@@ -1,4 +1,4 @@
 package com.wedplan.wedplan.repository.reviewAndAlertMgt;
 
-public class ReviewAndAlertController {
+public class ReviewAndAlertRepository {
 }

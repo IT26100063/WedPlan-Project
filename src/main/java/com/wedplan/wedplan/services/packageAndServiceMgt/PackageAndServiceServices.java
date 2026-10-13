@@ -1,4 +1,4 @@
 package com.wedplan.wedplan.services.packageAndServiceMgt;
 
-public class PackageAndServiceController {
+public class PackageAndServiceServices {
 }

@@ -1,4 +1,4 @@
 package com.wedplan.wedplan.repository.paymentMgt;
 
-public class PaymentController {
+public class PaymentRepository {
 }

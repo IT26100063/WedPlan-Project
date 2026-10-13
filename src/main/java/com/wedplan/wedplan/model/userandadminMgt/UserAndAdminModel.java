@@ -1,4 +1,4 @@
 package com.wedplan.wedplan.model.userandadminMgt;
 
-public class UserAndAdminController {
+public class UserAndAdminModel {
 }

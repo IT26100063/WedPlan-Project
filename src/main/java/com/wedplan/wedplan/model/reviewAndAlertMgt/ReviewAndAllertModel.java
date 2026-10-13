@@ -1,4 +1,4 @@
 package com.wedplan.wedplan.model.reviewAndAlertMgt;
 
-public class ReviewAndAllertController {
+public class ReviewAndAllertModel {
 }
