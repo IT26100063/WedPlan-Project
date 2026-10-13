@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fbf8f3" id="themeColorMeta" />
+  <meta name="description" content="Plan your wedding with WedPlan. Explore vendors, keep your favourites close, and make your day feel like yours." />
+  <title>WedPlan — Your day, beautifully planned</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+  <div class="topline">A little more joy in the planning <strong>·</strong> Made for celebrations across Sri Lanka</div>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="WedPlan home">WedPlan<span>.</span></a>
+      <nav class="navlinks" id="navlinks" aria-label="Main navigation">
+        <a href="#vendors">Find vendors</a><a href="#how-it-works">How it works</a><a href="#planning">Planning tools</a><a href="#for-vendors">For vendors</a>
+      </nav>
+      <div class="nav-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch theme"><span id="themeIcon" aria-hidden="true">☾</span></button><button class="text-btn" id="savedLink">♡ Saved</button><a class="btn" href="#vendors">Start exploring <span>↗</span></a><button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">☰</button></div>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Your wedding, your way</div>
+          <h1 class="hero-title">The beginning<br />of your <em>best day.</em></h1>
+          <p class="intro">Find the people who get your vision, keep the little details in one place, and enjoy the feeling of it all coming together.</p>
+          <div class="hero-buttons"><a class="btn" href="#vendors">Explore vendors <span>→</span></a><a class="link-arrow" href="#how-it-works">See how WedPlan works <span>↗</span></a></div>
+          <div class="micro-proof"><span class="spark">✳</span><span>From the first idea to the last dance</span></div>
+        </div>
+        <div class="hero-visual" role="img" aria-label="A couple celebrating their wedding">
+          <div class="hero-note"><span class="note-icon">✿</span><strong>Make room for the moments.</strong><small>We'll help with the planning.</small></div>
+          <div class="hero-stamp"><small>A celebration that feels like you</small><strong>Here's to your<br />once-in-a-lifetime.</strong></div>
+        </div>
+      </div>
+      <div class="container search-wrap">
+        <form class="searchbar" id="searchForm">
+          <div class="field"><label for="searchText">I'm looking for</label><input id="searchText" type="search" placeholder="Photographers, flowers…" /></div>
+          <div class="field"><label for="searchCategory">Category</label><select id="searchCategory"><option value="all">All vendors</option><option value="Photography">Photography</option><option value="Venues">Venues</option><option value="Beauty">Beauty</option><option value="Florals">Florals</option><option value="Catering">Catering</option><option value="Music">Music</option></select></div>
+          <div class="field"><label for="searchLocation">Location</label><select id="searchLocation"><option value="all">Anywhere in Sri Lanka</option><option value="Colombo">Colombo</option><option value="Gampaha">Gampaha</option><option value="Kandy">Kandy</option><option value="Galle">Galle</option></select></div>
+          <button class="btn" type="submit">Find your people <span>⌕</span></button>
+        </form>
+        <p class="search-hint">A calm place to compare ideas and start a conversation.</p>
+      </div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-head"><div><div class="eyebrow">A good place to begin</div><h2>Find your kind of wonderful.</h2></div><p>From the first look to the final song, meet local wedding pros who can help bring your plans to life.</p></div>
+        <div class="categories" id="categoryTiles">
+          <button class="category" data-category="Venues"><div class="category-icon">⌂</div><span>Venues</span><small>Find a setting</small></button>
+          <button class="category" data-category="Photography"><div class="category-icon">◎</div><span>Photography</span><small>Keep the moments</small></button>
+          <button class="category" data-category="Beauty"><div class="category-icon">✿</div><span>Beauty</span><small>Feel your best</small></button>
+          <button class="category" data-category="Florals"><div class="category-icon">❀</div><span>Florals</span><small>Set the mood</small></button>
+          <button class="category" data-category="Catering"><div class="category-icon">♨</div><span>Catering</span><small>Gather around</small></button>
+          <button class="category" data-category="Music"><div class="category-icon">♫</div><span>Music</span><small>Make it a night</small></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section vendors-section" id="vendors">
+      <div class="container">
+        <div class="section-head"><div><div class="eyebrow">A few lovely ideas</div><h2>Meet your dream team.</h2></div><p>Explore the kinds of professionals you can discover on WedPlan. Save a favourite, then send a booking inquiry when you're ready.</p></div>
+        <div class="vendor-toolbar" id="filterPills">
+          <button class="filter-pill active" data-filter="all">All vendors</button><button class="filter-pill" data-filter="Photography">Photography</button><button class="filter-pill" data-filter="Venues">Venues</button><button class="filter-pill" data-filter="Beauty">Beauty</button><button class="filter-pill" data-filter="Florals">Florals</button><button class="filter-pill" data-filter="Catering">Catering</button><button class="filter-pill" data-filter="Music">Music</button><span class="results-count" id="resultsCount">6 sample listings</span>
+        </div>
+        <div class="vendor-grid" id="vendorGrid">
+          <article class="vendor-card" data-category="Photography" data-location="Colombo" data-name="golden hour studio photography">
+            <div class="vendor-photo" style="background-image:url('images/photography.jpg')"><span class="demo-badge">Sample listing · demo</span><button class="heart" aria-label="Save Golden Hour Studio">♡</button></div>
+            <div class="vendor-body"><div class="vendor-meta"><span>Photography · Colombo</span><span class="rating">✦ 4.9</span></div><h3>Golden Hour Studio</h3><p class="vendor-desc">Warm, story-led wedding photographs.</p><div class="vendor-foot"><span class="price-copy">Example package<b>Ask for a quote</b></span><button class="mini-btn book-btn" data-vendor="Golden Hour Studio">Send inquiry ↗</button></div></div>
+          </article>
+          <article class="vendor-card" data-category="Venues" data-location="Gampaha" data-name="the garden house venue">
+            <div class="vendor-photo" style="background-image:url('images/reception.jpg')"><span class="demo-badge">Sample listing · demo</span><button class="heart" aria-label="Save The Garden House">♡</button></div>
+            <div class="vendor-body"><div class="vendor-meta"><span>Venues · Gampaha</span><span class="rating">✦ 4.8</span></div><h3>The Garden House</h3><p class="vendor-desc">A leafy setting for an intimate celebration.</p><div class="vendor-foot"><span class="price-copy">Example package<b>Ask for a quote</b></span><button class="mini-btn book-btn" data-vendor="The Garden House">Send inquiry ↗</button></div></div>
+          </article>
+          <article class="vendor-card" data-category="Beauty" data-location="Kandy" data-name="petal and pearl beauty">
+            <div class="vendor-photo" style="background-image:url('images/beauty.jpg')"><span class="demo-badge">Sample listing · demo</span><button class="heart" aria-label="Save Petal & Pearl Beauty">♡</button></div>
+            <div class="vendor-body"><div class="vendor-meta"><span>Beauty · Kandy</span><span class="rating">✦ 5.0</span></div><h3>Petal &amp; Pearl Beauty</h3><p class="vendor-desc">Soft, considered looks for your day.</p><div class="vendor-foot"><span class="price-copy">Example package<b>Ask for a quote</b></span><button class="mini-btn book-btn" data-vendor="Petal & Pearl Beauty">Send inquiry ↗</button></div></div>
+          </article>
+          <article class="vendor-card" data-category="Florals" data-location="Galle" data-name="wildflower atelier florals">
+            <div class="vendor-photo" style="background-image:url('images/florals.jpg')"><span class="demo-badge">Sample listing · demo</span><button class="heart" aria-label="Save Wildflower Atelier">♡</button></div>
+            <div class="vendor-body"><div class="vendor-meta"><span>Florals · Galle</span><span class="rating">✦ 4.9</span></div><h3>Wildflower Atelier</h3><p class="vendor-desc">Natural arrangements with a little whimsy.</p><div class="vendor-foot"><span class="price-copy">Example package<b>Ask for a quote</b></span><button class="mini-btn book-btn" data-vendor="Wildflower Atelier">Send inquiry ↗</button></div></div>
+          </article>
+          <article class="vendor-card" data-category="Catering" data-location="Colombo" data-name="table for two catering">
+            <div class="vendor-photo" style="background-image:url('images/catering.jpg')"><span class="demo-badge">Sample listing · demo</span><button class="heart" aria-label="Save Table for Two Catering">♡</button></div>
+            <div class="vendor-body"><div class="vendor-meta"><span>Catering · Colombo</span><span class="rating">✦ 4.8</span></div><h3>Table for Two Catering</h3><p class="vendor-desc">A thoughtful menu for a table full of people you love.</p><div class="vendor-foot"><span class="price-copy">Example package<b>Ask for a quote</b></span><button class="mini-btn book-btn" data-vendor="Table for Two Catering">Send inquiry ↗</button></div></div>
+          </article>
+          <article class="vendor-card" data-category="Music" data-location="Gampaha" data-name="the evening set music">
+            <div class="vendor-photo" style="background-image:url('images/music.jpg')"><span class="demo-badge">Sample listing · demo</span><button class="heart" aria-label="Save The Evening Set">♡</button></div>
+            <div class="vendor-body"><div class="vendor-meta"><span>Music · Gampaha</span><span class="rating">✦ 4.9</span></div><h3>The Evening Set</h3><p class="vendor-desc">Live music to carry the celebration into the night.</p><div class="vendor-foot"><span class="price-copy">Example package<b>Ask for a quote</b></span><button class="mini-btn book-btn" data-vendor="The Evening Set">Send inquiry ↗</button></div></div>
+          </article>
+        </div>
+        <div class="empty" id="emptyState">No sample listings match those filters. Try another category or location.</div>
+        <p class="disclaimer">Concept demo: vendor names, ratings, photos, locations, and sample details above are illustrative only and do not represent real businesses or verified offers.</p>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="container story">
+        <div class="story-image" role="img" aria-label="A wedding reception table ready for guests"><div class="story-label"><b>Little details, big feelings.</b><small>Your plans deserve a space of their own.</small></div></div>
+        <div class="story-copy"><div class="eyebrow">A little less juggling</div><h2>Planning can feel like part of the celebration.</h2><p>WedPlan brings discovery and first conversations together, so you can spend less time keeping track of tabs and more time shaping a day that feels like you.</p>
+          <div class="steps"><div class="step"><span class="step-no">1</span><div><b>Explore with a feeling in mind</b><span>Browse by service and location to find inspiration that fits your plans.</span></div></div><div class="step"><span class="step-no">2</span><div><b>Keep the good ones close</b><span>Save the vendors you'd like to come back to and compare at your own pace.</span></div></div><div class="step"><span class="step-no">3</span><div><b>Start a conversation</b><span>Share your date and a few details to begin an inquiry with a vendor.</span></div></div></div>
+          <a class="link-arrow" href="#vendors">Find a place to start <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section planning" id="planning">
+      <div class="container planning-grid">
+        <div class="planning-copy"><div class="eyebrow">Your plans, in one place</div><h2>Make space for the fun part.</h2><p>Keep the moving pieces feeling manageable with simple tools for the decisions ahead. WedPlan is designed to grow with your plans, one thoughtful step at a time.</p><a class="link-arrow" href="#vendors">Start with your vendor list <span>→</span></a></div>
+        <div class="planning-cards"><div class="tool-card"><div class="tool-icon">♡</div><b>Your shortlist</b><p>Save the vendors you love and revisit them when you're ready.</p><small>Try it above ↑</small></div><div class="tool-card"><div class="tool-icon">☷</div><b>Planning checklist</b><p>Imagine a gentle timeline that helps every detail find its moment.</p><small>Coming soon</small></div><div class="tool-card"><div class="tool-icon">◉</div><b>Budget overview</b><p>Keep your priorities visible while plans take shape.</p><small>Coming soon</small></div><div class="tool-card"><div class="tool-icon">✉</div><b>Vendor inquiries</b><p>Share the basics and make that first conversation easier.</p><small>Demo interaction</small></div></div>
+      </div>
+    </section>
+
+    <section class="cta" id="for-vendors"><div class="container"><div class="cta-card"><div><div class="eyebrow">For the people who make it happen</div><h2>Good at making days unforgettable?</h2><p>WedPlan is a concept for helping couples discover wedding professionals.</p></div><span class="cta-vendor">Want to be part of the idea? <a href="mailto:hello@wedplan.example">Tell us about your work ↗</a></span></div></div></section>
+  </main>
+  <footer><div class="container"><div class="footer-top"><div><a class="footer-brand" href="#top">WedPlan<span>.</span></a><p class="footer-note">A little more joy in the planning, from the first idea to the final dance.</p></div><div class="footer-links"><div><b>Explore</b><a href="#vendors">Find vendors</a><a href="#how-it-works">How it works</a></div><div><b>About</b><a href="#planning">Planning tools</a><a href="#for-vendors">For vendors</a></div></div></div><div class="footer-bottom"><span>© 2026 WedPlan concept</span><span class="concept">Concept demo · Sample listings are illustrative</span></div></div></footer>
+
+  <div class="modal-backdrop" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <form class="modal" id="bookingForm"><button class="modal-close" type="button" id="modalClose" aria-label="Close">×</button><div class="eyebrow">Start a conversation</div><h2 id="modalTitle">Send an inquiry</h2><p id="modalIntro">Share a few details to begin.</p><div class="modal-grid"><label>Your name<input name="name" required placeholder="e.g. Alex Perera" /></label><label>Email address<input name="email" type="email" required placeholder="you@example.com" /></label><label>Wedding date<input name="date" type="date" /></label><label>Guest count<select name="guests"><option>Not sure yet</option><option>Under 50</option><option>50–100</option><option>100–200</option><option>200+</option></select></label><label class="wide">A note for the vendor<textarea name="message" rows="3" style="border:1px solid #e4dcd4;border-radius:9px;padding:11px;background:#fffefa;color:var(--ink);font:inherit;resize:vertical" placeholder="Tell them a little about what you're planning…"></textarea></label></div><button class="btn" type="submit">Preview inquiry <span>→</span></button><p class="modal-note">Demo only: this form does not send or store your details. No real booking is made.</p></form>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script/script.js" defer></script>
+</body>
+</html>
