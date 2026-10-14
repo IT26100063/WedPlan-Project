@@ -1,4 +1,1 @@
-package com.wedplan.wedplan.model.userandadminMgt;
-
-public class UserAndAdminModel {
-}
+package com.wedplan.wedplan.model.userandadminMgt;import jakarta.persistence.*;import jakarta.validation.constraints.Email;import jakarta.validation.constraints.NotBlank;import jakarta.validation.constraints.Size;import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;@Entity@Table(name = "users_and_admins")@Data@NoArgsConstructor@AllArgsConstructorpublic class UserAndAdminModel {    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)    private Long id;    @NotBlank(message = "Name cannot be empty")    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")    private String name;    @NotBlank(message = "Email is required")    @Email(message = "Please enter a valid email format")    @Column(unique = true)    private String email;    @NotBlank(message = "Password is required")    @Size(min = 6, message = "Password must be at least 6 characters long")    private String password;    @NotBlank(message = "Role is required (e.g., USER or ADMIN)")    private String role;}
