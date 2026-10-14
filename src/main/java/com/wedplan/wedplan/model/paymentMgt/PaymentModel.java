@@ -58,7 +58,7 @@ public class PaymentModel {
     private BigDecimal amount;
 
     @NotBlank(message = "Currency is required.")
-    @Pattern(regexp = "[A-Z]{3}", message = "Use a three-letter uppercase currency code, such as LKR.")
+    @Pattern(regexp = "[A-Za-z]{3}", message = "Use a three-letter currency code, such as LKR.")
     @Column(nullable = false, length = 3)
     private String currency = "LKR";
 
