@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payments | WedPlan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/style/payment-management.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg wp-navbar">
+  <div class="container">
+    <a class="navbar-brand wp-brand" th:href="@{/}">WedPlan<span>.</span></a>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <a class="nav-link active" th:href="@{/payments}">Payments</a>
+      <a class="btn btn-primary wp-primary" th:href="@{/payments/new}">＋ Add payment</a>
+    </div>
+  </div>
+</nav>
+<main class="container py-4 py-lg-5">
+  <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <span th:text="${successMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="page-heading d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+    <div>
+      <p class="eyebrow mb-2">FINANCE OVERVIEW</p>
+      <h1 class="mb-2">Payment management</h1>
+      <p class="text-secondary mb-0">Track recorded wedding booking payments in one place.</p>
+    </div>
+    <a class="btn btn-primary wp-primary" th:href="@{/payments/new}">＋ Record a payment</a>
+  </div>
+  <div class="alert alert-info integrity-note mb-4" role="note">
+    <strong>Payment records only.</strong> WedPlan does not process or verify financial transactions.
+    Set a payment to completed only after verifying it through the appropriate payment provider or receipt.
+  </div>
+
+  <section class="row g-3 mb-4" aria-label="Payment summary">
+    <div class="col-6 col-xl-3"><article class="summary-card"><span class="summary-label">Total recorded</span><strong th:text="${summary.total}">0</strong><span class="summary-foot">All payment records</span></article></div>
+    <div class="col-6 col-xl-3"><article class="summary-card summary-completed"><span class="summary-label">Completed</span><strong th:text="${summary.completed}">0</strong><span class="summary-foot">Marked verified</span></article></div>
+    <div class="col-6 col-xl-3"><article class="summary-card summary-pending"><span class="summary-label">Pending</span><strong th:text="${summary.pending}">0</strong><span class="summary-foot">Awaiting confirmation</span></article></div>
+    <div class="col-6 col-xl-3"><article class="summary-card summary-failed"><span class="summary-label">Failed</span><strong th:text="${summary.failed}">0</strong><span class="summary-foot">Unsuccessful records</span></article></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div><h2 class="h5 mb-1">Payment records</h2><p class="text-secondary small mb-0" th:text="${payments.totalElements + ' records'}">0 records</p></div>
+      <form class="filters row g-2" method="get" th:action="@{/payments}">
+        <div class="col-12 col-md-auto"><label class="visually-hidden" for="payment-search">Search payments</label><input class="form-control" id="payment-search" type="search" name="q" placeholder="Search reference, customer..." th:value="${q}"></div>
+        <div class="col-6 col-md-auto">
+          <label class="visually-hidden" for="status-filter">Filter by status</label>
+          <select class="form-select" id="status-filter" name="paymentStatus">
+            <option value="">All statuses</option>
+            <option th:each="status : ${statuses}" th:value="${status}" th:text="${#strings.replace(status.name(), '_', ' ')}" th:selected="${status == selectedStatus}"></option>
+          </select>
+        </div>
+        <div class="col-6 col-md-auto">
+          <label class="visually-hidden" for="method-filter">Filter by payment method</label>
+          <select class="form-select" id="method-filter" name="paymentMethod">
+            <option value="">All methods</option>
+            <option th:each="method : ${methods}" th:value="${method}" th:text="${#strings.replace(method.name(), '_', ' ')}" th:selected="${method == selectedMethod}"></option>
+          </select>
+        </div>
+        <div class="col-12 col-md-auto d-flex gap-2"><button class="btn btn-outline-secondary flex-grow-1" type="submit">Apply</button><a class="btn btn-light" th:href="@{/payments}" aria-label="Clear filters">Clear</a></div>
+      </form>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-middle payment-table mb-0">
+        <thead><tr><th scope="col">Booking / customer</th><th scope="col">Date</th><th scope="col">Method</th><th scope="col">Amount</th><th scope="col">Status</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+        <tr th:each="payment : ${payments.content}">
+          <td><a class="booking-link" th:href="@{/payments/{id}(id=${payment.id})}" th:text="${payment.bookingReference}">WP-0001</a><span class="d-block small text-secondary" th:text="${payment.customerName}">Customer</span></td>
+          <td th:text="${#temporals.format(payment.paymentDate, 'dd MMM yyyy')}">01 Jan 2026</td>
+          <td th:text="${#strings.replace(payment.paymentMethod.name(), '_', ' ')}">BANK TRANSFER</td>
+          <td class="amount-cell"><span th:text="${payment.currency}">LKR</span> <span th:text="${#numbers.formatDecimal(payment.amount, 1, 'COMMA', 2, 'POINT')}">0.00</span></td>
+          <td><span class="status-badge" th:classappend="${' status-' + #strings.toLowerCase(payment.paymentStatus.name())}" th:text="${#strings.replace(payment.paymentStatus.name(), '_', ' ')}">PENDING</span></td>
+          <td class="text-end"><a class="btn btn-sm btn-light" th:href="@{/payments/{id}(id=${payment.id})}">View</a></td>
+        </tr>
+        <tr th:if="${payments.empty}"><td colspan="6"><div class="empty-state"><strong>No payment records found</strong><span>Try changing your filters or record your first payment.</span><a class="btn btn-sm btn-outline-primary mt-2" th:href="@{/payments/new}">Add payment</a></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination-row d-flex flex-wrap justify-content-between align-items-center gap-3" th:if="${payments.totalPages > 1}">
+      <span class="small text-secondary" th:text="${'Page ' + (payments.number + 1) + ' of ' + payments.totalPages}">Page 1 of 1</span>
+      <nav aria-label="Payment pages"><ul class="pagination pagination-sm mb-0">
+        <li class="page-item" th:classappend="${payments.first} ? 'disabled'"><a class="page-link" th:href="@{/payments(page=${payments.number - 1},q=${q},paymentStatus=${selectedStatus},paymentMethod=${selectedMethod})}">Previous</a></li>
+        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, payments.totalPages - 1)}" th:classappend="${pageNumber == payments.number} ? 'active'"><a class="page-link" th:href="@{/payments(page=${pageNumber},q=${q},paymentStatus=${selectedStatus},paymentMethod=${selectedMethod})}" th:text="${pageNumber + 1}">1</a></li>
+        <li class="page-item" th:classappend="${payments.last} ? 'disabled'"><a class="page-link" th:href="@{/payments(page=${payments.number + 1},q=${q},paymentStatus=${selectedStatus},paymentMethod=${selectedMethod})}">Next</a></li>
+      </ul></nav>
+    </div>
+  </section>
+  <footer class="small text-secondary text-center mt-4">WedPlan payment management · Records are not financial transactions</footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
