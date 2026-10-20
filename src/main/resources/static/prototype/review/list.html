@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Couple stories · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="stories" data-user="none">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-12">
+    <div class="grid lg:grid-cols-[1fr_auto] gap-8 items-end">
+      <div>
+        <span class="eyebrow">Verified bookings only</span>
+        <h1 class="font-display text-5xl sm:text-6xl font-semibold text-forest mt-4">Couple stories</h1>
+        <p class="text-ink/65 mt-3 max-w-xl">Every review comes from a couple who booked and paid through WedPlan, written after their day.</p>
+      </div>
+      <div class="card px-6 py-5 flex items-center gap-6">
+        <div class="text-center"><p class="font-display text-6xl font-semibold text-forest leading-none">4.9</p><span data-stars="5" class="mt-2"></span><p class="text-xs text-muted mt-1">418 reviews</p></div>
+        <ul class="space-y-1.5 text-xs w-40">
+          <li class="flex items-center gap-2"><span class="w-3">5</span><div class="bar flex-1"><span style="width:86%"></span></div></li>
+          <li class="flex items-center gap-2"><span class="w-3">4</span><div class="bar flex-1"><span style="width:10%"></span></div></li>
+          <li class="flex items-center gap-2"><span class="w-3">3</span><div class="bar flex-1"><span style="width:3%"></span></div></li>
+          <li class="flex items-center gap-2"><span class="w-3">2</span><div class="bar flex-1"><span style="width:1%"></span></div></li>
+          <li class="flex items-center gap-2"><span class="w-3">1</span><div class="bar flex-1"><span style="width:0%"></span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex flex-wrap gap-2" data-chip-filter="#review-grid" data-chip-attr="category">
+        <button type="button" class="chip active" data-chip="all">All</button>
+        <button type="button" class="chip" data-chip="venue">Venues</button>
+        <button type="button" class="chip" data-chip="photography">Photography</button>
+        <button type="button" class="chip" data-chip="beauty">Beauty</button>
+        <button type="button" class="chip" data-chip="catering">Catering</button>
+        <button type="button" class="chip" data-chip="music">Music</button>
+      </div>
+      <p class="text-sm text-muted"><span class="font-semibold text-forest" data-count-for="#review-grid">6</span> stories</p>
+    </div>
+
+    <!-- JSP: <c:forEach var="r" items="${reviews}"> -->
+    <div id="review-grid" class="mt-6 columns-1 md:columns-2 lg:columns-3 gap-6 [&>*]:mb-6 [&>*]:break-inside-avoid">
+      <figure data-item data-category="venue" class="card card-pad">
+        <div class="flex items-center justify-between"><span data-stars="5"></span><span class="badge badge-verified">Verified</span></div>
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"The rain plan saved us when a shower rolled in. Nobody even noticed the move to the pavilion."</blockquote>
+        <p class="mt-3 text-sm text-ink/70 leading-relaxed">The coordinator had the chairs moved in ten minutes and the fairy lights came on right as we walked in. Magic.</p>
+        <figcaption class="mt-5 flex items-center gap-3 text-sm"><span class="avatar">DR</span><span><span class="font-semibold block">Dilini &amp; Ruwan</span><span class="text-muted">The Garden House · Oct 2026</span></span></figcaption>
+      </figure>
+      <figure data-item data-category="photography" class="card card-pad">
+        <div class="flex items-center justify-between"><span data-stars="5"></span><span class="badge badge-verified">Verified</span></div>
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"Our beach photos by Golden Hour still make us cry."</blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 text-sm"><span class="avatar">MT</span><span><span class="font-semibold block">Maya &amp; Tharindu</span><span class="text-muted">Golden Hour Studio · Sep 2026</span></span></figcaption>
+        <div class="mt-5 rounded-2xl bg-sand/60 p-4 text-sm"><p class="font-semibold text-forest flex items-center gap-2"><i data-lucide="reply" class="w-4 h-4 text-brass"></i>Golden Hour Studio replied</p><p class="text-ink/70 mt-1">Thank you both, that sunset was a gift. Enjoy the album!</p></div>
+      </figure>
+      <figure data-item data-category="catering" class="card card-pad">
+        <div class="flex items-center justify-between"><span data-stars="5"></span><span class="badge badge-verified">Verified</span></div>
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"Seeing the total with our guest count before booking saved so many awkward phone calls."</blockquote>
+        <p class="mt-3 text-sm text-ink/70 leading-relaxed">And the lamprais were gone in twenty minutes.</p>
+        <figcaption class="mt-5 flex items-center gap-3 text-sm"><span class="avatar">SA</span><span><span class="font-semibold block">Sarah &amp; Ashan</span><span class="text-muted">Table for Two Catering · Aug 2026</span></span></figcaption>
+      </figure>
+      <figure data-item data-category="beauty" class="card card-pad">
+        <div class="flex items-center justify-between"><span data-stars="5"></span><span class="badge badge-verified">Verified</span></div>
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"I felt like myself, only glowing. The trial made the morning so calm."</blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 text-sm"><span class="avatar">KI</span><span><span class="font-semibold block">Kasuni &amp; Ian</span><span class="text-muted">Petal &amp; Pearl Beauty · Jul 2026</span></span></figcaption>
+      </figure>
+      <figure data-item data-category="venue" class="card card-pad">
+        <div class="flex items-center justify-between"><span data-stars="4"></span><span class="badge badge-verified">Verified</span></div>
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"Gorgeous garden and a lovely coordinator."</blockquote>
+        <p class="mt-3 text-sm text-ink/70 leading-relaxed">Parking got tight after 150 guests, so book a shuttle if you're a big crowd.</p>
+        <figcaption class="mt-5 flex items-center gap-3 text-sm"><span class="avatar">HC</span><span><span class="font-semibold block">Hasini &amp; Chamath</span><span class="text-muted">The Garden House · Jun 2026</span></span></figcaption>
+      </figure>
+      <figure data-item data-category="music" class="card card-pad">
+        <div class="flex items-center justify-between"><span data-stars="5"></span><span class="badge badge-verified">Verified</span></div>
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"Our aunties were dancing until the very last song."</blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 text-sm"><span class="avatar">AN</span><span><span class="font-semibold block">Ama &amp; Nuwan</span><span class="text-muted">The Evening Set · May 2026</span></span></figcaption>
+      </figure>
+    </div>
+    <div class="hidden card card-pad text-center" data-empty-for="#review-grid">
+      <i data-lucide="message-square-quote" class="w-10 h-10 mx-auto text-brass"></i>
+      <h3 class="font-display text-2xl text-forest mt-3">No stories here yet</h3>
+    </div>
+
+    <div class="mt-6 card card-pad flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-ink/75"><span class="font-display text-2xl text-forest">Married with WedPlan?</span> Tell other couples how it went.</p>
+      <a href="write.html" class="btn btn-primary"><i data-lucide="pencil"></i>Write a review</a>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

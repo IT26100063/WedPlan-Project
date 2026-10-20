@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Write a review · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="stories" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-12">
+    <div class="grid lg:grid-cols-[360px_1fr] gap-10 items-start">
+      <aside class="card overflow-hidden lg:sticky lg:top-28">
+        <div class="h-52"><img class="img-cover" src="../../img/photography.jpg" alt="Golden Hour Studio"></div>
+        <div class="p-6">
+          <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Your booking · <span class="mono normal-case tracking-normal">BK1987</span></p>
+          <h2 class="font-display text-3xl font-semibold text-forest mt-1">Golden Hour Studio</h2>
+          <p class="text-sm text-muted mt-1">Engagement shoot · Sun 6 Sep 2026</p>
+          <span class="badge badge-completed mt-4">Completed</span>
+        </div>
+      </aside>
+
+      <div>
+        <span class="eyebrow">Share your story</span>
+        <h1 class="font-display text-5xl font-semibold text-forest mt-4">How was it?</h1>
+        <p class="text-muted mt-2">Your review appears with a <span class="badge badge-verified">Verified</span> badge once our team has checked it.</p>
+
+        <!-- JSP: action="${pageContext.request.contextPath}/reviews" method="post" -->
+        <form class="card card-pad mt-8 space-y-7" data-demo="Thanks! Your review was sent (prototype)" data-next="list.html">
+          <input type="hidden" name="bookingId" value="BK1987">
+          <fieldset>
+            <legend class="label">Overall rating</legend>
+            <div class="flex items-center gap-5">
+              <div class="star-input">
+                <input type="radio" id="r5" name="rating" value="5" required><label for="r5" title="Exceptional"><i data-star></i></label>
+                <input type="radio" id="r4" name="rating" value="4"><label for="r4" title="Very good"><i data-star></i></label>
+                <input type="radio" id="r3" name="rating" value="3"><label for="r3" title="Good"><i data-star></i></label>
+                <input type="radio" id="r2" name="rating" value="2"><label for="r2" title="Fair"><i data-star></i></label>
+                <input type="radio" id="r1" name="rating" value="1"><label for="r1" title="Poor"><i data-star></i></label>
+              </div>
+              <span class="font-display text-2xl italic text-brass" data-rating-text></span>
+            </div>
+          </fieldset>
+
+          <div>
+            <label class="label" for="title">Headline</label>
+            <input id="title" name="title" class="input" maxlength="80" placeholder="e.g. They captured us perfectly" required>
+          </div>
+
+          <div>
+            <label class="label" for="text">Your review</label>
+            <textarea id="text" name="text" class="textarea" maxlength="500" required data-counter="#text-count"
+                      placeholder="What did you love? What could be better?"></textarea>
+            <div class="flex justify-between hint"><span>Be kind and specific. It helps other couples.</span><span id="text-count"></span></div>
+          </div>
+
+          <div>
+            <p class="label">Would you recommend them?</p>
+            <div class="grid grid-cols-2 gap-3 max-w-sm">
+              <label class="choice"><input type="radio" name="recommend" value="yes" checked><span class="choice-body flex items-center gap-2 !py-3"><i data-lucide="thumbs-up" class="w-4 h-4 text-sage"></i>Yes</span></label>
+              <label class="choice"><input type="radio" name="recommend" value="no"><span class="choice-body flex items-center gap-2 !py-3"><i data-lucide="thumbs-down" class="w-4 h-4 text-clay"></i>Not really</span></label>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <a href="../booking/my-bookings.html" class="btn btn-ghost">Cancel</a>
+            <button type="submit" class="btn btn-primary"><i data-lucide="send"></i>Submit review</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

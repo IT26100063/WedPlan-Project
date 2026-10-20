@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find vendors · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="vendors" data-user="none">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-12">
+    <!-- Page heading -->
+    <div class="grid lg:grid-cols-2 gap-6 items-end">
+      <div>
+        <span class="eyebrow">Marketplace</span>
+        <h1 class="font-display text-5xl sm:text-6xl font-semibold text-forest mt-4">Meet your dream team</h1>
+      </div>
+      <p class="text-ink/65 lg:text-right lg:max-w-md lg:ml-auto">Pick your wedding date to see who is free. Vendors on hold or suspended are hidden automatically.</p>
+    </div>
+
+    <!-- Search / date -->
+    <!-- JSP: action="${pageContext.request.contextPath}/vendors" method="get" -->
+    <form action="list.html" method="get" data-fill-query data-booking-calc data-default-dates
+          class="card mt-10 p-3 sm:p-4 grid gap-3 md:grid-cols-[1fr_1fr_auto] items-end">
+      <label class="block px-3 py-2">
+        <span class="label">Wedding date</span>
+        <input type="date" name="eventDate" required class="w-full bg-transparent font-semibold text-forest focus:outline-none">
+      </label>
+      <label class="block px-3 py-2 md:border-l md:border-line">
+        <span class="label">Guests</span>
+        <select name="guests" class="w-full bg-transparent font-semibold text-forest focus:outline-none">
+          <option value="50">Up to 50</option>
+          <option value="100">50 – 100</option>
+          <option value="150" selected>100 – 150</option>
+          <option value="250">150 – 250</option>
+          <option value="400">250+</option>
+        </select>
+      </label>
+      <button type="submit" class="btn btn-primary btn-lg min-h-[3.5rem]"><i data-lucide="search"></i>Update search</button>
+    </form>
+
+    <!-- Toolbar -->
+    <div class="mt-10 flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
+      <div class="flex flex-wrap gap-2" data-chip-filter="#vendor-grid" data-chip-attr="category">
+        <button type="button" class="chip active" data-chip="all">All vendors</button>
+        <button type="button" class="chip" data-chip="venue"><i data-lucide="church" class="w-4 h-4"></i>Venues</button>
+        <button type="button" class="chip" data-chip="photography"><i data-lucide="camera" class="w-4 h-4"></i>Photography</button>
+        <button type="button" class="chip" data-chip="beauty"><i data-lucide="sparkles" class="w-4 h-4"></i>Beauty</button>
+        <button type="button" class="chip" data-chip="florals"><i data-lucide="flower-2" class="w-4 h-4"></i>Florals</button>
+        <button type="button" class="chip" data-chip="catering"><i data-lucide="utensils" class="w-4 h-4"></i>Catering</button>
+        <button type="button" class="chip" data-chip="music"><i data-lucide="music" class="w-4 h-4"></i>Music</button>
+      </div>
+      <div class="flex items-center gap-4">
+        <select class="select !py-2 !text-sm w-48" data-filter-target="#vendor-grid" data-filter-attr="location" aria-label="Location">
+          <option value="">Anywhere</option>
+          <option value="colombo">Colombo</option>
+          <option value="gampaha">Gampaha</option>
+          <option value="kandy">Kandy</option>
+          <option value="galle">Galle</option>
+        </select>
+        <p class="text-sm text-muted whitespace-nowrap">
+          <span class="font-semibold text-forest" data-count-for="#vendor-grid">7</span> vendors · <span data-out="date">—</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Vendor list -->
+    <div id="vendor-grid" class="mt-6 grid gap-6">
+      <!-- JSP: <c:forEach var="vendor" items="${vendors}"> ... </c:forEach> -->
+
+      <article data-item data-category="venue" data-location="gampaha" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover" src="../../img/reception.jpg" alt="The Garden House reception lawn"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Venue · Gampaha</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">The Garden House</h2>
+            </div>
+            <span class="badge badge-active">Free on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">A leafy colonial bungalow with a lawn for the ceremony and a glass pavilion for dinner and dancing.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-brass"></i>Up to 300</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="trees" class="w-4 h-4 text-brass"></i>Garden ceremony</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="car" class="w-4 h-4 text-brass"></i>Parking for 80</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>4.8 (64)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="text-sm text-muted">from</span> <span class="font-display text-3xl font-semibold text-forest">LKR 250,000</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <a href="../booking/book.html" class="btn btn-primary btn-sm">Book now</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article data-item data-category="venue" data-location="galle" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover object-[center_40%]" src="../../img/hero-couple.jpg" alt="Seaside Pavilion pebble beach"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Venue · Galle</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Seaside Pavilion</h2>
+            </div>
+            <span class="badge badge-cancelled">Booked on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">Vows on the pebble beach, dinner on the open pavilion as the sun goes down. Try a different date to book this one.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-brass"></i>Up to 200</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="waves" class="w-4 h-4 text-brass"></i>Beachfront</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="sunset" class="w-4 h-4 text-brass"></i>Sunset ceremony</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>4.9 (41)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="text-sm text-muted">from</span> <span class="font-display text-3xl font-semibold text-forest/50">LKR 420,000</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <button class="btn btn-primary btn-sm opacity-40 cursor-not-allowed" disabled>Unavailable</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article data-item data-category="photography" data-location="colombo" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover" src="../../img/photography.jpg" alt="Golden Hour Studio photographer"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Photography · Colombo</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Golden Hour Studio</h2>
+            </div>
+            <span class="badge badge-active">Free on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">Warm, story-led photographs and a short film, with two photographers covering the whole day.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-brass"></i>Up to 12 hours</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4 text-brass"></i>Film add-on</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="book-open" class="w-4 h-4 text-brass"></i>Printed album</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>4.9 (88)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="text-sm text-muted">from</span> <span class="font-display text-3xl font-semibold text-forest">LKR 120,000</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <a href="../booking/book.html" class="btn btn-primary btn-sm">Book now</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article data-item data-category="beauty" data-location="kandy" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover" src="../../img/beauty.jpg" alt="Bridal makeup being applied"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Beauty · Kandy</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Petal &amp; Pearl Beauty</h2>
+            </div>
+            <span class="badge badge-active">Free on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">Soft, considered bridal looks, Kandyan and western dressing, and a trial session before the day.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="sparkles" class="w-4 h-4 text-brass"></i>Trial included</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-brass"></i>Bridal party</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-brass"></i>Travels island-wide</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>5.0 (37)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="text-sm text-muted">from</span> <span class="font-display text-3xl font-semibold text-forest">LKR 65,000</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <a href="../booking/book.html" class="btn btn-primary btn-sm">Book now</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article data-item data-category="florals" data-location="galle" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover" src="../../img/florals.jpg" alt="Wildflower Atelier bouquet"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Florals · Galle</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Wildflower Atelier</h2>
+            </div>
+            <span class="badge badge-active">Free on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">Natural, seasonal arrangements with a little whimsy, from the bouquet to the ceremony arch.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="flower-2" class="w-4 h-4 text-brass"></i>Bouquet &amp; buttonholes</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="tent" class="w-4 h-4 text-brass"></i>Ceremony arch</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>4.9 (29)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="text-sm text-muted">from</span> <span class="font-display text-3xl font-semibold text-forest">LKR 85,000</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <a href="../booking/book.html" class="btn btn-primary btn-sm">Book now</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article data-item data-category="catering" data-location="colombo" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover" src="../../img/catering.jpg" alt="Table for Two Catering spread"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Catering · Colombo</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Table for Two Catering</h2>
+            </div>
+            <span class="badge badge-active">Free on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">A thoughtful Sri Lankan and international menu for a table full of the people you love.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="utensils" class="w-4 h-4 text-brass"></i>Buffet or plated</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="cake" class="w-4 h-4 text-brass"></i>Cake table</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="leaf" class="w-4 h-4 text-brass"></i>Vegetarian menus</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>4.8 (52)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="font-display text-3xl font-semibold text-forest">LKR 3,400</span> <span class="text-sm text-muted">/ guest</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <a href="../booking/book.html" class="btn btn-primary btn-sm">Book now</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article data-item data-category="music" data-location="gampaha" class="card overflow-hidden grid md:grid-cols-[320px_1fr] card-hover">
+        <a href="detail.html" class="block h-60 md:h-full img-zoom"><img class="img-cover" src="../../img/music.jpg" alt="The Evening Set live band"></a>
+        <div class="p-6 sm:p-7 flex flex-col">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Music · Gampaha</p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">The Evening Set</h2>
+            </div>
+            <span class="badge badge-active">Free on your date</span>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 max-w-xl">A five-piece live band and DJ to carry the celebration from first dance into the night.</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink/70">
+            <li class="flex items-center gap-1.5"><i data-lucide="mic" class="w-4 h-4 text-brass"></i>Live band + DJ</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-brass"></i>4 hour set</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-brass"></i>4.9 (45)</li>
+          </ul>
+          <div class="mt-auto pt-6 flex flex-wrap items-end justify-between gap-4">
+            <p><span class="text-sm text-muted">from</span> <span class="font-display text-3xl font-semibold text-forest">LKR 95,000</span></p>
+            <div class="flex gap-2">
+              <a href="detail.html" class="btn btn-outline btn-sm">View details</a>
+              <a href="../booking/book.html" class="btn btn-primary btn-sm">Book now</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- shown by the filter when nothing matches -->
+    <div class="hidden card card-pad text-center mt-6" data-empty-for="#vendor-grid">
+      <i data-lucide="calendar-x" class="w-10 h-10 mx-auto text-brass"></i>
+      <h3 class="font-display text-2xl text-forest mt-3">No vendors match</h3>
+      <p class="text-sm text-muted mt-1">Try another category, location or date.</p>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
