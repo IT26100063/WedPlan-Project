@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile &amp; password · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-12" data-tab-scope>
+    <div class="flex flex-col md:flex-row md:items-center gap-6">
+      <span class="avatar avatar-lg avatar-brass">NK</span>
+      <div>
+        <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest">Nethmi &amp; Kavin</h1>
+        <p class="text-muted mt-1 flex flex-wrap items-center gap-2">Couple C1001 · joined March 2026 <span class="badge badge-plus no-dot"><i data-lucide="gem"></i>Plus</span></p>
+      </div>
+      <div class="tabs md:ml-auto">
+        <button class="tab active" data-tab="details"><i data-lucide="user" class="w-4 h-4"></i>Details</button>
+        <button class="tab" data-tab="password"><i data-lucide="lock" class="w-4 h-4"></i>Password</button>
+      </div>
+    </div>
+
+    <!-- JSP: action="${pageContext.request.contextPath}/profile" method="post" -->
+    <form class="card card-pad mt-10 max-w-3xl" data-tab-panel="details" data-demo="Profile saved (prototype)">
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div><label class="label" for="p1">Partner one</label><input id="p1" class="input" value="Nethmi Perera" required></div>
+        <div><label class="label" for="p2">Partner two</label><input id="p2" class="input" value="Kavin Jayawardena" required></div>
+        <div><label class="label" for="email">Email</label><input id="email" type="email" class="input" value="nethmi@example.com" required></div>
+        <div><label class="label" for="phone">Phone</label><input id="phone" class="input" value="+94 77 123 4567" required></div>
+        <div><label class="label" for="date">Wedding date</label><input id="date" type="date" class="input" value="2027-04-18"></div>
+        <div><label class="label" for="budget">Budget (LKR)</label><input id="budget" type="number" step="50000" class="input" value="2500000"></div>
+        <div class="sm:col-span-2"><label class="label" for="city">Home city</label><input id="city" class="input" value="Colombo"></div>
+      </div>
+      <div class="mt-8 flex justify-end gap-2"><button type="reset" class="btn btn-ghost">Reset</button><button type="submit" class="btn btn-primary"><i data-lucide="save"></i>Save changes</button></div>
+    </form>
+
+    <!-- JSP: action="${pageContext.request.contextPath}/profile/password" method="post" -->
+    <form class="card card-pad mt-10 max-w-xl hidden" data-tab-panel="password" data-demo="Password changed (prototype)">
+      <div class="space-y-5">
+        <div><label class="label" for="current">Current password</label><input id="current" type="password" class="input" autocomplete="current-password" required></div>
+        <div>
+          <label class="label" for="newpw">New password</label>
+          <input id="newpw" type="password" class="input" minlength="8" autocomplete="new-password" data-strength="#strength" required>
+          <div id="strength" class="mt-2 flex items-center gap-3"><div class="bar flex-1"><span data-bar style="width:0"></span></div><span data-label class="text-xs text-muted w-16 text-right"></span></div>
+        </div>
+        <div>
+          <label class="label" for="confirm">Confirm new password</label>
+          <div><input id="confirm" type="password" class="input" autocomplete="new-password" data-match="#newpw" required></div>
+          <p class="error-text hidden" data-match-msg>The passwords don't match.</p>
+        </div>
+      </div>
+      <div class="mt-8 flex justify-end"><button type="submit" class="btn btn-primary"><i data-lucide="lock"></i>Change password</button></div>
+    </form>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

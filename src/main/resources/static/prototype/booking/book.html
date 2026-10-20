@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a vendor · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="vendors" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-10" data-calc-scope>
+    <div class="steps">
+      <div class="step done"><span class="step-dot"><i data-lucide="check"></i></span>Choose vendor</div>
+      <span class="step-line"></span>
+      <div class="step current"><span class="step-dot">2</span>Review &amp; request</div>
+      <span class="step-line"></span>
+      <div class="step"><span class="step-dot">3</span>Requested</div>
+    </div>
+
+    <h1 class="font-display text-5xl font-semibold text-forest mt-8">Review your booking</h1>
+    <p class="text-muted mt-2">Check the details below. Nothing is charged until the vendor confirms your date.</p>
+
+    <div class="mt-10 grid lg:grid-cols-[1fr_400px] gap-10 items-start">
+      <!-- JSP: action="${pageContext.request.contextPath}/bookings" method="post" -->
+      <form id="book-form" class="space-y-6" data-booking-calc data-default-dates data-fill-query data-discount="0.10" data-deposit="0.30"
+            data-demo="Booking requested (prototype)" data-next="confirmation.html">
+        <input type="hidden" name="vendorId" value="V104">
+
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">i.</span>Your day</h2>
+          <div class="mt-5 grid sm:grid-cols-3 gap-4">
+            <div>
+              <label class="label" for="eventDate">Wedding date</label>
+              <input id="eventDate" type="date" name="eventDate" class="input" required>
+            </div>
+            <div>
+              <label class="label" for="guests">Guests</label>
+              <input id="guests" type="number" name="guests" min="20" max="300" value="150" class="input" required>
+            </div>
+            <div>
+              <label class="label" for="time">Ceremony time</label>
+              <select id="time" name="time" class="select">
+                <option>Morning (poruwa)</option><option selected>Afternoon</option><option>Evening</option>
+              </select>
+            </div>
+          </div>
+          <div class="alert alert-success mt-5"><i data-lucide="circle-check"></i><span>The Garden House is free on this date.</span></div>
+          <!-- When the date is already taken, show instead:
+          <div class="alert alert-error mt-5"><i data-lucide="calendar-x"></i><span>Sorry, this vendor is booked on that date. Try another date or <a href="../vendor/list.html" class="underline">another vendor</a>.</span></div> -->
+        </section>
+
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">ii.</span>Package</h2>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <label class="choice"><input type="radio" name="package" value="intimate" data-price="250000" data-per-guest="3200" data-label="Intimate package">
+              <span class="choice-body block"><span class="font-semibold text-forest block">Intimate</span><span class="text-sm text-muted block">LKR 250,000</span><span class="text-xs text-muted">+ 3,200 / guest · up to 80</span></span></label>
+            <label class="choice"><input type="radio" name="package" value="classic" data-price="400000" data-per-guest="3800" data-label="Classic package" checked>
+              <span class="choice-body block"><span class="font-semibold text-forest block">Classic</span><span class="text-sm text-muted block">LKR 400,000</span><span class="text-xs text-muted">+ 3,800 / guest · up to 200</span></span></label>
+            <label class="choice"><input type="radio" name="package" value="grand" data-price="650000" data-per-guest="4200" data-label="Grand package">
+              <span class="choice-body block"><span class="font-semibold text-forest block">Grand</span><span class="text-sm text-muted block">LKR 650,000</span><span class="text-xs text-muted">+ 4,200 / guest · up to 300</span></span></label>
+          </div>
+          <div class="mt-5">
+            <label class="label" for="note">A note for the vendor <span class="normal-case tracking-normal font-medium">(optional)</span></label>
+            <textarea id="note" name="note" class="textarea !min-h-[6rem]" maxlength="300" data-counter="#note-count" placeholder="Tell them a little about what you're planning…"></textarea>
+            <p class="hint text-right" id="note-count"></p>
+          </div>
+        </section>
+
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">iii.</span>Couple details</h2>
+          <p class="text-sm text-muted mt-1">Taken from your profile. <a href="../couple/profile.html" class="text-forest font-semibold underline-offset-4 hover:underline">Edit profile</a></p>
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <div><label class="label">Partners</label><input class="input" value="Nethmi Perera &amp; Kavin Jayawardena" readonly></div>
+            <div><label class="label">Email</label><input class="input" value="nethmi@example.com" readonly></div>
+          </div>
+          <div class="mt-4 flex items-center gap-3 rounded-2xl bg-brass/10 border border-brass/30 px-4 py-3">
+            <span class="badge badge-plus no-dot"><i data-lucide="gem"></i>Plus</span>
+            <span class="text-sm text-forest">Your 10% Plus discount is applied automatically.</span>
+          </div>
+        </section>
+
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">iv.</span>Payment &amp; policies</h2>
+          <ul class="mt-5 space-y-3 text-sm text-ink/75">
+            <li class="flex gap-3"><i data-lucide="calendar-check" class="w-5 h-5 text-brass shrink-0"></i>The vendor has 48 hours to confirm. Your date is held for you until then.</li>
+            <li class="flex gap-3"><i data-lucide="wallet" class="w-5 h-5 text-brass shrink-0"></i>Pay a 30% deposit once confirmed, and the balance up to 14 days before the wedding.</li>
+            <li class="flex gap-3"><i data-lucide="landmark" class="w-5 h-5 text-brass shrink-0"></i>Paying by bank transfer? You get an extra 5% off, combined with your Plus discount.</li>
+            <li class="flex gap-3"><i data-lucide="calendar-x" class="w-5 h-5 text-brass shrink-0"></i>Free cancellation up to 90 days before the date, from <a href="my-bookings.html" class="font-semibold text-forest">My bookings</a>. After that the deposit is kept.</li>
+          </ul>
+          <label class="mt-6 flex items-start gap-3 text-sm cursor-pointer">
+            <input type="checkbox" required class="mt-1 w-4 h-4 accent-[rgb(44,58,71)]">
+            <span>I understand the deposit and cancellation policy.</span>
+          </label>
+        </section>
+      </form>
+
+      <!-- Summary -->
+      <aside class="lg:sticky lg:top-28">
+        <div class="card overflow-hidden">
+          <div class="h-48"><img class="img-cover" src="../../img/reception.jpg" alt="The Garden House"></div>
+          <div class="p-6">
+            <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Venue · Gampaha</p>
+            <h2 class="font-display text-3xl font-semibold text-forest mt-1">The Garden House</h2>
+
+            <dl class="mt-5 grid grid-cols-2 gap-4 text-sm">
+              <div><dt class="label !mb-1">Date</dt><dd class="font-semibold" data-out="date">—</dd></div>
+              <div><dt class="label !mb-1">Package</dt><dd class="font-semibold" data-out="package">—</dd></div>
+            </dl>
+
+            <dl class="mt-6 space-y-3 text-sm border-t border-line pt-5">
+              <div class="flex justify-between"><dt class="text-ink/70">Package price</dt><dd data-out="base">—</dd></div>
+              <div class="flex justify-between"><dt class="text-ink/70" data-out="per-guest">—</dt><dd data-out="per-guest-total">—</dd></div>
+              <div class="flex justify-between text-brass"><dt>Plus discount (10%)</dt><dd data-out="discount">—</dd></div>
+              <div class="flex justify-between border-t border-line pt-3 text-base font-semibold text-forest"><dt>Estimated total</dt><dd data-out="total">—</dd></div>
+              <div class="flex justify-between text-ink/70"><dt>Deposit (30%)</dt><dd data-out="deposit">—</dd></div>
+              <div class="flex justify-between text-ink/70"><dt>Balance later</dt><dd data-out="balance">—</dd></div>
+            </dl>
+            <p class="mt-2 text-xs text-muted">Final amount is calculated by WedPlan when you pay. Bank transfers save a further 5%.</p>
+
+            <button type="submit" form="book-form" class="btn btn-primary btn-lg btn-block mt-6"><i data-lucide="calendar-heart"></i>Request booking</button>
+            <a href="../vendor/detail.html" class="btn btn-ghost btn-block mt-2">Back to vendor</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

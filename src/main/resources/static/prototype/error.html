@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Access denied · WedPlan</title>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../css/theme.css">
+</head>
+<body data-root="" data-layout="public" data-user="none">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-3xl px-4 sm:px-6 py-20 text-center">
+    <div class="relative inline-block">
+      <p class="font-display text-[9rem] sm:text-[12rem] font-semibold leading-none text-forest/10 select-none">403</p>
+      <span class="absolute inset-0 grid place-items-center"><span class="grid place-items-center w-20 h-20 rounded-full bg-brass text-forest-900 shadow-xl shadow-brass/30"><i data-lucide="key-round" class="w-9 h-9"></i></span></span>
+    </div>
+    <h1 class="font-display text-5xl font-semibold text-forest mt-4">This room is for staff only</h1>
+    <p class="mt-4 text-ink/65 max-w-md mx-auto">You don't have permission to open this page. If you think that's a mistake, sign in with a different account.</p>
+    <!-- 404 version: "We couldn't find that page" / "Looks like this page left the party early." -->
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href="index.html" class="btn btn-primary"><i data-lucide="heart"></i>Back to home</a>
+      <a href="couple/login.html" class="btn btn-outline">Sign in</a>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

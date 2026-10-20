@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Garden House · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="vendors" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-8">
+    <nav class="text-sm text-muted flex items-center gap-2" aria-label="Breadcrumb">
+      <a href="../index.html" class="hover:text-forest">Home</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <a href="list.html" class="hover:text-forest">Vendors</a><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      <span class="text-forest font-medium">The Garden House</span>
+    </nav>
+
+    <!-- Gallery -->
+    <div class="mt-6 grid md:grid-cols-[1.4fr_1fr] gap-4">
+      <div class="arch h-[420px] md:h-[520px] img-zoom">
+        <img class="img-cover" src="../../img/reception.jpg" alt="Reception tables set under the glass pavilion">
+      </div>
+      <div class="grid grid-rows-2 gap-4">
+        <div class="rounded-[22px] overflow-hidden img-zoom"><img class="img-cover" src="../../img/florals.jpg" alt="Ceremony flowers on the lawn"></div>
+        <div class="rounded-[22px] overflow-hidden img-zoom relative">
+          <img class="img-cover" src="../../img/catering.jpg" alt="Dinner served in the pavilion">
+          <span class="absolute bottom-4 right-4 badge no-dot bg-paper/90 text-forest"><i data-lucide="sparkles"></i>3 photos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-[1fr_380px] gap-12 items-start">
+      <!-- Details -->
+      <div>
+        <p class="text-xs tracking-[.22em] uppercase text-brass font-bold">Venue · Gampaha · V104</p>
+        <h1 class="font-display text-5xl sm:text-6xl font-semibold text-forest mt-2">The Garden House</h1>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="badge badge-outline no-dot"><i data-lucide="users"></i>Up to 300 guests</span>
+          <span class="badge badge-outline no-dot"><i data-lucide="trees"></i>Garden + pavilion</span>
+          <span class="badge badge-outline no-dot"><i data-lucide="star"></i>4.8 · 64 reviews</span>
+          <span class="badge badge-verified">Verified vendor</span>
+        </div>
+
+        <p class="mt-8 text-lg leading-relaxed text-ink/75">
+          A restored 1920s bungalow set in two acres of old trees. Say your vows on the front lawn under the
+          rain tree, then move into the glass pavilion for dinner while fairy lights come on across the garden.
+          Every package includes tables, chairs, a bridal suite for getting ready and a dedicated venue coordinator
+          on the day.
+        </p>
+
+        <div class="ornament my-10"><span></span></div>
+
+        <h2 class="font-display text-3xl font-semibold text-forest">What's included</h2>
+        <!-- JSP: <c:forEach var="a" items="${vendor.inclusions}"> -->
+        <ul class="mt-6 grid sm:grid-cols-2 gap-4">
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="trees"></i></span><span class="text-sm font-medium">Lawn ceremony setup</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="sofa"></i></span><span class="text-sm font-medium">Bridal getting-ready suite</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="armchair"></i></span><span class="text-sm font-medium">Tables, chairs &amp; linen</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="lightbulb"></i></span><span class="text-sm font-medium">Fairy-light garden</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="car"></i></span><span class="text-sm font-medium">Parking for 80 cars</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="speaker"></i></span><span class="text-sm font-medium">Sound system &amp; dance floor</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="umbrella"></i></span><span class="text-sm font-medium">Rain plan in the pavilion</span></li>
+          <li class="flex items-center gap-3"><span class="stat-icon"><i data-lucide="clipboard-check"></i></span><span class="text-sm font-medium">Venue coordinator</span></li>
+        </ul>
+
+        <div class="ornament my-10"><span></span></div>
+
+        <h2 class="font-display text-3xl font-semibold text-forest">Packages</h2>
+        <div class="mt-6 grid sm:grid-cols-3 gap-4">
+          <div class="card p-5">
+            <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Intimate</p>
+            <p class="font-display text-2xl font-semibold text-forest mt-1">LKR 250,000</p>
+            <p class="text-sm text-muted">+ LKR 3,200 / guest</p>
+            <p class="mt-3 text-sm text-ink/70">Up to 80 guests, lawn ceremony and garden dinner.</p>
+          </div>
+          <div class="card p-5 ring-2 ring-brass/40">
+            <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Classic · most booked</p>
+            <p class="font-display text-2xl font-semibold text-forest mt-1">LKR 400,000</p>
+            <p class="text-sm text-muted">+ LKR 3,800 / guest</p>
+            <p class="mt-3 text-sm text-ink/70">Up to 200 guests, pavilion dinner and dance floor.</p>
+          </div>
+          <div class="card p-5">
+            <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Grand</p>
+            <p class="font-display text-2xl font-semibold text-forest mt-1">LKR 650,000</p>
+            <p class="text-sm text-muted">+ LKR 4,200 / guest</p>
+            <p class="mt-3 text-sm text-ink/70">Up to 300 guests, whole estate, late licence till 1 am.</p>
+          </div>
+        </div>
+
+        <div class="ornament my-10"><span></span></div>
+
+        <h2 class="font-display text-3xl font-semibold text-forest">Good to know</h2>
+        <dl class="mt-6 grid sm:grid-cols-3 gap-6 text-sm">
+          <div><dt class="label">Access from</dt><dd class="font-semibold text-forest">8:00 am on the day</dd></div>
+          <div><dt class="label">Music until</dt><dd class="font-semibold text-forest">11:00 pm (Grand: 1 am)</dd></div>
+          <div><dt class="label">Cancellation</dt><dd class="font-semibold text-forest">Free up to 90 days before</dd></div>
+        </dl>
+
+        <div class="ornament my-10"><span></span></div>
+
+        <div class="flex items-end justify-between gap-4">
+          <h2 class="font-display text-3xl font-semibold text-forest">Couples who married here said</h2>
+          <a href="../review/list.html" class="text-sm font-semibold text-forest hover:text-brass">All reviews →</a>
+        </div>
+        <div class="mt-6 grid sm:grid-cols-2 gap-5">
+          <figure class="card card-pad">
+            <div class="flex items-center justify-between"><span data-stars="5"></span><span class="badge badge-verified">Verified</span></div>
+            <blockquote class="mt-4 text-ink/80 leading-relaxed">"The rain plan saved us when a shower rolled in. Nobody even noticed the move to the pavilion."</blockquote>
+            <figcaption class="mt-4 text-sm font-semibold">Dilini &amp; Ruwan</figcaption>
+          </figure>
+          <figure class="card card-pad">
+            <div class="flex items-center justify-between"><span data-stars="4"></span><span class="badge badge-verified">Verified</span></div>
+            <blockquote class="mt-4 text-ink/80 leading-relaxed">"Gorgeous garden and a lovely coordinator. Parking got tight after 150 guests."</blockquote>
+            <figcaption class="mt-4 text-sm font-semibold">Hasini &amp; Chamath</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- Booking card -->
+      <aside class="lg:sticky lg:top-28" data-calc-scope>
+        <!-- JSP: action="${pageContext.request.contextPath}/bookings/new" method="get" with vendorId -->
+        <form action="../booking/book.html" method="get" data-booking-calc data-default-dates data-discount="0.10"
+              class="card card-pad">
+          <input type="hidden" name="vendorId" value="V104">
+          <p><span class="text-sm text-muted">Your estimate</span><br><span class="font-display text-4xl font-semibold text-forest" data-out="total">—</span></p>
+
+          <div class="mt-6 grid grid-cols-2 border border-line rounded-2xl overflow-hidden">
+            <label class="block p-3 border-r border-line">
+              <span class="label !mb-1">Wedding date</span>
+              <input type="date" name="eventDate" required class="w-full bg-transparent text-sm font-semibold text-forest focus:outline-none">
+            </label>
+            <label class="block p-3">
+              <span class="label !mb-1">Guests</span>
+              <input type="number" name="guests" min="20" max="300" value="150" class="w-full bg-transparent text-sm font-semibold text-forest focus:outline-none">
+            </label>
+            <label class="block p-3 col-span-2 border-t border-line">
+              <span class="label !mb-1">Package</span>
+              <select name="package" class="w-full bg-transparent text-sm font-semibold text-forest focus:outline-none">
+                <option value="intimate" data-price="250000" data-per-guest="3200" data-label="Intimate">Intimate · up to 80</option>
+                <option value="classic" data-price="400000" data-per-guest="3800" data-label="Classic" selected>Classic · up to 200</option>
+                <option value="grand" data-price="650000" data-per-guest="4200" data-label="Grand">Grand · up to 300</option>
+              </select>
+            </label>
+          </div>
+
+          <dl class="mt-6 space-y-3 text-sm">
+            <div class="flex justify-between"><dt class="text-ink/70">Package</dt><dd data-out="base">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ink/70" data-out="per-guest">—</dt><dd data-out="per-guest-total">—</dd></div>
+            <div class="flex justify-between text-brass"><dt class="flex items-center gap-1.5"><i data-lucide="gem" class="w-4 h-4"></i>Plus discount (10%)</dt><dd data-out="discount">—</dd></div>
+            <div class="flex justify-between border-t border-line pt-3 font-semibold text-forest text-base"><dt>Estimated total</dt><dd data-out="total">—</dd></div>
+            <div class="flex justify-between text-ink/70"><dt>30% deposit to confirm</dt><dd data-out="deposit">—</dd></div>
+          </dl>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block mt-6">Request this date</button>
+          <p class="mt-4 text-xs text-muted flex gap-2"><i data-lucide="info" class="w-4 h-4 shrink-0"></i>You won't be charged now. The vendor confirms first, then you pay the deposit. Bank transfers get a further 5% off.</p>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

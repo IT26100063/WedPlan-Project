@@ -1,0 +1,26 @@
+*   [33mdd7f2f0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mUser-and-admin-Management[m[33m)[m Merge remote-tracking branch 'origin/Payment-Management' into User-and-admin-Management
+[31m|[m[32m\[m  
+[31m|[m * [33m55e6b7a[m[33m ([m[1;31morigin/Payment-Management[m[33m)[m css file update
+[31m|[m * [33me22f092[m pom.xml&payment managemnet css
+[31m|[m * [33m341c996[m Payment form+status
+* [32m|[m   [33m47869ab[m Merge remote-tracking branch 'refs/remotes/origin/Vendor-Management' into User-and-admin-Management
+[33m|[m[34m\[m [32m\[m  
+[33m|[m * [32m|[m [33m3408166[m[33m ([m[1;31morigin/Vendor-Management[m[33m)[m Updated WedPLanApplication.java for system integration.
+[33m|[m * [32m|[m [33m1f3306e[m Created VendorServices.java to manage business logic for vendor operations.
+[33m|[m * [32m|[m [33m90347a3[m Added VendorRepository.java to handle database abstraction.
+[33m|[m * [32m|[m [33m2b9f893[m create VendorServices.java JPA entity with Lombok
+[33m|[m * [32m|[m [33m878e1aa[m create VendorModel JPA entity with Lombok
+[33m|[m [32m|[m[32m/[m  
+* [32m|[m [33mcd8b87c[m[33m ([m[1;31morigin/User-and-admin-Management[m[33m)[m Added SecurityConfig for Disable Logins
+* [32m|[m [33m1fcbd9e[m Code for Disable Logins
+* [32m|[m [33m59780e7[m Add Security Config Class
+* [32m|[m [33m374c855[m Added UserAndAdmin Model Class
+* [32m|[m [33md989874[m Added UserAndAdmin Services class
+* [32m|[m [33m5d7744b[m Added UserAndAdmin Service Class
+* [32m|[m [33m79d7898[m Added UserAndAdmin Repository Class
+* [32m|[m [33m853f62e[m Added user management controller
+[32m|[m[32m/[m  
+* [33m487372e[m[33m ([m[1;31morigin/Review-and-Alert-Management[m[33m, [m[1;31morigin/Package-and-Service-Management[m[33m, [m[1;31morigin/Booking-Management[m[33m, [m[1;32mmain[m[33m)[m recreate packages
+* [33m526c814[m setup the database (updated)
+* [33m0b9b056[m setup the database
+* [33m408ae06[m Init

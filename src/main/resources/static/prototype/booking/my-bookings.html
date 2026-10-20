@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My bookings · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="bookings" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-12" data-tab-scope>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <span class="eyebrow">Your wedding team</span>
+        <h1 class="font-display text-5xl sm:text-6xl font-semibold text-forest mt-4">My bookings</h1>
+        <p class="text-muted mt-2">Everything you've booked for Sunday 18 April 2027, in one place.</p>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="upcoming">Upcoming <span class="count">3</span></button>
+        <button class="tab" data-tab="past">Past <span class="count">1</span></button>
+        <button class="tab" data-tab="cancelled">Cancelled <span class="count">1</span></button>
+      </div>
+    </div>
+
+    <!-- JSP: <c:forEach var="b" items="${upcoming}"> -->
+    <div class="mt-10 grid gap-6" data-tab-panel="upcoming">
+      <article class="card overflow-hidden grid md:grid-cols-[260px_1fr]">
+        <div class="h-52 md:h-full"><img class="img-cover" src="../../img/reception.jpg" alt="The Garden House"></div>
+        <div class="p-6 sm:p-7">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Venue · <span class="mono normal-case tracking-normal">BK2041</span></p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">The Garden House</h2>
+            </div>
+            <div class="flex gap-2"><span class="badge badge-confirmed">Confirmed</span><span class="badge badge-deposit">Deposit paid</span></div>
+          </div>
+          <dl class="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+            <div><dt class="label !mb-1">Date</dt><dd class="font-semibold">Sun 18 Apr 2027</dd></div>
+            <div><dt class="label !mb-1">Package</dt><dd class="font-semibold">Classic · 150</dd></div>
+            <div><dt class="label !mb-1">Total</dt><dd class="font-semibold">LKR 873,000</dd></div>
+            <div><dt class="label !mb-1">Balance due</dt><dd class="font-semibold">LKR 611,100 · 4 Apr</dd></div>
+          </dl>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="../vendor/detail.html" class="btn btn-outline btn-sm">View vendor</a>
+            <a href="../payment/invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i>Deposit receipt</a>
+            <button class="btn btn-ghost btn-sm text-clay ml-auto" data-modal-open="cancel-modal" data-booking="BK2041" data-vendor="The Garden House"><i data-lucide="x"></i>Cancel</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden grid md:grid-cols-[260px_1fr]">
+        <div class="h-52 md:h-full"><img class="img-cover" src="../../img/photography.jpg" alt="Golden Hour Studio"></div>
+        <div class="p-6 sm:p-7">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Photography · <span class="mono normal-case tracking-normal">BK2044</span></p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Golden Hour Studio</h2>
+            </div>
+            <span class="badge badge-pending">Awaiting vendor</span>
+          </div>
+          <dl class="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+            <div><dt class="label !mb-1">Date</dt><dd class="font-semibold">Sun 18 Apr 2027</dd></div>
+            <div><dt class="label !mb-1">Package</dt><dd class="font-semibold">Full day + film</dd></div>
+            <div><dt class="label !mb-1">Total</dt><dd class="font-semibold">LKR 198,000</dd></div>
+            <div><dt class="label !mb-1">Deposit</dt><dd class="font-semibold">After confirmation</dd></div>
+          </dl>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="../vendor/detail.html" class="btn btn-outline btn-sm">View vendor</a>
+            <button class="btn btn-ghost btn-sm text-clay ml-auto" data-modal-open="cancel-modal" data-booking="BK2044" data-vendor="Golden Hour Studio"><i data-lucide="x"></i>Withdraw request</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden grid md:grid-cols-[260px_1fr]">
+        <div class="h-52 md:h-full"><img class="img-cover" src="../../img/beauty.jpg" alt="Petal &amp; Pearl Beauty"></div>
+        <div class="p-6 sm:p-7">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Beauty · <span class="mono normal-case tracking-normal">BK2038</span></p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Petal &amp; Pearl Beauty</h2>
+            </div>
+            <div class="flex gap-2"><span class="badge badge-confirmed">Confirmed</span><span class="badge badge-paid">Paid in full</span></div>
+          </div>
+          <dl class="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+            <div><dt class="label !mb-1">Date</dt><dd class="font-semibold">Sun 18 Apr 2027</dd></div>
+            <div><dt class="label !mb-1">Package</dt><dd class="font-semibold">Bride + 4</dd></div>
+            <div><dt class="label !mb-1">Total</dt><dd class="font-semibold">LKR 94,050</dd></div>
+            <div><dt class="label !mb-1">Trial</dt><dd class="font-semibold">Sat 6 Mar 2027</dd></div>
+          </dl>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="../vendor/detail.html" class="btn btn-outline btn-sm">View vendor</a>
+            <a href="../payment/invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i>Invoice</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-10 grid gap-6 hidden" data-tab-panel="past">
+      <article class="card overflow-hidden grid md:grid-cols-[260px_1fr]">
+        <div class="h-52 md:h-full"><img class="img-cover" src="../../img/photography.jpg" alt="Golden Hour Studio engagement shoot"></div>
+        <div class="p-6 sm:p-7">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Photography · <span class="mono normal-case tracking-normal">BK1987</span></p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">Golden Hour Studio · engagement shoot</h2>
+            </div>
+            <div class="flex gap-2"><span class="badge badge-completed">Completed</span><span class="badge badge-paid">Paid</span></div>
+          </div>
+          <p class="mt-4 text-sm text-ink/70">Sun 6 Sep 2026 · Galle Fort · LKR 40,500</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="../review/write.html" class="btn btn-primary btn-sm"><i data-lucide="pencil"></i>Write a review</a>
+            <a href="../payment/invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i>Invoice</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-10 grid gap-6 hidden" data-tab-panel="cancelled">
+      <article class="card overflow-hidden grid md:grid-cols-[260px_1fr] opacity-80">
+        <div class="h-52 md:h-full grayscale"><img class="img-cover" src="../../img/music.jpg" alt="The Evening Set"></div>
+        <div class="p-6 sm:p-7">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold">Music · <span class="mono normal-case tracking-normal">BK2002</span></p>
+              <h2 class="font-display text-3xl font-semibold text-forest mt-1">The Evening Set</h2>
+            </div>
+            <div class="flex gap-2"><span class="badge badge-cancelled">Cancelled</span><span class="badge badge-refunded">Refunded</span></div>
+          </div>
+          <p class="mt-4 text-sm text-ink/70"><span class="line-through">Sun 18 Apr 2027</span> · cancelled 2 Oct 2026, deposit of LKR 25,650 refunded</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Cancel modal -->
+  <div class="modal" id="cancel-modal" role="dialog" aria-modal="true" aria-labelledby="cancel-title">
+    <div class="modal-box">
+      <span class="stat-icon !bg-clay/10 !text-clay"><i data-lucide="calendar-x"></i></span>
+      <h2 id="cancel-title" class="font-display text-3xl font-semibold text-forest mt-4">Cancel <span data-fill="vendor">this booking</span>?</h2>
+      <p class="mt-2 text-sm text-ink/70">Booking <span class="mono" data-fill="booking"></span>. Your date is released for other couples. Cancelling more than 90 days before the wedding refunds any deposit in full.</p>
+      <!-- JSP: <form method="post" action=".../bookings/cancel"> -->
+      <div class="mt-6 flex justify-end gap-2">
+        <button class="btn btn-ghost" data-modal-close>Keep booking</button>
+        <button class="btn btn-danger" data-demo-click="Booking cancelled (prototype)">Yes, cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
