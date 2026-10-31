@@ -63,7 +63,10 @@
       ['stories', 'Couple stories', 'review/list.html'],
       ['how', 'How it works', 'index.html#how'],
     ];
-    if (user === 'couple') links.push(['bookings', 'My bookings', 'booking/my-bookings.html']);
+    if (user === 'couple') {
+      links.push(['bookings', 'My bookings', 'booking/my-bookings.html']);
+      links.push(['payments', 'My payments', 'payment/my-payments.html']);
+    }
 
     const navLinks = links.map(([key, label, href]) =>
       `<a href="${url(href)}" class="nav-link${isActive(key)}">${label}</a>`).join('');
@@ -148,11 +151,15 @@
                 <li><a class="hover:text-ivory" href="${url('couple/login.html')}">Sign in</a></li>
                 <li><a class="hover:text-ivory" href="${url('couple/register.html')}">Create account</a></li>
                 <li><a class="hover:text-ivory" href="${url('booking/my-bookings.html')}">My bookings</a></li>
+                <li><a class="hover:text-ivory" href="${url('payment/checkout.html')}">Pay deposit / Checkout</a></li>
+                <li><a class="hover:text-ivory" href="${url('payment/my-payments.html')}">My payments &amp; receipts</a></li>
               </ul>
             </div>
             <div class="md:col-span-3">
               <h4 class="text-xs tracking-[.22em] uppercase text-brass font-bold mb-4">Planner desk</h4>
               <ul class="space-y-2.5 text-sm text-ivory/70">
+                <li><a class="hover:text-ivory" href="${url('admin/dashboard.html')}">Staff Dashboard</a></li>
+                <li><a class="hover:text-ivory" href="${url('payment/list.html')}">Payment Management</a></li>
                 <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-brass"></i>+94 11 255 0198</li>
                 <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-brass"></i>hello@wedplan.lk</li>
                 <li class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-brass"></i>Mon – Sat, 9 am – 6 pm</li>

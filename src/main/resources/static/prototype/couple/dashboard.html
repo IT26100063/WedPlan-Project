@@ -95,8 +95,19 @@
           <h2 class="font-display text-2xl font-semibold text-forest">Coming up</h2>
           <ul class="mt-4 space-y-4 text-sm">
             <li class="flex items-center gap-3"><span class="stat-icon !w-9 !h-9"><i data-lucide="sparkles"></i></span><div class="flex-1"><p class="font-semibold">Makeup trial</p><p class="text-xs text-muted">Sat 6 Mar 2027 · Kandy</p></div></li>
-            <li class="flex items-center gap-3"><span class="stat-icon !w-9 !h-9"><i data-lucide="wallet"></i></span><div class="flex-1"><p class="font-semibold">Venue balance</p><p class="text-xs text-muted">Due 4 Apr 2027</p></div><span class="font-semibold">LKR 611,100</span></li>
+            <li class="flex items-center gap-3">
+              <span class="stat-icon !w-9 !h-9"><i data-lucide="wallet"></i></span>
+              <div class="flex-1">
+                <p class="font-semibold">Venue balance</p>
+                <p class="text-xs text-muted">Due 4 Apr 2027 · LKR 611,100</p>
+              </div>
+              <a href="../payment/checkout.html?booking=BK2041&type=BALANCE" class="btn btn-primary btn-sm"><i data-lucide="credit-card"></i>Pay</a>
+            </li>
           </ul>
+          <div class="mt-4 pt-3 border-t border-line flex justify-between text-xs">
+            <a href="../payment/my-payments.html" class="font-semibold text-forest hover:text-brass flex items-center gap-1"><i data-lucide="receipt" class="w-3.5 h-3.5"></i>Payment history &amp; receipts →</a>
+            <a href="../payment/checkout.html" class="text-muted hover:text-forest">Checkout portal</a>
+          </div>
         </section>
       </div>
     </div>
