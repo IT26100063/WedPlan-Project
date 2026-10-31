@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Checkout · WedPlan</title>
+  <link rel="icon" th:href="@{/img/favicon.svg}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script th:src="@{/js/tailwind.config.js}"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+<body class="bg-paper text-ink font-sans antialiased min-h-screen">
+
+  <nav class="border-b border-line bg-paper/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a th:href="@{/prototype/booking/my-bookings.html}" class="flex items-center gap-2">
+        <img th:src="@{/img/favicon.svg}" class="w-8 h-8" alt="WedPlan">
+        <span class="font-display text-2xl font-semibold text-forest tracking-tight">WedPlan<span class="text-brass">.</span></span>
+      </a>
+      <div class="flex items-center gap-2 text-xs font-semibold text-muted">
+        <i data-lucide="shield-check" class="w-4 h-4 text-sage"></i>
+        <span>256-bit SSL Secure Checkout</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Stepper -->
+    <div class="steps max-w-xl mx-auto mb-10 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-sage text-sm font-semibold">
+        <span class="w-7 h-7 rounded-full bg-sage/15 flex items-center justify-center text-sage"><i data-lucide="check" class="w-4 h-4"></i></span>
+        <span>Choose Vendor</span>
+      </div>
+      <span class="flex-1 h-px bg-sage/30 mx-3"></span>
+      <div class="flex items-center gap-2 text-sage text-sm font-semibold">
+        <span class="w-7 h-7 rounded-full bg-sage/15 flex items-center justify-center text-sage"><i data-lucide="check" class="w-4 h-4"></i></span>
+        <span>Reservation</span>
+      </div>
+      <span class="flex-1 h-px bg-brass mx-3"></span>
+      <div class="flex items-center gap-2 text-forest text-sm font-bold">
+        <span class="w-7 h-7 rounded-full bg-brass text-white flex items-center justify-center text-xs">3</span>
+        <span>Payment</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <span class="text-xs tracking-[.2em] uppercase text-brass font-bold">Step 3 of 3</span>
+        <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-2">Complete Your Payment</h1>
+        <p class="text-ink/65 mt-1">Confirm your booking with a 30% deposit or settle in full with exclusive member savings.</p>
+      </div>
+    </div>
+
+    <form th:object="" th:action="@{/payments/checkout}" method="post" id="checkout-form" class="mt-8 grid lg:grid-cols-[1fr_380px] gap-8 items-start">
+      <div class="space-y-6">
+
+        <!-- Booking & Couple Info Card -->
+        <section class="card p-6 sm:p-8">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-brass/10 text-brass text-sm font-bold flex items-center justify-center">1</span>
+            Booking Details
+          </h2>
+
+          <div class="mt-6 grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="bookingReference">Booking Reference</label>
+              <input id="bookingReference" class="input w-full mono font-bold" th:field="*{bookingReference}" required readonly>
+            </div>
+            <div>
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="vendorName">Vendor</label>
+              <input id="vendorName" class="input w-full" th:field="*{vendorName}" placeholder="e.g. The Garden House">
+            </div>
+            <div>
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="customerName">Couple Name <span class="text-clay">*</span></label>
+              <input id="customerName" class="input w-full" th:field="*{customerName}" required>
+            </div>
+            <div>
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="customerEmail">Couple Email <span class="text-clay">*</span></label>
+              <input id="customerEmail" type="email" class="input w-full" th:field="*{customerEmail}" required>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="packageName">Package Selection</label>
+              <input id="packageName" class="input w-full" th:field="*{packageName}" placeholder="e.g. Classic Lawn Ceremony & Banquet">
+            </div>
+          </div>
+        </section>
+
+        <!-- Payment Option: Deposit vs Balance vs Full -->
+        <section class="card p-6 sm:p-8">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-brass/10 text-brass text-sm font-bold flex items-center justify-center">2</span>
+            Payment Installment
+          </h2>
+          <p class="text-xs text-muted mt-1">Select whether you are placing your initial reservation deposit or settling your account.</p>
+
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <label class="p-4 rounded-xl border-2 border-brass bg-brass/5 cursor-pointer block text-center transition-all has-[:checked]:border-forest has-[:checked]:bg-sand/30">
+              <input type="radio" name="paymentType" value="DEPOSIT" th:field="*{paymentType}" class="sr-only" checked onchange="updateCalculations()">
+              <span class="block font-display text-xl font-bold text-forest">30% Deposit</span>
+              <span class="block text-xs text-muted mt-1">Locks your wedding date</span>
+            </label>
+            <label class="p-4 rounded-xl border border-line hover:border-brass/50 bg-paper cursor-pointer block text-center transition-all has-[:checked]:border-forest has-[:checked]:bg-sand/30">
+              <input type="radio" name="paymentType" value="BALANCE" th:field="*{paymentType}" class="sr-only" onchange="updateCalculations()">
+              <span class="block font-display text-xl font-bold text-forest">70% Balance</span>
+              <span class="block text-xs text-muted mt-1">Due before ceremony</span>
+            </label>
+            <label class="p-4 rounded-xl border border-line hover:border-brass/50 bg-paper cursor-pointer block text-center transition-all has-[:checked]:border-forest has-[:checked]:bg-sand/30">
+              <input type="radio" name="paymentType" value="FULL" th:field="*{paymentType}" class="sr-only" onchange="updateCalculations()">
+              <span class="block font-display text-xl font-bold text-forest">100% Full</span>
+              <span class="block text-xs text-muted mt-1">Complete payment</span>
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-2 p-3 rounded-xl bg-brass/10 border border-brass/20 text-xs text-forest">
+            <input type="checkbox" id="isPlusMember" th:field="*{plusMember}" class="rounded text-forest" onchange="updateCalculations()">
+            <label for="isPlusMember" class="font-semibold cursor-pointer">WedPlan Plus Member (10% VIP wedding discount applies)</label>
+          </div>
+        </section>
+
+        <!-- Payment Method: Card vs Bank Transfer -->
+        <section class="card p-6 sm:p-8">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-brass/10 text-brass text-sm font-bold flex items-center justify-center">3</span>
+            Select Payment Method
+          </h2>
+
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <label class="p-4 rounded-xl border-2 border-brass bg-sand/20 cursor-pointer flex items-center gap-3 has-[:checked]:border-forest">
+              <input type="radio" name="paymentMethod" value="CARD" th:field="*{paymentMethod}" checked onchange="toggleMethod('CARD'); updateCalculations()">
+              <div>
+                <span class="font-semibold text-forest block">Credit / Debit Card</span>
+                <span class="text-xs text-muted">Visa, Mastercard, American Express</span>
+              </div>
+            </label>
+            <label class="p-4 rounded-xl border border-line bg-paper cursor-pointer flex items-center gap-3 has-[:checked]:border-forest">
+              <input type="radio" name="paymentMethod" value="BANK_TRANSFER" th:field="*{paymentMethod}" onchange="toggleMethod('BANK'); updateCalculations()">
+              <div>
+                <span class="font-semibold text-forest block">Bank Transfer <span class="text-xs text-sage font-bold ml-1">Save 5%</span></span>
+                <span class="text-xs text-muted">Direct transfer to WedPlan BOC / ComBank</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Card Input Fields -->
+          <div id="card-fields" class="mt-6 space-y-4 pt-4 border-t border-line">
+            <div>
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="cardholderName">Cardholder Full Name</label>
+              <input id="cardholderName" class="input w-full" th:field="*{cardholderName}" placeholder="e.g. NETHMI PERERA">
+            </div>
+            <div>
+              <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="cardNumber">Card Number</label>
+              <div class="relative">
+                <input id="cardNumber" class="input w-full font-mono pl-10" th:field="*{cardNumber}" maxlength="19" placeholder="4242 •••• •••• 4242" oninput="formatCard(this)">
+                <i data-lucide="credit-card" class="w-4 h-4 text-muted absolute left-3 top-3.5"></i>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="cardExpiry">Expiration MM/YY</label>
+                <input id="cardExpiry" class="input w-full font-mono" maxlength="5" th:field="*{cardExpiry}" placeholder="12/28">
+              </div>
+              <div>
+                <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="cardCvv">CVV Code</label>
+                <input id="cardCvv" type="password" maxlength="4" class="input w-full font-mono" th:field="*{cardCvv}" placeholder="•••">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bank Transfer Details -->
+          <div id="bank-fields" class="mt-6 space-y-4 pt-4 border-t border-line hidden">
+            <div class="p-4 rounded-xl bg-sand/40 border border-line text-xs space-y-2">
+              <p class="font-bold text-forest uppercase tracking-wider">WedPlan Official Accounts:</p>
+              <div class="grid sm:grid-cols-2 gap-2 text-ink/80">
+                <p><strong>Bank:</strong> Commercial Bank (Kollupitiya Branch)<br><strong>Account:</strong> 1000 8920 3841<br><strong>Name:</strong> WedPlan Events (Pvt) Ltd</p>
+                <p><strong>Bank:</strong> Bank of Ceylon (Corporate Branch)<br><strong>Account:</strong> 0082 1928 4710<br><strong>Name:</strong> WedPlan Events (Pvt) Ltd</p>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="bankName">Your Remitting Bank</label>
+                <select id="bankName" class="select w-full" th:field="*{bankName}">
+                  <option value="Commercial Bank">Commercial Bank</option>
+                  <option value="Bank of Ceylon">Bank of Ceylon</option>
+                  <option value="Sampath Bank">Sampath Bank</option>
+                  <option value="Hatton National Bank">Hatton National Bank</option>
+                  <option value="Nations Trust Bank">Nations Trust Bank</option>
+                </select>
+              </div>
+              <div>
+                <label class="label block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1" for="bankReference">Bank Transfer Reference <span class="text-clay">*</span></label>
+                <input id="bankReference" class="input w-full mono" th:field="*{bankReference}" placeholder="e.g. COMB-20261031-901">
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Live Calculation Aside -->
+      <aside class="card p-6 sm:p-7 sticky top-24 space-y-5">
+        <p class="text-xs uppercase tracking-widest text-muted font-bold">Payment Summary</p>
+
+        <dl class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <dt class="text-ink/70">Booking Total</dt>
+            <dd class="font-medium mono" id="out-base">LKR 873,000</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-ink/70" id="out-type-label">Portion Due (30% Deposit)</dt>
+            <dd class="font-medium mono" id="out-installment">LKR 261,900</dd>
+          </div>
+          <div class="flex justify-between text-brass" id="row-plus">
+            <dt>Plus Discount (10%)</dt>
+            <dd class="font-medium mono" id="out-plus">- LKR 26,190</dd>
+          </div>
+          <div class="flex justify-between text-sage hidden" id="row-bank">
+            <dt>Bank Discount (5%)</dt>
+            <dd class="font-medium mono" id="out-bank">- LKR 11,785</dd>
+          </div>
+          <div class="border-t border-line pt-3 flex justify-between items-baseline">
+            <dt class="font-bold text-forest text-base">Net Total to Pay</dt>
+            <dd class="font-display text-3xl font-bold text-forest" id="out-total">LKR 235,710</dd>
+          </div>
+        </dl>
+
+        <input type="hidden" id="baseAmount" th:field="*{baseAmount}">
+
+        <button type="submit" class="btn btn-primary btn-lg w-full mt-6 justify-center">
+          <i data-lucide="lock" class="w-4 h-4"></i>Confirm &amp; Pay
+        </button>
+
+        <p class="text-xs text-muted text-center leading-relaxed">
+          Your reservation is immediately locked in our calendar. You will receive an instant digital invoice.
+        </p>
+      </aside>
+    </form>
+  </main>
+
+  <script>
+    function toggleMethod(type) {
+      const cardFields = document.getElementById('card-fields');
+      const bankFields = document.getElementById('bank-fields');
+      const rowBank = document.getElementById('row-bank');
+      if (type === 'BANK') {
+        cardFields.classList.add('hidden');
+        bankFields.classList.remove('hidden');
+        rowBank.classList.remove('hidden');
+      } else {
+        cardFields.classList.remove('hidden');
+        bankFields.classList.add('hidden');
+        rowBank.classList.add('hidden');
+      }
+    }
+
+    function formatCard(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      let parts = [];
+      for (let i = 0; i < v.length; i += 4) {
+        parts.push(v.substring(i, i + 4));
+      }
+      input.value = parts.join(' ');
+    }
+
+    function updateCalculations() {
+      const base = parseFloat(document.getElementById('baseAmount').value || '873000');
+      const typeRadios = document.getElementsByName('paymentType');
+      let type = 'DEPOSIT';
+      for (let r of typeRadios) { if (r.checked) type = r.value; }
+
+      let pct = 30;
+      let typeLabel = 'Portion Due (30% Deposit)';
+      if (type === 'BALANCE') { pct = 70; typeLabel = 'Portion Due (70% Balance)'; }
+      if (type === 'FULL') { pct = 100; typeLabel = 'Portion Due (100% Full)'; }
+      document.getElementById('out-type-label').textContent = typeLabel;
+
+      const installment = base * (pct / 100);
+      document.getElementById('out-installment').textContent = 'LKR ' + Math.round(installment).toLocaleString();
+
+      const isPlus = document.getElementById('isPlusMember').checked;
+      const rowPlus = document.getElementById('row-plus');
+      let plusDisc = 0;
+      if (isPlus) {
+        rowPlus.classList.remove('hidden');
+        plusDisc = installment * 0.10;
+        document.getElementById('out-plus').textContent = '- LKR ' + Math.round(plusDisc).toLocaleString();
+      } else {
+        rowPlus.classList.add('hidden');
+      }
+
+      const methodRadios = document.getElementsByName('paymentMethod');
+      let isBank = false;
+      for (let m of methodRadios) { if (m.checked && m.value === 'BANK_TRANSFER') isBank = true; }
+
+      let bankDisc = 0;
+      const rowBank = document.getElementById('row-bank');
+      if (isBank) {
+        rowBank.classList.remove('hidden');
+        bankDisc = (installment - plusDisc) * 0.05;
+        document.getElementById('out-bank').textContent = '- LKR ' + Math.round(bankDisc).toLocaleString();
+      } else {
+        rowBank.classList.add('hidden');
+      }
+
+      const total = installment - plusDisc - bankDisc;
+      document.getElementById('out-total').textContent = 'LKR ' + Math.round(total).toLocaleString();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+      updateCalculations();
+    });
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Payments · WedPlan staff</title>
+  <title>Payments · WedPlan Staff</title>
   <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,91 +22,67 @@
         <div>
           <span class="eyebrow">Planner desk</span>
           <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Payments</h1>
-          <p class="text-muted mt-2">Deposits, balances and refunds for every booking.</p>
+          <p class="text-muted mt-2">Deposits, balances, bank transfer verifications, and refunds.</p>
         </div>
-        <a href="record.html" class="btn btn-primary"><i data-lucide="plus"></i>Record payment</a>
+        <div class="flex items-center gap-2">
+          <a href="/api/payments/export/csv" class="btn btn-outline" download><i data-lucide="download"></i>Export CSV</a>
+          <a href="checkout.html" class="btn btn-outline"><i data-lucide="shopping-cart"></i>User Checkout</a>
+          <a href="record.html" class="btn btn-primary"><i data-lucide="plus"></i>Record payment</a>
+        </div>
       </div>
 
       <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="stat"><p class="stat-label">Collected · October</p><p class="stat-value mt-2">1.24M</p><p class="text-xs text-muted">LKR, 6 payments</p></div>
-        <div class="stat"><p class="stat-label">Deposits due</p><p class="stat-value mt-2">2</p><p class="text-xs text-muted">est. LKR 486,300</p></div>
-        <div class="stat"><p class="stat-label">Balances due</p><p class="stat-value mt-2">2</p><p class="text-xs text-muted">within 30 days</p></div>
-        <div class="stat"><p class="stat-label">Refunded</p><p class="stat-value mt-2">1</p><p class="text-xs text-muted">LKR 25,650</p></div>
+        <div class="stat"><p class="stat-label">Total Revenue</p><p class="stat-value mt-2" id="kpi-collected">1.24M</p><p class="text-xs text-muted">LKR, completed</p></div>
+        <div class="stat"><p class="stat-label">Pending Bank Approvals</p><p class="stat-value mt-2 text-brass" id="kpi-pending">2</p><p class="text-xs text-muted">Awaiting staff check</p></div>
+        <div class="stat"><p class="stat-label">Refunded</p><p class="stat-value mt-2 text-clay" id="kpi-refunded">1</p><p class="text-xs text-muted">LKR 25,650</p></div>
+        <div class="stat"><p class="stat-label">All Payments</p><p class="stat-value mt-2" id="kpi-total">6</p><p class="text-xs text-muted">Across all bookings</p></div>
       </div>
 
       <div class="card mt-8">
-        <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto] border-b border-line">
-          <div class="input-icon"><i data-lucide="search"></i><input class="input !py-2.5" placeholder="Search payment, booking or couple…" data-filter-target="#pay-table"></div>
-          <select class="select !py-2.5 md:w-44" data-filter-target="#pay-table" data-filter-attr="method">
-            <option value="">Any method</option><option value="card">Card</option><option value="bank">Bank transfer</option>
+        <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto_auto] border-b border-line">
+          <div class="input-icon"><i data-lucide="search"></i><input class="input !py-2.5" placeholder="Search payment, booking or couple…" data-filter-target="#pay-table" id="proto-pay-search"></div>
+          <select class="select !py-2.5 md:w-44" data-filter-target="#pay-table" data-filter-attr="method" id="proto-pay-method-filter">
+            <option value="">Any method</option>
+            <option value="CARD">Card</option>
+            <option value="BANK_TRANSFER">Bank transfer</option>
+            <option value="CASH">Cash</option>
           </select>
-          <select class="select !py-2.5 md:w-44" data-filter-target="#pay-table" data-filter-attr="status">
-            <option value="">Any status</option><option value="paid">Paid</option><option value="refunded">Refunded</option>
+          <select class="select !py-2.5 md:w-44" data-filter-target="#pay-table" data-filter-attr="status" id="proto-pay-status-filter">
+            <option value="">Any status</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="PENDING">Pending</option>
+            <option value="REFUNDED">Refunded</option>
           </select>
+          <button class="btn btn-outline !py-2.5" onclick="location.href='/api/payments/export/csv'"><i data-lucide="file-spreadsheet"></i>CSV</button>
         </div>
         <div class="table-wrap">
           <table class="table" id="pay-table">
-            <thead><tr><th>Payment</th><th>Booking</th><th>Couple</th><th>Type</th><th>Method</th><th>Date</th><th class="text-right">Amount</th><th>Status</th><th></th></tr></thead>
+            <thead>
+              <tr>
+                <th>Receipt / ID</th>
+                <th>Booking</th>
+                <th>Couple</th>
+                <th>Type</th>
+                <th>Method</th>
+                <th>Date</th>
+                <th class="text-right">Amount</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
             <tbody>
-              <!-- JSP: <c:forEach var="p" items="${payments}"> -->
-              <tr data-item data-method="card" data-status="paid">
-                <td class="mono">P3018</td><td class="mono">BK2041</td>
-                <td><div class="flex items-center gap-2"><span class="avatar avatar-brass">NK</span><span class="font-semibold">Nethmi &amp; Kavin</span></div></td>
-                <td>Deposit</td><td><span class="inline-flex items-center gap-1.5"><i data-lucide="credit-card" class="w-4 h-4 text-brass"></i>Card</span></td>
-                <td>16 Oct 2026</td><td class="text-right font-semibold">LKR 261,900</td>
-                <td><span class="badge badge-paid">Paid</span></td>
-                <td class="text-right"><a href="invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i></a></td>
-              </tr>
-              <tr data-item data-method="bank" data-status="paid">
-                <td class="mono">P3017</td><td class="mono">BK2038</td>
-                <td><div class="flex items-center gap-2"><span class="avatar avatar-brass">NK</span><span class="font-semibold">Nethmi &amp; Kavin</span></div></td>
-                <td>Full</td><td><span class="inline-flex items-center gap-1.5"><i data-lucide="landmark" class="w-4 h-4 text-brass"></i>Bank</span></td>
-                <td>12 Oct 2026</td><td class="text-right font-semibold">LKR 94,050</td>
-                <td><span class="badge badge-paid">Paid</span></td>
-                <td class="text-right"><a href="invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i></a></td>
-              </tr>
-              <tr data-item data-method="bank" data-status="paid">
-                <td class="mono">P3015</td><td class="mono">BK2030</td>
-                <td><div class="flex items-center gap-2"><span class="avatar">MT</span><span class="font-semibold">Maya &amp; Tharindu</span></div></td>
-                <td>Deposit</td><td><span class="inline-flex items-center gap-1.5"><i data-lucide="landmark" class="w-4 h-4 text-brass"></i>Bank</span></td>
-                <td>8 Oct 2026</td><td class="text-right font-semibold">LKR 205,200</td>
-                <td><span class="badge badge-paid">Paid</span></td>
-                <td class="text-right"><a href="invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i></a></td>
-              </tr>
-              <tr data-item data-method="card" data-status="paid">
-                <td class="mono">P3012</td><td class="mono">BK2027</td>
-                <td><div class="flex items-center gap-2"><span class="avatar">DR</span><span class="font-semibold">Dilini &amp; Ruwan</span></div></td>
-                <td>Balance</td><td><span class="inline-flex items-center gap-1.5"><i data-lucide="credit-card" class="w-4 h-4 text-brass"></i>Card</span></td>
-                <td>3 Oct 2026</td><td class="text-right font-semibold">LKR 588,000</td>
-                <td><span class="badge badge-paid">Paid</span></td>
-                <td class="text-right"><a href="invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i></a></td>
-              </tr>
-              <tr data-item data-method="card" data-status="refunded" class="text-ink/60">
-                <td class="mono">P3006</td><td class="mono">BK2002</td>
-                <td><div class="flex items-center gap-2"><span class="avatar avatar-brass">NK</span><span class="font-semibold">Nethmi &amp; Kavin</span></div></td>
-                <td>Deposit</td><td><span class="inline-flex items-center gap-1.5"><i data-lucide="credit-card" class="w-4 h-4 text-brass"></i>Card</span></td>
-                <td>21 Sep 2026</td><td class="text-right font-semibold line-through">LKR 25,650</td>
-                <td><span class="badge badge-refunded">Refunded</span></td>
-                <td class="text-right"><a href="invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i></a></td>
-              </tr>
-              <tr data-item data-method="card" data-status="paid" class="text-ink/60">
-                <td class="mono">P2991</td><td class="mono">BK1987</td>
-                <td><div class="flex items-center gap-2"><span class="avatar avatar-brass">NK</span><span class="font-semibold">Nethmi &amp; Kavin</span></div></td>
-                <td>Full</td><td><span class="inline-flex items-center gap-1.5"><i data-lucide="credit-card" class="w-4 h-4 text-brass"></i>Card</span></td>
-                <td>1 Sep 2026</td><td class="text-right font-semibold">LKR 40,500</td>
-                <td><span class="badge badge-paid">Paid</span></td>
-                <td class="text-right"><a href="invoice.html" class="btn btn-ghost btn-sm"><i data-lucide="receipt"></i></a></td>
-              </tr>
+              <!-- Live Bridge injects MySQL payment records here -->
             </tbody>
           </table>
         </div>
         <div class="hidden p-10 text-center text-muted" data-empty-for="#pay-table">No payments match these filters.</div>
-        <div class="px-5 py-4 border-t border-line text-sm text-muted">Showing <span data-count-for="#pay-table" class="font-semibold text-forest">6</span> payments</div>
+        <div class="px-5 py-4 border-t border-line text-sm text-muted">Showing live records from MySQL database.</div>
       </div>
     </main>
   </div>
 
   <script src="../../js/layout.js"></script>
   <script src="../../js/app.js"></script>
+  <script src="../../js/api-bridge.js"></script>
 </body>
 </html>

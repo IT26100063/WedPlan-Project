@@ -415,6 +415,15 @@
     initForms();
     initReveal();
     icons();
+
+    // Ensure API Bridge is loaded across all pages
+    if (!window.__wedplan_bridge_initialized && !document.querySelector('script[data-bridge]')) {
+      const bridgeScript = document.createElement('script');
+      bridgeScript.setAttribute('data-bridge', 'true');
+      const root = document.body.dataset.root || '';
+      bridgeScript.src = (root ? root : '') + '../js/api-bridge.js';
+      document.body.appendChild(bridgeScript);
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Checkout · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="bookings" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-10">
+    <div class="steps max-w-xl mx-auto mb-10">
+      <div class="step done"><span class="step-dot"><i data-lucide="check"></i></span>Choose vendor</div>
+      <span class="step-line"></span>
+      <div class="step done"><span class="step-dot"><i data-lucide="check"></i></span>Reservation</div>
+      <span class="step-line"></span>
+      <div class="step current"><span class="step-dot">3</span>Secure Payment</div>
+    </div>
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <span class="eyebrow">Checkout portal</span>
+        <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-2">Wedding Payment Process</h1>
+        <p class="text-muted mt-1">Complete your deposit or balance payment with instant receipt generation.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="my-payments.html" class="btn btn-outline btn-sm"><i data-lucide="history"></i>My Payment History</a>
+      </div>
+    </div>
+
+    <form id="user-checkout-form" class="mt-8 grid xl:grid-cols-[1fr_400px] gap-8 items-start">
+      <div class="space-y-6">
+
+        <!-- Booking Details -->
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3">
+            <span class="sec-num text-xl">i.</span>Booking Details
+          </h2>
+
+          <div class="mt-5 space-y-4">
+            <div>
+              <label class="label" for="checkoutBookingSelect">Select Your Wedding Booking</label>
+              <select id="checkoutBookingSelect" class="select" required>
+                <option value="BK2041" data-amount="873000" data-plus="true" data-couple="Nethmi & Kavin" data-email="nethmi@example.com" data-vendor="The Garden House" data-package="Classic Venue Package">
+                  BK2041 · Nethmi & Kavin · The Garden House (LKR 873,000)
+                </option>
+                <option value="BK2044" data-amount="198000" data-plus="false" data-couple="Nethmi & Kavin" data-email="nethmi@example.com" data-vendor="Golden Hour Studio" data-package="Full Day + Film">
+                  BK2044 · Nethmi & Kavin · Golden Hour Studio (LKR 198,000)
+                </option>
+                <option value="BK2039" data-amount="224400" data-plus="false" data-couple="Sarah & Ashan" data-email="sarah@example.com" data-vendor="Table for Two Catering" data-package="Gourmet Buffet">
+                  BK2039 · Sarah & Ashan · Table for Two Catering (LKR 224,400)
+                </option>
+              </select>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="label" for="customerName">Couple Name</label>
+                <input id="customerName" class="input" value="Nethmi & Kavin" required>
+              </div>
+              <div>
+                <label class="label" for="customerEmail">Couple Email</label>
+                <input id="customerEmail" type="email" class="input" value="nethmi@example.com" required>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Payment Installment Type -->
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3">
+            <span class="sec-num text-xl">ii.</span>Installment Option
+          </h2>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <label class="choice">
+              <input type="radio" name="paymentType" value="DEPOSIT" checked>
+              <span class="choice-body text-center p-4">
+                <span class="font-display text-xl font-bold text-forest block">30% Deposit</span>
+                <span class="text-xs text-muted block mt-1">Locks date in calendar</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="paymentType" value="BALANCE">
+              <span class="choice-body text-center p-4">
+                <span class="font-display text-xl font-bold text-forest block">70% Balance</span>
+                <span class="text-xs text-muted block mt-1">Due before wedding</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="paymentType" value="FULL">
+              <span class="choice-body text-center p-4">
+                <span class="font-display text-xl font-bold text-forest block">100% Full</span>
+                <span class="text-xs text-muted block mt-1">Complete payment</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center gap-2.5 p-3 rounded-2xl bg-brass/10 border border-brass/20 text-xs">
+            <input type="checkbox" id="plusMemberCheck" class="rounded text-brass" checked>
+            <label for="plusMemberCheck" class="font-semibold text-forest cursor-pointer">
+              WedPlan Plus Member (10% VIP wedding discount applies)
+            </label>
+          </div>
+        </section>
+
+        <!-- Payment Method -->
+        <section class="card card-pad">
+          <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3">
+            <span class="sec-num text-xl">iii.</span>Choose Method
+          </h2>
+          <div class="mt-5 grid sm:grid-cols-2 gap-3">
+            <label class="choice">
+              <input type="radio" name="checkoutMethod" value="CARD" checked>
+              <span class="choice-body flex items-center gap-4">
+                <span class="stat-icon"><i data-lucide="credit-card"></i></span>
+                <span>
+                  <span class="font-semibold text-forest block">Credit / Debit Card</span>
+                  <span class="text-xs text-muted">Instant confirmation (Visa, MC)</span>
+                </span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="checkoutMethod" value="BANK_TRANSFER">
+              <span class="choice-body flex items-center gap-4">
+                <span class="stat-icon"><i data-lucide="landmark"></i></span>
+                <span>
+                  <span class="font-semibold text-forest block">Bank Transfer</span>
+                  <span class="text-xs text-sage font-bold">Extra 5% direct savings</span>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Card Panel -->
+          <div id="proto-card-panel" class="mt-6 space-y-4 pt-4 border-t border-line">
+            <div>
+              <label class="label" for="protoCardholder">Cardholder Name</label>
+              <input id="protoCardholder" class="input" placeholder="NETHMI PERERA" value="NETHMI PERERA">
+            </div>
+            <div>
+              <label class="label" for="protoCardNumber">Card Number</label>
+              <div class="relative">
+                <input id="protoCardNumber" class="input font-mono pl-10" maxlength="19" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242">
+                <i data-lucide="credit-card" class="w-4 h-4 text-muted absolute left-3 top-3.5"></i>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="label" for="protoExpiry">Expiry MM/YY</label>
+                <input id="protoExpiry" class="input font-mono" maxlength="5" placeholder="12/28" value="12/28">
+              </div>
+              <div>
+                <label class="label" for="protoCvv">CVV Code</label>
+                <input id="protoCvv" type="password" maxlength="4" class="input font-mono" placeholder="•••" value="888">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bank Panel -->
+          <div id="proto-bank-panel" class="mt-6 space-y-4 pt-4 border-t border-line hidden">
+            <div class="p-4 rounded-2xl bg-sand/40 border border-line text-xs space-y-2">
+              <p class="font-bold text-forest uppercase tracking-wider">WedPlan Official Bank Accounts:</p>
+              <div class="grid sm:grid-cols-2 gap-2 text-ink/80">
+                <p><strong>Commercial Bank:</strong> 1000 8920 3841<br>Kollupitiya Branch · WedPlan Events</p>
+                <p><strong>Bank of Ceylon:</strong> 0082 1928 4710<br>Corporate Branch · WedPlan Events</p>
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="label" for="protoBankSelect">Remitting Bank</label>
+                <select id="protoBankSelect" class="select">
+                  <option value="Commercial Bank">Commercial Bank</option>
+                  <option value="Bank of Ceylon">Bank of Ceylon</option>
+                  <option value="Sampath Bank">Sampath Bank</option>
+                  <option value="HNB">Hatton National Bank</option>
+                </select>
+              </div>
+              <div>
+                <label class="label" for="protoBankRef">Transfer Reference</label>
+                <input id="protoBankRef" class="input mono" placeholder="COMB-20261031-118" value="COMB-20261031-118">
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Live Breakdown Aside -->
+      <aside class="card card-pad xl:sticky xl:top-24 space-y-5">
+        <p class="label">Payment Breakdown</p>
+        <dl class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <dt class="text-ink/70">Booking Total</dt>
+            <dd id="breakdown-base" class="font-medium mono">LKR 873,000</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt id="breakdown-portion-label" class="text-ink/70">Portion (30% Deposit)</dt>
+            <dd id="breakdown-portion" class="font-medium mono">LKR 261,900</dd>
+          </div>
+          <div id="breakdown-plus-row" class="flex justify-between text-brass">
+            <dt>Plus Discount (10%)</dt>
+            <dd id="breakdown-plus" class="font-medium mono">- LKR 26,190</dd>
+          </div>
+          <div id="breakdown-bank-row" class="flex justify-between text-sage hidden">
+            <dt>Bank Discount (5%)</dt>
+            <dd id="breakdown-bank" class="font-medium mono">- LKR 11,785</dd>
+          </div>
+          <div class="border-t border-line pt-3 flex justify-between items-baseline">
+            <dt class="font-bold text-forest text-base">To Pay Today</dt>
+            <dd id="breakdown-total" class="font-display text-3xl font-bold text-forest">LKR 235,710</dd>
+          </div>
+        </dl>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block mt-6">
+          <i data-lucide="lock" class="w-4 h-4"></i>Complete Payment
+        </button>
+
+        <p class="text-xs text-muted text-center leading-relaxed">
+          Discounts automatically calculate and stack. An official receipt will be generated immediately.
+        </p>
+      </aside>
+    </form>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/api-bridge.js"></script>
+</body>
+</html>

@@ -17,7 +17,20 @@
   const body = document.body;
   const root = body.dataset.root || '';
   const active = body.dataset.active || '';
-  const user = body.dataset.user || 'none';
+
+  // Session detection from backend authentication
+  let sessionUser = null;
+  try {
+    const raw = localStorage.getItem('wedplan_user');
+    if (raw) sessionUser = JSON.parse(raw);
+  } catch (e) {}
+
+  let user = body.dataset.user || 'none';
+  if (sessionUser) {
+    if (sessionUser.role === 'ADMIN') user = 'admin';
+    else if (sessionUser.role === 'STAFF') user = 'staff';
+    else user = 'couple';
+  }
 
   const url = (path) => root + path;
   const isActive = (key) => (key === active ? ' active' : '');
@@ -58,12 +71,15 @@
     const mobileLinks = links.map(([key, label, href]) =>
       `<a href="${url(href)}" class="block py-3 border-b border-line/60 font-medium ${key === active ? 'text-forest' : 'text-ink/75'}">${label}</a>`).join('');
 
+    const coupleName = sessionUser ? sessionUser.name : 'Nethmi & Kavin';
+    const coupleInitials = coupleName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'NK';
+
     const right = user === 'couple' ? `
       <div class="dropdown" data-dropdown>
         <button class="flex items-center gap-2.5 rounded-full pl-1 pr-3 py-1 hover:bg-forest/5 transition" data-dropdown-toggle aria-haspopup="true">
-          <span class="avatar avatar-brass">NK</span>
+          <span class="avatar avatar-brass">${coupleInitials}</span>
           <span class="hidden sm:block text-left leading-tight">
-            <span class="block text-sm font-semibold">Nethmi &amp; Kavin</span>
+            <span class="block text-sm font-semibold">${coupleName}</span>
             <span class="block text-[10px] tracking-widest uppercase text-brass font-bold">Plus member</span>
           </span>
           <i data-lucide="chevron-down" class="w-4 h-4 text-muted"></i>
@@ -71,9 +87,10 @@
         <div class="dropdown-menu">
           <a class="dropdown-item" href="${url('couple/dashboard.html')}"><i data-lucide="layout-dashboard"></i>Our wedding</a>
           <a class="dropdown-item" href="${url('booking/my-bookings.html')}"><i data-lucide="calendar-heart"></i>My bookings</a>
+          <a class="dropdown-item" href="${url('payment/my-payments.html')}"><i data-lucide="wallet"></i>My payments</a>
           <a class="dropdown-item" href="${url('couple/profile.html')}"><i data-lucide="user"></i>Profile &amp; password</a>
           <div class="my-1 border-t border-line"></div>
-          <a class="dropdown-item" href="${url('index.html')}"><i data-lucide="log-out"></i>Sign out</a>
+          <a class="dropdown-item" data-logout href="${url('index.html')}"><i data-lucide="log-out"></i>Sign out</a>
         </div>
       </div>` : `
       <a href="${url('couple/login.html')}" class="btn btn-ghost btn-sm hidden sm:inline-flex">Sign in</a>
@@ -183,9 +200,15 @@
       ).join('');
     }).join('');
 
-    const who = isAdmin
-      ? { initials: 'AS', name: 'Amaya Silva', role: 'Administrator' }
-      : { initials: 'IF', name: 'Ishara Fernando', role: 'Planner support' };
+    const who = sessionUser
+      ? {
+          initials: sessionUser.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'ST',
+          name: sessionUser.name,
+          role: sessionUser.role === 'ADMIN' ? 'Administrator' : 'Planner support'
+        }
+      : (isAdmin
+          ? { initials: 'AS', name: 'Amaya Silva', role: 'Administrator' }
+          : { initials: 'IF', name: 'Ishara Fernando', role: 'Planner support' });
 
     return `
       <div id="side-overlay" class="no-print fixed inset-0 z-40 bg-forest-900/50 hidden lg:hidden" data-toggle="#side-overlay, #sidebar"></div>
@@ -199,7 +222,7 @@
             <p class="text-sm font-semibold text-ivory truncate">${who.name}</p>
             <p class="text-[11px] text-ivory/50">${who.role}</p>
           </div>
-          <a href="${url('admin/login.html')}" class="ml-auto p-2 rounded-lg text-ivory/60 hover:text-ivory hover:bg-ivory/10" title="Sign out" aria-label="Sign out"><i data-lucide="log-out" class="w-4 h-4"></i></a>
+          <a href="${url('admin/login.html')}" data-logout class="ml-auto p-2 rounded-lg text-ivory/60 hover:text-ivory hover:bg-ivory/10" title="Sign out" aria-label="Sign out"><i data-lucide="log-out" class="w-4 h-4"></i></a>
         </div>
       </aside>`;
   }
@@ -234,5 +257,13 @@
   } else if (body.dataset.layout === 'staff') {
     fill('sidebar', staffSidebar());
     fill('topbar', staffTopbar());
+  }
+
+  // Automatically inject API Bridge if not already loaded
+  if (!document.querySelector('script[data-bridge]')) {
+    const bridgeScript = document.createElement('script');
+    bridgeScript.setAttribute('data-bridge', 'true');
+    bridgeScript.src = (root ? root : '') + '../js/api-bridge.js';
+    document.body.appendChild(bridgeScript);
   }
 })();
