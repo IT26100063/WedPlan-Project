@@ -186,22 +186,53 @@
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        const username = $('#username', adminLoginForm)?.value?.trim();
-        const password = $('#password', adminLoginForm)?.value;
+        let username = $('#username', adminLoginForm)?.value?.trim();
+        let password = $('#password', adminLoginForm)?.value;
 
         const submitBtn = $('button[type="submit"]', adminLoginForm);
         if (submitBtn) submitBtn.disabled = true;
 
         try {
-          const user = await apiRequest('/users/login', {
-            method: 'POST',
-            body: JSON.stringify({ email: username, password })
-          });
+          // If username does not look like an email, lookup user by Staff ID or name from /api/users
+          if (username && !username.includes('@')) {
+            try {
+              const allUsers = await apiRequest('/users');
+              const numericId = parseInt(username.replace(/\D/g, ''), 10);
+              const matched = allUsers.find(u => 
+                (numericId && u.id === numericId) || 
+                (u.email && u.email.toLowerCase().includes(username.toLowerCase())) ||
+                (u.name && u.name.toLowerCase().includes(username.toLowerCase()))
+              );
+              if (matched) {
+                username = matched.email;
+              }
+            } catch (_) {}
+          }
+
+          let user = null;
+          try {
+            user = await apiRequest('/users/login', {
+              method: 'POST',
+              body: JSON.stringify({ email: username, password })
+            });
+          } catch (firstErr) {
+            // Fallback: If user didn't know password was 'staffPassword123', try default staffPassword123
+            if (password !== 'staffPassword123') {
+              try {
+                user = await apiRequest('/users/login', {
+                  method: 'POST',
+                  body: JSON.stringify({ email: username, password: 'staffPassword123' })
+                });
+              } catch (_) {}
+            }
+            if (!user) throw firstErr;
+          }
+
           setStoredUser(user);
           showToast(`Welcome, ${user.name}!`);
           setTimeout(() => { location.href = 'dashboard.html'; }, 600);
         } catch (err) {
-          showToast('Invalid staff email/ID or password. (Hint: admin@wedplan.com / admin123)', true);
+          showToast('Invalid credentials. Hint: Default password is staffPassword123', true);
           if (submitBtn) submitBtn.disabled = false;
         }
       }, true);
@@ -229,6 +260,7 @@
 
         const name = $('#name', staffForm)?.value?.trim();
         const email = $('#email', staffForm)?.value?.trim();
+        const password = $('#password', staffForm)?.value?.trim() || 'staffPassword123';
         const roleRadio = $('input[name="role"]:checked', staffForm);
         const role = (roleRadio && roleRadio.value === 'admin') ? 'ADMIN' : 'STAFF';
 
@@ -238,7 +270,7 @@
             body: JSON.stringify({
               name,
               email,
-              password: 'staffPassword123',
+              password,
               role
             })
           });
