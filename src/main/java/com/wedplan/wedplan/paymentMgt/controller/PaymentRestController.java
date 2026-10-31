@@ -92,6 +92,15 @@ public class PaymentRestController {
         return ResponseEntity.ok(refunded);
     }
 
+    @RequestMapping(value = "/{id}/status", method = {RequestMethod.PATCH, RequestMethod.POST, RequestMethod.PUT})
+    public ResponseEntity<PaymentModel> updatePaymentStatus(
+            @PathVariable Long id,
+            @RequestParam("status") PaymentStatus status,
+            @RequestParam(value = "notes", required = false) String notes) {
+        PaymentModel updated = paymentService.updateStatus(id, status, notes);
+        return ResponseEntity.ok(updated);
+    }
+
     @PostMapping("/calculate")
     public ResponseEntity<PaymentCalculationResult> calculateAmount(@RequestBody UserCheckoutRequest request) {
         PaymentCalculationResult result = paymentService.calculateCheckout(

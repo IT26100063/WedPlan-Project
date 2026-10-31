@@ -204,6 +204,20 @@ public class PaymentController {
         return "redirect:/payments/" + id;
     }
 
+    @PostMapping("/{id}/status")
+    public String updateStatus(
+            @PathVariable Long id,
+            @RequestParam("status") PaymentStatus status,
+            @RequestParam(value = "notes", required = false) String notes,
+            RedirectAttributes redirectAttributes) {
+        PaymentModel payment = paymentService.updateStatus(id, status, notes);
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Payment status for booking " + payment.getBookingReference() + " updated to " + status + "."
+        );
+        return "redirect:/payments";
+    }
+
     @GetMapping("/{id}/receipt")
     public String viewReceipt(@PathVariable Long id, Model model) {
         PaymentModel payment = paymentService.getPayment(id);

@@ -1116,6 +1116,18 @@
             ? '<span class="badge badge-refunded">Refunded</span>'
             : '<span class="badge badge-cancelled">' + p.paymentStatus + '</span>';
 
+          const statusSelector = `
+            <div class="flex items-center gap-1.5">
+              ${statusBadge}
+              <select class="select select-sm !py-0.5 !px-1.5 text-xs font-semibold rounded border border-line bg-paper cursor-pointer hover:border-forest" data-action="update-status" data-id="${p.id}" title="Quick update status">
+                <option value="COMPLETED" ${isCompleted ? 'selected' : ''}>Completed</option>
+                <option value="PENDING" ${isPending ? 'selected' : ''}>Pending</option>
+                <option value="REFUNDED" ${isRefunded ? 'selected' : ''}>Refunded</option>
+                <option value="FAILED" ${p.paymentStatus === 'FAILED' ? 'selected' : ''}>Failed</option>
+              </select>
+            </div>
+          `;
+
           const verifyBtn = isPending
             ? `<button class="btn btn-ghost btn-sm p-1.5 text-sage hover:bg-sage/10" data-action="quick-verify" data-id="${p.id}" title="Verify Bank Transfer"><i data-lucide="check-circle" class="w-4 h-4"></i></button>`
             : '';
@@ -1148,10 +1160,11 @@
               </td>
               <td class="text-ink/75">${formatDate(p.paymentDate)}</td>
               <td class="text-right font-semibold text-forest">${formatLKR(p.amount)}</td>
-              <td>${statusBadge}</td>
+              <td>${statusSelector}</td>
               <td class="text-right">
                 <div class="flex items-center justify-end gap-1">
                   <a href="invoice.html?id=${p.id}" class="btn btn-ghost btn-sm p-1.5" title="Digital Receipt"><i data-lucide="receipt" class="w-4 h-4"></i></a>
+                  <button class="btn btn-ghost btn-sm p-1.5 text-forest hover:bg-forest/10" data-action="prompt-status" data-id="${p.id}" data-current="${p.paymentStatus}" title="Change status with notes"><i data-lucide="sliders-horizontal" class="w-4 h-4"></i></button>
                   ${verifyBtn}
                   ${refundBtn}
                   <button class="btn btn-ghost btn-sm p-1.5 text-clay hover:bg-clay/10" data-action="delete-payment" data-id="${p.id}" title="Delete Record"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
@@ -1166,6 +1179,45 @@
       }
 
       function attachTableActions() {
+        $$('select[data-action="update-status"]', tbody).forEach(sel => {
+          sel.addEventListener('change', async (e) => {
+            const newStatus = e.target.value;
+            const paymentId = e.target.dataset.id;
+            try {
+              await apiRequest(`/payments/${paymentId}/status?status=${encodeURIComponent(newStatus)}`, { method: 'PATCH' });
+              showToast(`Payment #${paymentId} status updated to ${newStatus}.`);
+              loadPaymentsTable();
+            } catch (err) {
+              showToast('Failed to update status: ' + err.message, true);
+              loadPaymentsTable();
+            }
+          });
+        });
+
+        $$('[data-action="prompt-status"]', tbody).forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const paymentId = btn.dataset.id;
+            const current = btn.dataset.current || 'PENDING';
+            const newStatus = prompt(`Update status for payment #${paymentId}\n(Options: COMPLETED, PENDING, REFUNDED, FAILED):`, current);
+            if (!newStatus || newStatus.toUpperCase() === current) return;
+            const normalized = newStatus.trim().toUpperCase();
+            const validStatuses = ['COMPLETED', 'PENDING', 'REFUNDED', 'FAILED'];
+            if (!validStatuses.includes(normalized)) {
+              alert('Invalid status. Allowed: COMPLETED, PENDING, REFUNDED, FAILED');
+              return;
+            }
+            const note = prompt('Optional audit note for this status update:', 'Admin manual status change');
+            try {
+              await apiRequest(`/payments/${paymentId}/status?status=${encodeURIComponent(normalized)}&notes=${encodeURIComponent(note || '')}`, { method: 'PATCH' });
+              showToast(`Payment #${paymentId} status updated to ${normalized}.`);
+              loadPaymentsTable();
+            } catch (err) {
+              showToast('Failed to update status: ' + err.message, true);
+            }
+          });
+        });
+
         $$('[data-action="quick-verify"]', tbody).forEach(btn => {
           btn.addEventListener('click', async (e) => {
             e.stopPropagation();

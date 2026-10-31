@@ -142,10 +142,14 @@
                 <span th:text="">LKR</span> <span th:text="">261,900.00</span>
               </td>
               <td class="py-3.5 px-4">
-                <span th:if="" class="badge badge-paid">Completed</span>
-                <span th:if="" class="badge badge-pending">Pending</span>
-                <span th:if="" class="badge badge-cancelled">Failed</span>
-                <span th:if="" class="badge badge-refunded">Refunded</span>
+                <form th:action="@{/payments/{id}/status(id=${p.id})}" method="post" class="inline-flex items-center gap-1.5">
+                  <select name="status" onchange="this.form.submit()" class="text-xs font-semibold rounded-lg px-2 py-1 border border-line bg-paper cursor-pointer hover:border-forest" title="Update status">
+                    <option value="COMPLETED" th:selected="${p.paymentStatus.name() == 'COMPLETED'}">Completed</option>
+                    <option value="PENDING" th:selected="${p.paymentStatus.name() == 'PENDING'}">Pending</option>
+                    <option value="REFUNDED" th:selected="${p.paymentStatus.name() == 'REFUNDED'}">Refunded</option>
+                    <option value="FAILED" th:selected="${p.paymentStatus.name() == 'FAILED'}">Failed</option>
+                  </select>
+                </form>
               </td>
               <td class="py-3.5 px-4 text-right">
                 <div class="flex items-center justify-end gap-1.5">

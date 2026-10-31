@@ -64,6 +64,19 @@
         <span>Record created on <strong class="text-forest" th:text="">Date</strong></span>
       </div>
       <div class="flex items-center gap-2">
+        <!-- Update Status Form -->
+        <form th:action="@{/payments/{id}/status(id=${payment.id})}" method="post" class="inline-flex items-center gap-2 mr-2">
+          <span class="text-xs font-semibold text-forest">Status:</span>
+          <select name="status" class="select select-sm !py-1 !px-2 text-xs font-semibold">
+            <option value="COMPLETED" th:selected="${payment.paymentStatus.name() == 'COMPLETED'}">Completed</option>
+            <option value="PENDING" th:selected="${payment.paymentStatus.name() == 'PENDING'}">Pending</option>
+            <option value="REFUNDED" th:selected="${payment.paymentStatus.name() == 'REFUNDED'}">Refunded</option>
+            <option value="FAILED" th:selected="${payment.paymentStatus.name() == 'FAILED'}">Failed</option>
+          </select>
+          <input type="text" name="notes" placeholder="Optional audit note" class="input !py-1 !px-2 text-xs w-44">
+          <button type="submit" class="btn btn-outline btn-sm"><i data-lucide="check"></i>Update</button>
+        </form>
+
         <!-- 1-Click Verify Button for Pending bank transfers -->
         <form th:if="" th:action="@{/payments/{id}/verify(id=)}" method="post" class="inline" onsubmit="return confirm('Verify funds received and mark COMPLETED?');">
           <button type="submit" class="btn btn-primary btn-sm"><i data-lucide="check-circle"></i>Verify &amp; Complete</button>

@@ -29,6 +29,8 @@ public interface PaymentService {
 
     PaymentModel refundPayment(Long id, String refundReason);
 
+    PaymentModel updateStatus(Long id, PaymentStatus newStatus, String notes);
+
     PaymentModel processUserCheckout(UserCheckoutRequest request);
 
     PaymentCalculationResult calculateCheckout(String bookingReference, String paymentType, PaymentMethod method, boolean isPlusMember, BigDecimal baseAmount);

@@ -174,6 +174,15 @@ class PaymentServiceTest {
     }
 
     @Test
+    void testUpdateStatusSetsNewStatusAndNotes() {
+        PaymentModel updated = paymentServices.updateStatus(1L, PaymentStatus.FAILED, "Card gateway rejected authorization");
+
+        assertNotNull(updated);
+        assertEquals(PaymentStatus.FAILED, updated.getPaymentStatus());
+        assertTrue(updated.getNotes().contains("Card gateway rejected authorization"));
+    }
+
+    @Test
     void testExportPaymentsCsvGeneratesContent() {
         byte[] csv = paymentServices.exportPaymentsCsv();
 

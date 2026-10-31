@@ -196,6 +196,33 @@ public class PaymentServiceImpl implements PaymentService, PaymentServices {
     }
 
     @Override
+    @Transactional
+    public PaymentModel updateStatus(Long id, PaymentStatus newStatus, String notes) {
+        PaymentModel payment = getPayment(id);
+        payment.setPaymentStatus(newStatus);
+
+        if (newStatus == PaymentStatus.COMPLETED && (payment.getReceiptNumber() == null || payment.getReceiptNumber().isBlank())) {
+            payment.setReceiptNumber("INV-2026-" + String.format("%04d", (int) (Math.random() * 9000) + 1000));
+        }
+
+        if (newStatus == PaymentStatus.REFUNDED) {
+            payment.setRefundDate(LocalDate.now());
+            if (notes != null && !notes.isBlank()) {
+                payment.setRefundReason(notes.trim());
+            } else if (payment.getRefundReason() == null || payment.getRefundReason().isBlank()) {
+                payment.setRefundReason("Status updated to REFUNDED by administrator");
+            }
+        }
+
+        if (notes != null && !notes.isBlank()) {
+            String currentNotes = payment.getNotes() != null ? payment.getNotes() : "";
+            payment.setNotes((currentNotes + " | Status updated to " + newStatus + ": " + notes.trim()).trim());
+        }
+
+        return paymentRepository.saveAndFlush(payment);
+    }
+
+    @Override
     public PaymentCalculationResult calculateCheckout(String bookingReference, String paymentType, PaymentMethod method, boolean isPlusMember, BigDecimal baseAmount) {
         if (baseAmount == null || baseAmount.compareTo(BigDecimal.ZERO) <= 0) {
             baseAmount = new BigDecimal("100000.00");
