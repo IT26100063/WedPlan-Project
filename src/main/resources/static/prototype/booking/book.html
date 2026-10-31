@@ -99,6 +99,14 @@
             <input type="checkbox" required class="mt-1 w-4 h-4 accent-[rgb(44,58,71)]">
             <span>I understand the deposit and cancellation policy.</span>
           </label>
+
+          <div class="mt-5 p-4 rounded-xl bg-sand/40 border border-brass/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <p class="font-semibold text-forest text-sm">Ready to complete payment?</p>
+              <p class="text-xs text-muted">Go to the secure checkout portal to calculate live discounts and pay by Card or Bank Transfer.</p>
+            </div>
+            <a href="../payment/checkout.html" class="btn btn-primary btn-sm shrink-0"><i data-lucide="credit-card"></i>Go to Payment Checkout</a>
+          </div>
         </section>
       </form>
 
@@ -126,7 +134,8 @@
             <p class="mt-2 text-xs text-muted">Final amount is calculated by WedPlan when you pay. Bank transfers save a further 5%.</p>
 
             <button type="submit" form="book-form" class="btn btn-primary btn-lg btn-block mt-6"><i data-lucide="calendar-heart"></i>Request booking</button>
-            <a href="../vendor/detail.html" class="btn btn-ghost btn-block mt-2">Back to vendor</a>
+            <a href="../payment/checkout.html?booking=BK2041" class="btn btn-outline btn-block mt-2"><i data-lucide="credit-card"></i>Pay Deposit / Checkout</a>
+            <a href="../vendor/detail.html" class="btn btn-ghost btn-block mt-1">Back to vendor</a>
           </div>
         </div>
       </aside>
