@@ -218,6 +218,16 @@ public class PaymentController {
         return "redirect:/payments";
     }
 
+    @PostMapping("/{id}/reminder")
+    public String sendReminder(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        PaymentModel payment = paymentService.sendReminder(id);
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Payment reminder notice sent to " + (payment.getCustomerEmail() != null ? payment.getCustomerEmail() : "couple") + " for booking " + payment.getBookingReference() + "."
+        );
+        return "redirect:/payments";
+    }
+
     @GetMapping("/{id}/receipt")
     public String viewReceipt(@PathVariable Long id, Model model) {
         PaymentModel payment = paymentService.getPayment(id);

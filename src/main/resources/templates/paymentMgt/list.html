@@ -33,10 +33,10 @@
   </nav>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div th:if="" class="mb-6 p-4 rounded-xl bg-sage/15 border border-sage/30 text-forest flex items-center justify-between">
+    <div th:if="${successMessage}" class="mb-6 p-4 rounded-xl bg-sage/15 border border-sage/30 text-forest flex items-center justify-between">
       <div class="flex items-center gap-3">
         <i data-lucide="check-circle" class="w-5 h-5 text-sage"></i>
-        <span class="font-medium" th:text="">Payment recorded successfully.</span>
+        <span class="font-medium" th:text="${successMessage}">Payment recorded successfully.</span>
       </div>
       <button onclick="this.parentElement.remove()" class="text-ink/50 hover:text-ink"><i data-lucide="x" class="w-4 h-4"></i></button>
     </div>
@@ -45,9 +45,10 @@
       <div>
         <span class="text-xs tracking-[.2em] uppercase text-brass font-bold">Financial Administration</span>
         <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-2">Payment Management</h1>
-        <p class="text-ink/65 mt-1">Manage deposits, bank transfer approvals, settlements, and customer refunds.</p>
+        <p class="text-ink/65 mt-1">Manage deposits, bank transfer approvals, settlements, payment reminders, and customer refunds.</p>
       </div>
       <div class="flex flex-wrap items-center gap-2">
+        <button onclick="window.print()" class="btn btn-outline btn-sm"><i data-lucide="printer"></i>Print Statement</button>
         <a th:href="@{/payments/export/csv}" class="btn btn-outline btn-sm"><i data-lucide="file-spreadsheet"></i>Download CSV</a>
         <a th:href="@{/payments/new}" class="btn btn-primary btn-sm"><i data-lucide="plus"></i>New Payment Record</a>
       </div>
@@ -57,89 +58,91 @@
     <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="card p-5">
         <p class="text-xs uppercase tracking-wider text-muted font-semibold">Total Revenue</p>
-        <p class="font-display text-3xl font-semibold text-forest mt-2" th:text="">LKR 0</p>
-        <p class="text-xs text-muted mt-1"><span class="font-semibold text-forest" th:text="">0</span> completed transactions</p>
+        <p class="font-display text-3xl font-semibold text-forest mt-2" th:text="${'LKR ' + #numbers.formatDecimal(summary.totalRevenue, 1, 'COMMA', 2, 'POINT')}">LKR 0</p>
+        <p class="text-xs text-muted mt-1"><span class="font-semibold text-forest" th:text="${summary.completed}">0</span> completed transactions</p>
       </div>
       <div class="card p-5">
         <p class="text-xs uppercase tracking-wider text-muted font-semibold">Pending Approvals</p>
-        <p class="font-display text-3xl font-semibold text-brass mt-2" th:text="">0</p>
-        <p class="text-xs text-muted mt-1" th:text="">est. LKR 0</p>
+        <p class="font-display text-3xl font-semibold text-brass mt-2" th:text="${summary.pending}">0</p>
+        <p class="text-xs text-muted mt-1" th:text="${'est. LKR ' + #numbers.formatDecimal(summary.pendingRevenue, 1, 'COMMA', 2, 'POINT')}">est. LKR 0</p>
       </div>
       <div class="card p-5">
         <p class="text-xs uppercase tracking-wider text-muted font-semibold">Refunded Amount</p>
-        <p class="font-display text-3xl font-semibold text-clay mt-2" th:text="">LKR 0</p>
-        <p class="text-xs text-muted mt-1"><span class="font-semibold text-clay" th:text="">0</span> refunds processed</p>
+        <p class="font-display text-3xl font-semibold text-clay mt-2" th:text="${'LKR ' + #numbers.formatDecimal(summary.refundedRevenue, 1, 'COMMA', 2, 'POINT')}">LKR 0</p>
+        <p class="text-xs text-muted mt-1"><span class="font-semibold text-clay" th:text="${summary.refunded}">0</span> refunds processed</p>
       </div>
       <div class="card p-5">
         <p class="text-xs uppercase tracking-wider text-muted font-semibold">All Records</p>
-        <p class="font-display text-3xl font-semibold text-forest mt-2" th:text="">0</p>
-        <p class="text-xs text-muted mt-1">Across all bookings</p>
+        <p class="font-display text-3xl font-semibold text-forest mt-2" th:text="${summary.total}">0</p>
+        <p class="text-xs text-muted mt-1">Across all couples &amp; bookings</p>
       </div>
     </div>
 
-    <!-- Filter & Table Panel -->
+    <!-- Payment List Table -->
     <div class="card mt-8">
-      <form class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto_auto] border-b border-line" method="get" th:action="@{/payments}">
-        <div class="input-icon relative">
-          <i data-lucide="search" class="absolute left-3 top-3 w-4 h-4 text-ink/40"></i>
-          <input class="input pl-9 !py-2.5 w-full" type="search" name="q" placeholder="Search booking reference, couple, or receipt..." th:value="">
-        </div>
-        <select class="select !py-2.5 md:w-44" name="paymentStatus">
-          <option value="">All Statuses</option>
-          <option th:each="st : " th:value="" th:text="" th:selected=""></option>
-        </select>
-        <select class="select !py-2.5 md:w-44" name="paymentMethod">
-          <option value="">All Methods</option>
-          <option th:each="m : " th:value="" th:text="" th:selected=""></option>
-        </select>
-        <div class="flex gap-2">
-          <button type="submit" class="btn btn-outline btn-sm">Filter</button>
-          <a th:href="@{/payments}" class="btn btn-ghost btn-sm text-ink/60">Reset</a>
-        </div>
-      </form>
+      <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto_auto] border-b border-line">
+        <form method="get" th:action="@{/payments}" class="w-full">
+          <div class="input-icon">
+            <i data-lucide="search"></i>
+            <input name="q" th:value="${search}" class="input !py-2.5" placeholder="Search by booking, couple name, email or receipt #">
+          </div>
+        </form>
+        <form method="get" th:action="@{/payments}" class="flex gap-2">
+          <input type="hidden" name="q" th:value="${search}">
+          <select name="paymentMethod" onchange="this.form.submit()" class="select !py-2.5 md:w-44">
+            <option value="">Any method</option>
+            <option th:each="m : ${methods}" th:value="${m.name()}" th:text="${m.name()}" th:selected="${selectedMethod != null and selectedMethod.name() == m.name()}"></option>
+          </select>
+          <select name="paymentStatus" onchange="this.form.submit()" class="select !py-2.5 md:w-44">
+            <option value="">Any status</option>
+            <option th:each="s : ${statuses}" th:value="${s.name()}" th:text="${s.name()}" th:selected="${selectedStatus != null and selectedStatus.name() == s.name()}"></option>
+          </select>
+        </form>
+        <a th:href="@{/payments}" class="btn btn-ghost !py-2.5" title="Reset Filters"><i data-lucide="rotate-ccw"></i>Reset</a>
+      </div>
 
-      <div class="table-wrap overflow-x-auto">
-        <table class="table w-full text-left">
+      <div class="table-wrap">
+        <table class="table">
           <thead>
-            <tr class="border-b border-line text-xs uppercase tracking-wider text-muted bg-sand/30">
-              <th class="py-3.5 px-4 font-semibold">Receipt / ID</th>
-              <th class="py-3.5 px-4 font-semibold">Booking</th>
-              <th class="py-3.5 px-4 font-semibold">Couple</th>
-              <th class="py-3.5 px-4 font-semibold">Type</th>
-              <th class="py-3.5 px-4 font-semibold">Method</th>
-              <th class="py-3.5 px-4 font-semibold">Date</th>
-              <th class="py-3.5 px-4 font-semibold text-right">Amount</th>
-              <th class="py-3.5 px-4 font-semibold">Status</th>
-              <th class="py-3.5 px-4 font-semibold text-right">Actions</th>
+            <tr>
+              <th>Receipt / ID</th>
+              <th>Booking</th>
+              <th>Couple</th>
+              <th>Type</th>
+              <th>Method</th>
+              <th>Date</th>
+              <th class="text-right">Amount</th>
+              <th>Status</th>
+              <th class="text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-line text-sm">
-            <tr th:if="">
-              <td colspan="9" class="p-8 text-center text-muted">No payment records match your filters.</td>
+          <tbody>
+            <tr th:if="${payments.empty}">
+              <td colspan="9" class="p-10 text-center text-muted">No payments match your search filters.</td>
             </tr>
-            <tr th:each="p : " class="hover:bg-sand/20 transition-colors">
+            <tr th:each="p : ${payments}" class="hover:bg-sand/20 transition-colors">
               <td class="py-3.5 px-4 mono font-semibold text-forest">
-                <a th:href="@{/payments/{id}(id=)}" class="hover:underline" th:text="">INV-2026-1001</a>
+                <a th:href="@{/payments/{id}(id=${p.id})}" class="hover:underline" th:text="${p.receiptNumber != null ? p.receiptNumber : ('#P' + p.id)}">INV-2026-1001</a>
               </td>
-              <td class="py-3.5 px-4 mono" th:text="">BK2041</td>
+              <td class="py-3.5 px-4 mono" th:text="${p.bookingReference}">BK2041</td>
               <td class="py-3.5 px-4">
-                <div class="font-semibold text-forest" th:text="">Nethmi &amp; Kavin</div>
-                <div class="text-xs text-muted" th:text="">nethmi@example.com</div>
+                <div class="font-semibold text-forest" th:text="${p.customerName}">Nethmi &amp; Kavin</div>
+                <div class="text-xs text-muted" th:text="${p.customerEmail}">nethmi@example.com</div>
               </td>
               <td class="py-3.5 px-4">
-                <span class="text-xs font-semibold uppercase tracking-wider text-ink/70" th:text="">Deposit</span>
+                <span class="text-xs font-semibold uppercase tracking-wider text-ink/70" th:text="${p.paymentType != null ? p.paymentType : 'Deposit'}">Deposit</span>
               </td>
               <td class="py-3.5 px-4">
                 <span class="inline-flex items-center gap-1.5 font-medium">
-                  <i data-lucide="credit-card" th:if="" class="w-4 h-4 text-brass"></i>
-                  <i data-lucide="landmark" th:if="" class="w-4 h-4 text-brass"></i>
-                  <i data-lucide="wallet" th:if="" class="w-4 h-4 text-brass"></i>
-                  <span th:text="">CARD</span>
+                  <i data-lucide="credit-card" th:if="${p.paymentMethod.name() == 'CARD' or p.paymentMethod.name() == 'ONLINE'}" class="w-4 h-4 text-brass"></i>
+                  <i data-lucide="landmark" th:if="${p.paymentMethod.name() == 'BANK_TRANSFER'}" class="w-4 h-4 text-brass"></i>
+                  <i data-lucide="wallet" th:if="${p.paymentMethod.name() == 'CASH'}" class="w-4 h-4 text-brass"></i>
+                  <span th:text="${p.paymentMethod}">CARD</span>
                 </span>
               </td>
-              <td class="py-3.5 px-4 text-ink/75" th:text="">16 Oct 2026</td>
+              <td class="py-3.5 px-4 text-ink/75" th:text="${p.paymentDate}">16 Oct 2026</td>
               <td class="py-3.5 px-4 text-right font-semibold text-forest">
-                <span th:text="">LKR</span> <span th:text="">261,900.00</span>
+                <span th:text="${p.currency != null ? p.currency : 'LKR'}">LKR</span> <span th:text="${#numbers.formatDecimal(p.amount, 1, 'COMMA', 2, 'POINT')}">261,900.00</span>
               </td>
               <td class="py-3.5 px-4">
                 <form th:action="@{/payments/{id}/status(id=${p.id})}" method="post" class="inline-flex items-center gap-1.5">
@@ -153,17 +156,22 @@
               </td>
               <td class="py-3.5 px-4 text-right">
                 <div class="flex items-center justify-end gap-1.5">
-                  <a th:href="@{/payments/{id}/receipt(id=)}" class="btn btn-ghost btn-sm p-1.5" title="Print Receipt"><i data-lucide="printer" class="w-4 h-4"></i></a>
-                  <a th:href="@{/payments/{id}(id=)}" class="btn btn-ghost btn-sm p-1.5" title="View Details"><i data-lucide="eye" class="w-4 h-4"></i></a>
-                  <a th:href="@{/payments/{id}/edit(id=)}" class="btn btn-ghost btn-sm p-1.5" title="Edit"><i data-lucide="edit-3" class="w-4 h-4"></i></a>
+                  <a th:href="@{/payments/{id}/receipt(id=${p.id})}" class="btn btn-ghost btn-sm p-1.5" title="Print Receipt"><i data-lucide="printer" class="w-4 h-4"></i></a>
+                  <a th:href="@{/payments/{id}(id=${p.id})}" class="btn btn-ghost btn-sm p-1.5" title="View Details"><i data-lucide="eye" class="w-4 h-4"></i></a>
+                  <a th:href="@{/payments/{id}/edit(id=${p.id})}" class="btn btn-ghost btn-sm p-1.5" title="Edit"><i data-lucide="edit-3" class="w-4 h-4"></i></a>
 
                   <!-- 1-Click Verify for Pending Payments -->
-                  <form th:if="" th:action="@{/payments/{id}/verify(id=)}" method="post" class="inline" onsubmit="return confirm('Verify bank transfer and mark this payment as COMPLETED?');">
+                  <form th:if="${p.paymentStatus.name() == 'PENDING'}" th:action="@{/payments/{id}/verify(id=${p.id})}" method="post" class="inline" onsubmit="return confirm('Verify bank transfer and mark this payment as COMPLETED?');">
                     <button type="submit" class="btn btn-ghost btn-sm p-1.5 text-sage hover:bg-sage/10" title="Verify &amp; Approve"><i data-lucide="check-circle" class="w-4 h-4"></i></button>
                   </form>
 
+                  <!-- 1-Click Send Reminder for Pending Payments -->
+                  <form th:if="${p.paymentStatus.name() == 'PENDING'}" th:action="@{/payments/{id}/reminder(id=${p.id})}" method="post" class="inline" onsubmit="return confirm('Send payment reminder notice to customer?');">
+                    <button type="submit" class="btn btn-ghost btn-sm p-1.5 text-brass hover:bg-brass/10" title="Send Payment Reminder"><i data-lucide="bell-ring" class="w-4 h-4"></i></button>
+                  </form>
+
                   <!-- Quick Refund for Completed Payments -->
-                  <form th:if="" th:action="@{/payments/{id}/refund(id=)}" method="post" class="inline" onsubmit="return confirm('Are you sure you want to refund this payment?');">
+                  <form th:if="${p.paymentStatus.name() == 'COMPLETED'}" th:action="@{/payments/{id}/refund(id=${p.id})}" method="post" class="inline" onsubmit="return confirm('Are you sure you want to refund this payment?');">
                     <button type="submit" class="btn btn-ghost btn-sm p-1.5 text-clay hover:bg-clay/10" title="Refund Payment"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
                   </form>
                 </div>
@@ -175,13 +183,13 @@
 
       <div class="px-5 py-4 border-t border-line flex flex-wrap items-center justify-between text-sm text-muted">
         <div>
-          Showing <span class="font-semibold text-forest" th:text="">0</span> of
-          <span class="font-semibold text-forest" th:text="">0</span> payment records
+          Showing <span class="font-semibold text-forest" th:text="${payments.numberOfElements}">0</span> of
+          <span class="font-semibold text-forest" th:text="${payments.totalElements}">0</span> payment records
         </div>
-        <div class="flex items-center gap-2" th:if="">
-          <a th:if="" th:href="@{/payments(page=, q=, paymentStatus=, paymentMethod=)}" class="btn btn-ghost btn-sm"><i data-lucide="chevron-left"></i>Prev</a>
-          <span class="text-xs">Page <span class="font-semibold" th:text="">1</span> of <span class="font-semibold" th:text="">1</span></span>
-          <a th:if="" th:href="@{/payments(page=, q=, paymentStatus=, paymentMethod=)}" class="btn btn-ghost btn-sm">Next<i data-lucide="chevron-right"></i></a>
+        <div class="flex items-center gap-2" th:if="${payments.totalPages > 1}">
+          <a th:if="${payments.hasPrevious()}" th:href="@{/payments(page=${payments.number - 1}, q=${search}, paymentStatus=${selectedStatus}, paymentMethod=${selectedMethod})}" class="btn btn-ghost btn-sm"><i data-lucide="chevron-left"></i>Prev</a>
+          <span class="text-xs">Page <span class="font-semibold" th:text="${payments.number + 1}">1</span> of <span class="font-semibold" th:text="${payments.totalPages}">1</span></span>
+          <a th:if="${payments.hasNext()}" th:href="@{/payments(page=${payments.number + 1}, q=${search}, paymentStatus=${selectedStatus}, paymentMethod=${selectedMethod})}" class="btn btn-ghost btn-sm">Next<i data-lucide="chevron-right"></i></a>
         </div>
       </div>
     </div>

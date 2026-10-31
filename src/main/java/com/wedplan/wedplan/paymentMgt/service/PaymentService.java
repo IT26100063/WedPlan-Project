@@ -31,6 +31,8 @@ public interface PaymentService {
 
     PaymentModel updateStatus(Long id, PaymentStatus newStatus, String notes);
 
+    PaymentModel sendReminder(Long id);
+
     PaymentModel processUserCheckout(UserCheckoutRequest request);
 
     PaymentCalculationResult calculateCheckout(String bookingReference, String paymentType, PaymentMethod method, boolean isPlusMember, BigDecimal baseAmount);

@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,6 +100,16 @@ public class PaymentRestController {
             @RequestParam(value = "notes", required = false) String notes) {
         PaymentModel updated = paymentService.updateStatus(id, status, notes);
         return ResponseEntity.ok(updated);
+    }
+
+    @PostMapping("/{id}/reminder")
+    public ResponseEntity<Map<String, Object>> sendPaymentReminder(@PathVariable Long id) {
+        PaymentModel updated = paymentService.sendReminder(id);
+        Map<String, Object> resp = new HashMap<>();
+        resp.put("success", true);
+        resp.put("message", "Payment reminder sent to " + (updated.getCustomerEmail() != null ? updated.getCustomerEmail() : "couple") + " for booking " + updated.getBookingReference());
+        resp.put("payment", updated);
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping("/calculate")

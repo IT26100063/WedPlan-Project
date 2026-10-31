@@ -223,6 +223,17 @@ public class PaymentServiceImpl implements PaymentService, PaymentServices {
     }
 
     @Override
+    @Transactional
+    public PaymentModel sendReminder(Long id) {
+        PaymentModel payment = getPayment(id);
+        String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        String reminderNote = "Payment reminder notice sent to " + (payment.getCustomerEmail() != null ? payment.getCustomerEmail() : "couple") + " at " + timestamp;
+        String currentNotes = payment.getNotes() != null ? payment.getNotes() : "";
+        payment.setNotes(currentNotes.isEmpty() ? reminderNote : currentNotes + " | " + reminderNote);
+        return paymentRepository.saveAndFlush(payment);
+    }
+
+    @Override
     public PaymentCalculationResult calculateCheckout(String bookingReference, String paymentType, PaymentMethod method, boolean isPlusMember, BigDecimal baseAmount) {
         if (baseAmount == null || baseAmount.compareTo(BigDecimal.ZERO) <= 0) {
             baseAmount = new BigDecimal("100000.00");

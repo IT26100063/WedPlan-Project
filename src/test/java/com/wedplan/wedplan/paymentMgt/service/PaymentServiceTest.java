@@ -183,6 +183,14 @@ class PaymentServiceTest {
     }
 
     @Test
+    void testSendReminderAppendsReminderAuditNote() {
+        PaymentModel updated = paymentServices.sendReminder(1L);
+
+        assertNotNull(updated);
+        assertTrue(updated.getNotes().contains("Payment reminder notice sent"));
+    }
+
+    @Test
     void testExportPaymentsCsvGeneratesContent() {
         byte[] csv = paymentServices.exportPaymentsCsv();
 

@@ -22,15 +22,17 @@
         <div>
           <span class="eyebrow">Planner desk</span>
           <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Payments</h1>
-          <p class="text-muted mt-2">Deposits, balances, bank transfer verifications, and refunds.</p>
+          <p class="text-muted mt-2">Deposits, balances, bank transfer verifications, payment reminders, and refunds.</p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="window.print()" class="btn btn-outline"><i data-lucide="printer"></i>Print Statement</button>
           <a href="/api/payments/export/csv" class="btn btn-outline" download><i data-lucide="download"></i>Export CSV</a>
           <a href="checkout.html" class="btn btn-outline"><i data-lucide="shopping-cart"></i>User Checkout</a>
           <a href="record.html" class="btn btn-primary"><i data-lucide="plus"></i>Record payment</a>
         </div>
       </div>
 
+      <!-- KPI Summary Cards -->
       <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="stat"><p class="stat-label">Total Revenue</p><p class="stat-value mt-2" id="kpi-collected">1.24M</p><p class="text-xs text-muted">LKR, completed</p></div>
         <div class="stat"><p class="stat-label">Pending Bank Approvals</p><p class="stat-value mt-2 text-brass" id="kpi-pending">2</p><p class="text-xs text-muted">Awaiting staff check</p></div>
@@ -38,9 +40,37 @@
         <div class="stat"><p class="stat-label">All Payments</p><p class="stat-value mt-2" id="kpi-total">6</p><p class="text-xs text-muted">Across all bookings</p></div>
       </div>
 
+      <!-- Collection Efficiency & Progress Widget (New Feature) -->
+      <div class="card p-5 mt-4 bg-sand/30 border border-line">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <i data-lucide="activity" class="w-4 h-4 text-forest"></i>
+            <span class="font-semibold text-forest text-sm">Financial Collection Efficiency</span>
+          </div>
+          <span class="text-xs font-semibold text-muted" id="kpi-rate-text">88% of target volume settled</span>
+        </div>
+        <div class="w-full bg-forest/10 h-3 rounded-full overflow-hidden flex">
+          <div id="bar-completed" class="bg-forest h-full transition-all duration-500" style="width: 80%" title="Completed Collections"></div>
+          <div id="bar-pending" class="bg-brass h-full transition-all duration-500" style="width: 15%" title="Pending Approvals"></div>
+          <div id="bar-refunded" class="bg-clay h-full transition-all duration-500" style="width: 5%" title="Refunded"></div>
+        </div>
+        <div class="flex items-center gap-5 mt-2.5 text-xs text-muted">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-forest"></span>Settled / Completed</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-brass"></span>Pending Escrow / Verification</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-clay"></span>Refunded to Couple</span>
+        </div>
+      </div>
+
+      <!-- Payments Table Card -->
       <div class="card mt-8">
-        <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto_auto] border-b border-line">
+        <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto_auto_auto] border-b border-line">
           <div class="input-icon"><i data-lucide="search"></i><input class="input !py-2.5" placeholder="Search payment, booking or couple…" data-filter-target="#pay-table" id="proto-pay-search"></div>
+          <select class="select !py-2.5 md:w-36" id="proto-pay-date-filter" title="Filter by transaction date">
+            <option value="ALL">All dates</option>
+            <option value="TODAY">Today</option>
+            <option value="WEEK">Last 7 days</option>
+            <option value="MONTH">This month</option>
+          </select>
           <select class="select !py-2.5 md:w-44" data-filter-target="#pay-table" data-filter-attr="method" id="proto-pay-method-filter">
             <option value="">Any method</option>
             <option value="CARD">Card</option>
@@ -79,6 +109,49 @@
         <div class="px-5 py-4 border-t border-line text-sm text-muted">Showing live records from MySQL database.</div>
       </div>
     </main>
+  </div>
+
+  <!-- Bank Transfer Slip Inspector Modal (New Feature) -->
+  <div class="modal" id="slip-modal" role="dialog" aria-modal="true" aria-labelledby="slip-title">
+    <div class="modal-box max-w-lg">
+      <div class="flex items-center justify-between border-b border-line pb-4">
+        <div class="flex items-center gap-2">
+          <span class="stat-icon !bg-forest/10 !text-forest"><i data-lucide="landmark"></i></span>
+          <h2 id="slip-title" class="font-display text-2xl font-semibold text-forest">Bank Transfer Proof</h2>
+        </div>
+        <button class="text-muted hover:text-ink" data-modal-close><i data-lucide="x"></i></button>
+      </div>
+
+      <div class="mt-4 p-5 rounded-2xl bg-forest/5 border border-forest/15 space-y-3 text-sm">
+        <div class="flex justify-between border-b border-line/50 pb-2">
+          <span class="text-muted">Deposit Bank:</span>
+          <span class="font-semibold text-forest" id="slip-bank">Commercial Bank PLC</span>
+        </div>
+        <div class="flex justify-between border-b border-line/50 pb-2">
+          <span class="text-muted">Reference / Slip No:</span>
+          <span class="font-mono font-semibold text-forest" id="slip-ref">TXN-998241</span>
+        </div>
+        <div class="flex justify-between border-b border-line/50 pb-2">
+          <span class="text-muted">Deposited By:</span>
+          <span class="font-medium text-ink" id="slip-couple">Nethmi &amp; Kavin</span>
+        </div>
+        <div class="flex justify-between border-b border-line/50 pb-2">
+          <span class="text-muted">Transaction Date:</span>
+          <span class="text-ink" id="slip-date">2026-10-31</span>
+        </div>
+        <div class="flex justify-between pt-1">
+          <span class="text-muted">Amount Deposited:</span>
+          <span class="font-display text-xl font-bold text-forest" id="slip-amount">LKR 0</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-muted mt-3">Verified by audit protocol. You can approve this slip to credit the couple's booking immediately.</p>
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button class="btn btn-ghost" data-modal-close>Close</button>
+        <button class="btn btn-primary" id="slip-approve-btn"><i data-lucide="check-circle"></i>Approve &amp; Verify Slip</button>
+      </div>
+    </div>
   </div>
 
   <script src="../../js/layout.js"></script>
