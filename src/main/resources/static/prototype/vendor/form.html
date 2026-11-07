@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add / edit vendor · WedPlan staff</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="staff" data-active="vendors" data-user="admin">
+  <div data-slot="sidebar"></div>
+  <div class="lg:pl-72 min-h-screen">
+    <div data-slot="topbar"></div>
+    <main class="px-4 sm:px-8 py-8 max-w-7xl">
+      <a href="manage.html" class="text-sm text-muted hover:text-forest inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i>All vendors</a>
+      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Edit vendor <span class="mono text-2xl text-muted">V104</span></h1>
+      <p class="text-muted mt-2">Changes appear on the couple site as soon as you save.</p>
+
+      <div class="mt-8 grid xl:grid-cols-[1fr_360px] gap-8 items-start">
+        <!-- JSP: action="${pageContext.request.contextPath}/admin/vendors/save" method="post" -->
+        <form id="vendor-form" class="space-y-6" data-demo="Vendor saved (prototype)" data-next="manage.html">
+          <section class="card card-pad">
+            <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">i.</span>Basics</h2>
+            <div class="mt-5 grid sm:grid-cols-2 gap-4">
+              <div class="sm:col-span-2"><label class="label" for="name">Business name</label><input id="name" class="input" value="The Garden House" data-bind="name" required></div>
+              <div>
+                <label class="label" for="category">Category</label>
+                <select id="category" class="select" data-bind="category">
+                  <option selected>Venue</option><option>Photography</option><option>Beauty</option><option>Florals</option><option>Catering</option><option>Music</option>
+                </select>
+              </div>
+              <div>
+                <label class="label" for="location">Location</label>
+                <select id="location" class="select" data-bind="location">
+                  <option>Colombo</option><option selected>Gampaha</option><option>Kandy</option><option>Galle</option>
+                </select>
+              </div>
+              <div><label class="label" for="email">Contact email</label><input id="email" type="email" class="input" value="events@gardenhouse.lk" required></div>
+              <div><label class="label" for="phone">Phone</label><input id="phone" class="input" value="+94 33 222 4410" required></div>
+              <div class="sm:col-span-2">
+                <label class="label" for="desc">Description</label>
+                <textarea id="desc" class="textarea" maxlength="400" data-counter="#desc-count">A restored 1920s bungalow set in two acres of old trees, with a lawn for the ceremony and a glass pavilion for dinner and dancing.</textarea>
+                <p class="hint text-right" id="desc-count"></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card card-pad">
+            <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">ii.</span>Pricing</h2>
+            <p class="text-sm text-muted mt-1">Pick a starting tier, then fine-tune the numbers.</p>
+            <div class="mt-5 grid sm:grid-cols-3 gap-3">
+              <label class="choice"><input type="radio" name="tier" data-bind="tier" data-label="Intimate" data-set="price=250000;perGuest=3200;capacity=80"><span class="choice-body block"><span class="font-semibold text-forest block">Intimate</span><span class="text-xs text-muted">up to 80 guests</span></span></label>
+              <label class="choice"><input type="radio" name="tier" data-bind="tier" data-label="Classic" data-set="price=400000;perGuest=3800;capacity=200" checked><span class="choice-body block"><span class="font-semibold text-forest block">Classic</span><span class="text-xs text-muted">up to 200 guests</span></span></label>
+              <label class="choice"><input type="radio" name="tier" data-bind="tier" data-label="Grand" data-set="price=650000;perGuest=4200;capacity=300"><span class="choice-body block"><span class="font-semibold text-forest block">Grand</span><span class="text-xs text-muted">up to 300 guests</span></span></label>
+            </div>
+            <div class="mt-5 grid sm:grid-cols-3 gap-4">
+              <div><label class="label" for="price">Base price (LKR)</label><input id="price" name="price" type="number" min="0" step="1000" class="input" value="400000" data-bind="price" required></div>
+              <div><label class="label" for="perGuest">Per guest (LKR)</label><input id="perGuest" name="perGuest" type="number" min="0" step="50" class="input" value="3800" data-bind="perGuest"></div>
+              <div><label class="label" for="capacity">Max guests</label><input id="capacity" name="capacity" type="number" min="0" class="input" value="200" data-bind="capacity"></div>
+            </div>
+          </section>
+
+          <section class="card card-pad">
+            <h2 class="font-display text-2xl font-semibold text-forest flex items-center gap-3"><span class="sec-num text-xl">iii.</span>Listing status</h2>
+            <div class="mt-5 grid sm:grid-cols-3 gap-3">
+              <label class="choice"><input type="radio" name="status" value="active" data-bind="status" data-label="Active" checked><span class="choice-body block"><span class="badge badge-active">Active</span><span class="text-xs text-muted block mt-2">Bookable by couples</span></span></label>
+              <label class="choice"><input type="radio" name="status" value="pending" data-bind="status" data-label="Awaiting approval"><span class="choice-body block"><span class="badge badge-pending">Pending</span><span class="text-xs text-muted block mt-2">Hidden until approved</span></span></label>
+              <label class="choice"><input type="radio" name="status" value="suspended" data-bind="status" data-label="Suspended"><span class="choice-body block"><span class="badge badge-suspended">Suspended</span><span class="text-xs text-muted block mt-2">Hidden, bookings kept</span></span></label>
+            </div>
+          </section>
+
+          <div class="flex justify-end gap-2">
+            <a href="manage.html" class="btn btn-ghost">Cancel</a>
+            <button type="submit" class="btn btn-primary"><i data-lucide="save"></i>Save vendor</button>
+          </div>
+        </form>
+
+        <!-- Live preview -->
+        <aside class="xl:sticky xl:top-24">
+          <p class="label">Preview on the couple site</p>
+          <div class="card overflow-hidden">
+            <div class="h-44"><img class="img-cover" src="../../img/reception.jpg" alt=""></div>
+            <div class="p-5">
+              <p class="text-xs tracking-[.2em] uppercase text-brass font-bold"><span data-bound="category">Venue</span> · <span data-bound="location">Gampaha</span></p>
+              <h3 class="font-display text-3xl font-semibold text-forest mt-1" data-bound="name">The Garden House</h3>
+              <p class="text-sm text-muted mt-2 flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-brass"></i>Up to <span data-bound="capacity">200</span> guests · <span data-bound="tier">Classic</span></p>
+              <dl class="mt-4 space-y-2 text-sm border-t border-line pt-4">
+                <div class="flex justify-between"><dt class="text-ink/70">Base price</dt><dd class="font-semibold text-forest" data-bound="price" data-format="lkr">—</dd></div>
+                <div class="flex justify-between"><dt class="text-ink/70">Per guest</dt><dd class="font-semibold text-forest" data-bound="perGuest" data-format="lkr">—</dd></div>
+                <div class="flex justify-between"><dt class="text-ink/70">Status</dt><dd class="font-semibold" data-bound="status">Active</dd></div>
+              </dl>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

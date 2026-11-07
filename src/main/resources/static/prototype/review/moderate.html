@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moderate reviews · WedPlan staff</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="staff" data-active="reviews" data-user="admin">
+  <div data-slot="sidebar"></div>
+  <div class="lg:pl-72 min-h-screen">
+    <div data-slot="topbar"></div>
+    <main class="px-4 sm:px-8 py-8 max-w-5xl" data-tab-scope>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="eyebrow">Marketplace</span>
+          <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Reviews</h1>
+          <p class="text-muted mt-2">Check new reviews before they go live on vendor pages.</p>
+        </div>
+        <div class="tabs">
+          <button class="tab active" data-tab="pending">Pending <span class="count">2</span></button>
+          <button class="tab" data-tab="published">Published <span class="count">418</span></button>
+          <button class="tab" data-tab="hidden">Hidden <span class="count">3</span></button>
+        </div>
+      </div>
+
+      <!-- JSP: <c:forEach var="r" items="${pendingReviews}"> -->
+      <div class="mt-8 space-y-5" data-tab-panel="pending">
+        <article class="card card-pad">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="avatar">MT</span>
+            <div class="flex-1"><p class="font-semibold">Maya &amp; Tharindu <span class="text-muted font-normal">on</span> Seaside Pavilion</p><p class="text-xs text-muted mono">R5120 · BK2030 · today 09:14</p></div>
+            <span data-stars="5"></span>
+          </div>
+          <p class="mt-4 font-display text-2xl text-forest">"Sunset vows we'll never forget"</p>
+          <p class="mt-2 text-ink/75 leading-relaxed">The pavilion team handled the wind like pros and the dinner on the beach was everything we dreamed of.</p>
+          <div class="mt-5 flex flex-wrap justify-end gap-2">
+            <button class="btn btn-ghost btn-sm text-clay" data-modal-open="hide-modal" data-review="R5120"><i data-lucide="eye-off"></i>Hide</button>
+            <button class="btn btn-primary btn-sm" data-demo-click="Review published (prototype)"><i data-lucide="check"></i>Publish</button>
+          </div>
+        </article>
+        <article class="card card-pad border-clay/40">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="avatar">KR</span>
+            <div class="flex-1"><p class="font-semibold">Kasun &amp; Rehana <span class="text-muted font-normal">on</span> Drum &amp; Brass Collective</p><p class="text-xs text-muted mono">R5118 · BK1990 · yesterday</p></div>
+            <span data-stars="2"></span>
+          </div>
+          <p class="mt-4 font-display text-2xl text-forest">"Late and loud"</p>
+          <p class="mt-2 text-ink/75 leading-relaxed">Band arrived an hour late and the sound was far too loud for the hall. Contact number in this review: 077 xxx xxxx call me.</p>
+          <div class="alert alert-error mt-4"><i data-lucide="flag"></i><span>Contains a phone number. Reviews must not include personal contact details.</span></div>
+          <div class="mt-5 flex flex-wrap justify-end gap-2">
+            <button class="btn btn-ghost btn-sm text-clay" data-modal-open="hide-modal" data-review="R5118"><i data-lucide="eye-off"></i>Hide</button>
+            <button class="btn btn-outline btn-sm" data-demo-click="Sent back to the couple for editing (prototype)"><i data-lucide="undo-2"></i>Ask to edit</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-8 space-y-5 hidden" data-tab-panel="published">
+        <article class="card card-pad">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="avatar">DR</span>
+            <div class="flex-1"><p class="font-semibold">Dilini &amp; Ruwan <span class="text-muted font-normal">on</span> The Garden House</p><p class="text-xs text-muted mono">R5101 · published 5 Oct</p></div>
+            <span data-stars="5"></span>
+          </div>
+          <p class="mt-3 text-ink/75">"The rain plan saved us when a shower rolled in…"</p>
+        </article>
+      </div>
+
+      <div class="mt-8 space-y-5 hidden" data-tab-panel="hidden">
+        <div class="card card-pad text-center text-muted">3 hidden reviews. Hidden reviews never appear on the couple site.</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="hide-modal" role="dialog" aria-modal="true" aria-labelledby="hide-title">
+    <div class="modal-box">
+      <span class="stat-icon !bg-clay/10 !text-clay"><i data-lucide="eye-off"></i></span>
+      <h2 id="hide-title" class="font-display text-3xl font-semibold text-forest mt-4">Hide review <span data-fill="review" class="mono text-2xl"></span>?</h2>
+      <p class="mt-2 text-sm text-ink/70">It won't appear on the vendor page or count towards their rating.</p>
+      <label class="block mt-5"><span class="label">Reason</span>
+        <select class="select"><option>Personal contact details</option><option>Offensive language</option><option>Not about this vendor</option><option>Spam</option></select>
+      </label>
+      <div class="mt-6 flex justify-end gap-2">
+        <button class="btn btn-ghost" data-modal-close>Cancel</button>
+        <button class="btn btn-danger" data-demo-click="Review hidden (prototype)">Hide review</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
