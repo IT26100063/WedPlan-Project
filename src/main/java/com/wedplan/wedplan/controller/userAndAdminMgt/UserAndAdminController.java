@@ -1,7 +1,7 @@
-package com.wedplan.wedplan.controller.userAndAdminMgt;
+package com.wedplan.wedplan.controller.userandAdminMgt;
 
-import com.wedplan.wedplan.model.userandadminMgt.UserAndAdminModel;
-import com.wedplan.wedplan.services.userAndAdminMgt.UserAndAdminService;
+import com.wedplan.wedplan.model.userandAdminMgt.UserAndAdminModel;
+import com.wedplan.wedplan.services.userandAdminMgt.UserAndAdminService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +34,20 @@ public class UserAndAdminController {
     @GetMapping("/{id}")
     public ResponseEntity<UserAndAdminModel> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getUserById(id));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserAndAdminModel credentials) {
+        UserAndAdminModel authenticated = service.authenticate(credentials.getEmail(), credentials.getPassword());
+        if (authenticated == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+        return ResponseEntity.ok(authenticated);
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<UserAndAdminModel> getUserByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(service.getUserByEmail(email));
     }
 
     @PutMapping("/{id}")
