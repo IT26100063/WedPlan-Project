@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Booking requested · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="public" data-active="bookings" data-user="couple">
+  <div data-slot="header"></div>
+
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-10">
+    <div class="steps">
+      <div class="step done"><span class="step-dot"><i data-lucide="check"></i></span>Choose vendor</div>
+      <span class="step-line"></span>
+      <div class="step done"><span class="step-dot"><i data-lucide="check"></i></span>Review &amp; request</div>
+      <span class="step-line"></span>
+      <div class="step current"><span class="step-dot">3</span>Requested</div>
+    </div>
+
+    <div class="mt-10 grid lg:grid-cols-[1fr_420px] gap-10 items-start">
+      <div class="reveal">
+        <span class="stat-icon !w-16 !h-16 !rounded-full !bg-sage/15 !text-sage"><i data-lucide="heart-handshake" class="!w-7 !h-7"></i></span>
+        <h1 class="font-display text-5xl sm:text-6xl font-semibold text-forest mt-6">Your date is <em class="italic text-brass">on hold.</em></h1>
+        <p class="mt-4 text-lg text-ink/70 max-w-xl">We've sent your request to The Garden House. They'll confirm within 48 hours, and we'll email you the moment they do.</p>
+
+        <ol class="mt-10 space-y-6">
+          <li class="flex gap-5"><span class="font-display italic text-3xl text-brass w-8">i.</span><div><h3 class="font-semibold text-forest">Vendor confirms</h3><p class="text-sm text-ink/65 mt-1">Usually within a day. You'll see the status change in My bookings.</p></div></li>
+          <li class="flex gap-5"><span class="font-display italic text-3xl text-brass w-8">ii.</span><div><h3 class="font-semibold text-forest">Pay the 30% deposit</h3><p class="text-sm text-ink/65 mt-1">By card or bank transfer (bank transfers save a further 5%).</p></div></li>
+          <li class="flex gap-5"><span class="font-display italic text-3xl text-brass w-8">iii.</span><div><h3 class="font-semibold text-forest">Plan the rest</h3><p class="text-sm text-ink/65 mt-1">Add a photographer, florist and music to complete your team.</p></div></li>
+        </ol>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="my-bookings.html" class="btn btn-primary btn-lg"><i data-lucide="calendar-heart"></i>View my bookings</a>
+          <a href="../vendor/list.html" class="btn btn-outline btn-lg">Keep planning</a>
+        </div>
+      </div>
+
+      <aside class="card overflow-hidden reveal">
+        <div class="h-44 relative"><img class="img-cover" src="../../img/reception.jpg" alt="The Garden House"><span class="absolute top-4 left-4 badge badge-pending bg-paper/95">Awaiting vendor</span></div>
+        <div class="p-6">
+          <div class="flex items-center justify-between"><p class="label !mb-0">Booking reference</p><span class="mono text-sm font-semibold text-forest">BK2041</span></div>
+          <h2 class="font-display text-3xl font-semibold text-forest mt-3">The Garden House</h2>
+          <p class="text-sm text-muted">Classic package · 150 guests</p>
+          <dl class="mt-5 grid grid-cols-2 gap-4 text-sm">
+            <div><dt class="label !mb-1">Date</dt><dd class="font-semibold">Sun 18 Apr 2027</dd></div>
+            <div><dt class="label !mb-1">Ceremony</dt><dd class="font-semibold">Afternoon</dd></div>
+          </dl>
+          <dl class="mt-6 space-y-3 text-sm border-t border-line pt-5">
+            <div class="flex justify-between"><dt class="text-ink/70">Estimated total</dt><dd class="font-semibold text-forest">LKR 873,000</dd></div>
+            <div class="flex justify-between"><dt class="text-ink/70">Deposit after confirmation</dt><dd>LKR 261,900</dd></div>
+          </dl>
+          <div class="alert alert-info mt-6"><i data-lucide="info"></i><span>You can cancel for free up to 90 days before your date.</span></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

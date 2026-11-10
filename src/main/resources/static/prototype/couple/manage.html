@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Couples · WedPlan staff</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="staff" data-active="couples" data-user="staff">
+  <div data-slot="sidebar"></div>
+  <div class="lg:pl-72 min-h-screen">
+    <div data-slot="topbar"></div>
+    <main class="px-4 sm:px-8 py-8 max-w-7xl">
+      <div>
+        <span class="eyebrow">Planner desk</span>
+        <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Couples</h1>
+        <p class="text-muted mt-2">Everyone planning with WedPlan. Upgrade to Plus or deactivate an account.</p>
+      </div>
+
+      <div class="card mt-8">
+        <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto] border-b border-line">
+          <div class="input-icon"><i data-lucide="search"></i><input class="input !py-2.5" placeholder="Search by name, email or ID…" data-filter-target="#couple-table"></div>
+          <select class="select !py-2.5 md:w-44" data-filter-target="#couple-table" data-filter-attr="tier">
+            <option value="">All couples</option><option value="plus">Plus</option><option value="free">Free</option><option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="couple-table">
+            <thead><tr><th>Couple</th><th>Contact</th><th>Wedding</th><th>Bookings</th><th>Tier</th><th class="text-right">Actions</th></tr></thead>
+            <tbody>
+              <!-- JSP: <c:forEach var="c" items="${couples}"> -->
+              <tr data-item data-tier="plus">
+                <td><div class="flex items-center gap-3"><span class="avatar avatar-brass">NK</span><div><p class="font-semibold">Nethmi &amp; Kavin</p><p class="text-xs text-muted mono">C1001</p></div></div></td>
+                <td><p>nethmi@example.com</p><p class="text-xs text-muted">+94 77 123 4567</p></td>
+                <td>18 Apr 2027</td><td>3 active</td>
+                <td><span class="badge badge-plus no-dot"><i data-lucide="gem"></i>Plus</span></td>
+                <td class="text-right"><button class="btn btn-ghost btn-sm" data-demo-click="Plus removed (prototype)">Remove Plus</button></td>
+              </tr>
+              <tr data-item data-tier="free">
+                <td><div class="flex items-center gap-3"><span class="avatar">DR</span><div><p class="font-semibold">Dilini &amp; Ruwan</p><p class="text-xs text-muted mono">C1003</p></div></div></td>
+                <td><p>dilini.j@example.com</p><p class="text-xs text-muted">+94 71 555 0182</p></td>
+                <td>3 Oct 2026</td><td>2 completed</td>
+                <td><span class="badge badge-outline no-dot">Free</span></td>
+                <td class="text-right"><button class="btn btn-ghost btn-sm" data-modal-open="plus-modal" data-couple="Dilini &amp; Ruwan"><i data-lucide="gem"></i>Make Plus</button></td>
+              </tr>
+              <tr data-item data-tier="free">
+                <td><div class="flex items-center gap-3"><span class="avatar">MT</span><div><p class="font-semibold">Maya &amp; Tharindu</p><p class="text-xs text-muted mono">C1004</p></div></div></td>
+                <td><p>maya.t@example.com</p><p class="text-xs text-muted">+94 76 210 9934</p></td>
+                <td>31 Oct 2026</td><td>1 active</td>
+                <td><span class="badge badge-outline no-dot">Free</span></td>
+                <td class="text-right"><button class="btn btn-ghost btn-sm" data-modal-open="plus-modal" data-couple="Maya &amp; Tharindu"><i data-lucide="gem"></i>Make Plus</button></td>
+              </tr>
+              <tr data-item data-tier="free">
+                <td><div class="flex items-center gap-3"><span class="avatar">SA</span><div><p class="font-semibold">Sarah &amp; Ashan</p><p class="text-xs text-muted mono">C1005</p></div></div></td>
+                <td><p>sarah.c@example.com</p><p class="text-xs text-muted">+94 70 884 1203</p></td>
+                <td>21 Nov 2026</td><td>1 active</td>
+                <td><span class="badge badge-outline no-dot">Free</span></td>
+                <td class="text-right"><button class="btn btn-ghost btn-sm" data-modal-open="plus-modal" data-couple="Sarah &amp; Ashan"><i data-lucide="gem"></i>Make Plus</button></td>
+              </tr>
+              <tr data-item data-tier="plus">
+                <td><div class="flex items-center gap-3"><span class="avatar avatar-brass">HC</span><div><p class="font-semibold">Hasini &amp; Chamath</p><p class="text-xs text-muted mono">C1007</p></div></div></td>
+                <td><p>hasini@example.com</p><p class="text-xs text-muted">+94 77 908 3321</p></td>
+                <td>5 Dec 2026</td><td>1 requested</td>
+                <td><span class="badge badge-plus no-dot"><i data-lucide="gem"></i>Plus</span></td>
+                <td class="text-right"><button class="btn btn-ghost btn-sm" data-demo-click="Plus removed (prototype)">Remove Plus</button></td>
+              </tr>
+              <tr data-item data-tier="inactive" class="text-ink/60">
+                <td><div class="flex items-center gap-3"><span class="avatar">RS</span><div><p class="font-semibold">Rashmi &amp; Sajith</p><p class="text-xs text-muted mono">C0988</p></div></div></td>
+                <td><p>rashmi@example.com</p><p class="text-xs text-muted">—</p></td>
+                <td>—</td><td>0</td>
+                <td><span class="badge badge-retired">Inactive</span></td>
+                <td class="text-right"><button class="btn btn-ghost btn-sm" data-demo-click="Account reactivated (prototype)">Reactivate</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="hidden p-10 text-center text-muted" data-empty-for="#couple-table">No couples match.</div>
+        <div class="px-5 py-4 border-t border-line text-sm text-muted">Showing <span data-count-for="#couple-table" class="font-semibold text-forest">6</span> couples</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="plus-modal" role="dialog" aria-modal="true" aria-labelledby="plus-title">
+    <div class="modal-box">
+      <span class="stat-icon"><i data-lucide="gem"></i></span>
+      <h2 id="plus-title" class="font-display text-3xl font-semibold text-forest mt-4">Make <span data-fill="couple">couple</span> Plus?</h2>
+      <p class="mt-2 text-sm text-ink/70">They get 10% off every future booking and payment. Payments already recorded are not changed.</p>
+      <div class="mt-6 flex justify-end gap-2">
+        <button class="btn btn-ghost" data-modal-close>Cancel</button>
+        <button class="btn btn-primary" data-demo-click="Upgraded to Plus (prototype)"><i data-lucide="gem"></i>Upgrade</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

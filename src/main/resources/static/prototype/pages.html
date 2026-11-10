@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page index · WedPlan UI prototype</title>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../css/theme.css">
+</head>
+<!-- Team page: every prototype page grouped by component. Not part of the real website. -->
+<body>
+  <main class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 py-14">
+    <div class="flex items-center gap-3">
+      <img src="../img/favicon.svg" class="w-12 h-12" alt="">
+      <div>
+        <p class="font-display text-3xl font-semibold text-forest leading-none">WedPlan<span class="text-brass">.</span></p>
+        <p class="text-xs tracking-[.25em] uppercase text-muted mt-1">UI prototype · page index</p>
+      </div>
+    </div>
+
+    <div class="mt-8 grid lg:grid-cols-[1fr_380px] gap-6">
+      <div class="alert alert-brass"><i data-lucide="info"></i>
+        <span>These pages are a <strong>design prototype</strong> with sample data. Buttons and forms only pretend to work (you'll see a small message).
+        Each component owner converts their pages to JSP in <code class="mono">WEB-INF/views/&lt;component&gt;/</code> once their servlets are ready. See <code class="mono">prototype/README.md</code>.</span>
+      </div>
+      <div class="card p-5 flex flex-wrap gap-2 items-center">
+        <span class="label !mb-0 w-full">Shared files</span>
+        <span class="badge badge-outline no-dot">css/theme.css</span>
+        <span class="badge badge-outline no-dot">js/app.js</span>
+        <span class="badge badge-outline no-dot">js/layout.js</span>
+        <span class="badge badge-outline no-dot">js/tailwind.config.js</span>
+      </div>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <!-- Couple / User -->
+      <section class="card card-pad">
+        <div class="flex items-center justify-between"><h2 class="font-display text-2xl font-semibold text-forest">Couple / User</h2><span class="mono text-xs">couples.txt</span></div>
+        <ul class="mt-4 space-y-1">
+          <li><a class="dropdown-item" href="couple/login.html"><i data-lucide="log-in"></i>Sign in<span class="ml-auto badge badge-outline no-dot">Public</span></a></li>
+          <li><a class="dropdown-item" href="couple/register.html"><i data-lucide="user-plus"></i>Create account<span class="ml-auto badge badge-outline no-dot">Public</span></a></li>
+          <li><a class="dropdown-item" href="couple/dashboard.html"><i data-lucide="layout-dashboard"></i>Our wedding<span class="ml-auto badge badge-active">Couple</span></a></li>
+          <li><a class="dropdown-item" href="couple/profile.html"><i data-lucide="user"></i>Profile &amp; password<span class="ml-auto badge badge-active">Couple</span></a></li>
+          <li><a class="dropdown-item" href="couple/manage.html"><i data-lucide="users"></i>Manage couples<span class="ml-auto badge badge-staff">Staff</span></a></li>
+        </ul>
+      </section>
+
+      <!-- Vendor -->
+      <section class="card card-pad">
+        <div class="flex items-center justify-between"><h2 class="font-display text-2xl font-semibold text-forest">Vendor</h2><span class="mono text-xs">vendors.txt</span></div>
+        <ul class="mt-4 space-y-1">
+          <li><a class="dropdown-item" href="vendor/list.html"><i data-lucide="store"></i>Find vendors<span class="ml-auto badge badge-outline no-dot">Public</span></a></li>
+          <li><a class="dropdown-item" href="vendor/detail.html"><i data-lucide="eye"></i>Vendor details<span class="ml-auto badge badge-outline no-dot">Public</span></a></li>
+          <li><a class="dropdown-item" href="vendor/manage.html"><i data-lucide="clipboard-list"></i>Manage vendors<span class="ml-auto badge badge-admin">Admin</span></a></li>
+          <li><a class="dropdown-item" href="vendor/form.html"><i data-lucide="plus"></i>Add / edit vendor<span class="ml-auto badge badge-admin">Admin</span></a></li>
+        </ul>
+      </section>
+
+      <!-- Booking -->
+      <section class="card card-pad">
+        <div class="flex items-center justify-between"><h2 class="font-display text-2xl font-semibold text-forest">Booking</h2><span class="mono text-xs">bookings.txt</span></div>
+        <ul class="mt-4 space-y-1">
+          <li><a class="dropdown-item" href="booking/book.html"><i data-lucide="calendar-heart"></i>Book a vendor<span class="ml-auto badge badge-active">Couple</span></a></li>
+          <li><a class="dropdown-item" href="booking/confirmation.html"><i data-lucide="circle-check"></i>Booking requested<span class="ml-auto badge badge-active">Couple</span></a></li>
+          <li><a class="dropdown-item" href="booking/my-bookings.html"><i data-lucide="calendar-days"></i>My bookings<span class="ml-auto badge badge-active">Couple</span></a></li>
+          <li><a class="dropdown-item" href="booking/manage.html"><i data-lucide="calendar-check"></i>Bookings &amp; confirmation<span class="ml-auto badge badge-staff">Staff</span></a></li>
+        </ul>
+      </section>
+
+      <!-- Payment -->
+      <section class="card card-pad">
+        <div class="flex items-center justify-between"><h2 class="font-display text-2xl font-semibold text-forest">Payment</h2><span class="mono text-xs">payments.txt</span></div>
+        <ul class="mt-4 space-y-1">
+          <li><a class="dropdown-item" href="payment/list.html"><i data-lucide="wallet"></i>Payments<span class="ml-auto badge badge-staff">Staff</span></a></li>
+          <li><a class="dropdown-item" href="payment/record.html"><i data-lucide="banknote"></i>Record payment<span class="ml-auto badge badge-staff">Staff</span></a></li>
+          <li><a class="dropdown-item" href="payment/invoice.html"><i data-lucide="receipt"></i>Invoice (printable)<span class="ml-auto badge badge-staff">Staff</span></a></li>
+        </ul>
+      </section>
+
+      <!-- Admin / Staff -->
+      <section class="card card-pad">
+        <div class="flex items-center justify-between"><h2 class="font-display text-2xl font-semibold text-forest">Admin / Staff</h2><span class="mono text-xs">staff.txt</span></div>
+        <ul class="mt-4 space-y-1">
+          <li><a class="dropdown-item" href="admin/login.html"><i data-lucide="key-round"></i>Staff portal sign in<span class="ml-auto badge badge-outline no-dot">Public</span></a></li>
+          <li><a class="dropdown-item" href="admin/dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard<span class="ml-auto badge badge-staff">Staff</span></a></li>
+          <li><a class="dropdown-item" href="admin/staff.html"><i data-lucide="user-cog"></i>Staff accounts<span class="ml-auto badge badge-admin">Admin</span></a></li>
+          <li><a class="dropdown-item" href="admin/staff-form.html"><i data-lucide="user-plus"></i>Add / edit staff<span class="ml-auto badge badge-admin">Admin</span></a></li>
+        </ul>
+      </section>
+
+      <!-- Review -->
+      <section class="card card-pad">
+        <div class="flex items-center justify-between"><h2 class="font-display text-2xl font-semibold text-forest">Feedback / Review</h2><span class="mono text-xs">reviews.txt</span></div>
+        <ul class="mt-4 space-y-1">
+          <li><a class="dropdown-item" href="review/list.html"><i data-lucide="message-square-quote"></i>Couple stories<span class="ml-auto badge badge-outline no-dot">Public</span></a></li>
+          <li><a class="dropdown-item" href="review/write.html"><i data-lucide="pencil"></i>Write a review<span class="ml-auto badge badge-active">Couple</span></a></li>
+          <li><a class="dropdown-item" href="review/moderate.html"><i data-lucide="shield-check"></i>Moderate reviews<span class="ml-auto badge badge-admin">Admin</span></a></li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="card card-pad mt-6 flex flex-wrap items-center gap-3">
+      <h2 class="font-display text-2xl font-semibold text-forest mr-auto">Shared pages</h2>
+      <a class="btn btn-light btn-sm" href="index.html"><i data-lucide="heart"></i>Home page</a>
+      <a class="btn btn-light btn-sm" href="error.html"><i data-lucide="shield-alert"></i>Error / access denied</a>
+    </section>
+  </main>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

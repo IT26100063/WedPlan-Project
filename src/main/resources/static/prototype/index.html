@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WedPlan · Your day, beautifully planned</title>
+  <meta name="description" content="Plan your wedding with WedPlan. Find trusted vendors across Sri Lanka, book packages and keep every detail in one place.">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../css/theme.css">
+</head>
+<body data-root="" data-layout="public" data-active="home" data-user="none">
+  <div data-slot="header"></div>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 pt-10 lg:pt-16 overflow-x-clip">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 reveal">
+          <span class="eyebrow">Your wedding, your way</span>
+          <h1 class="font-display text-[3.2rem] leading-[1.02] sm:text-7xl lg:text-[5.4rem] font-semibold text-forest mt-6">
+            The beginning of your <em class="italic font-medium text-brass">best day.</em>
+          </h1>
+          <p class="mt-6 text-lg text-ink/70 max-w-lg leading-relaxed">
+            Find the venues, photographers, florists and musicians who get your vision. Book a package,
+            keep every detail in one place and enjoy the feeling of it all coming together.
+          </p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a href="vendor/list.html" class="btn btn-primary btn-lg">Explore vendors <i data-lucide="arrow-right"></i></a>
+            <a href="#how" class="btn btn-outline btn-lg">See how it works</a>
+          </div>
+          <dl class="mt-12 grid grid-cols-3 max-w-md divide-x divide-line">
+            <div class="pr-4">
+              <dt class="text-xs text-muted uppercase tracking-widest">Vendors</dt>
+              <dd class="font-display text-4xl text-forest font-semibold">120<span class="text-brass text-2xl">+</span></dd>
+            </div>
+            <div class="px-4">
+              <dt class="text-xs text-muted uppercase tracking-widest">Rating</dt>
+              <dd class="font-display text-4xl text-forest font-semibold">4.9<span class="text-brass text-2xl">★</span></dd>
+            </div>
+            <div class="pl-4">
+              <dt class="text-xs text-muted uppercase tracking-widest">Weddings</dt>
+              <dd class="font-display text-4xl text-forest font-semibold">860</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="lg:col-span-6 relative reveal">
+          <div class="veil-glow"></div>
+          <div class="arch h-[480px] sm:h-[600px] lg:ml-10 shadow-2xl shadow-forest/25 img-zoom relative">
+            <img class="img-cover object-[center_42%]" src="../img/hero-couple.jpg" alt="A bride and groom embracing on a pebble beach, her long veil spread across the stones">
+          </div>
+          <!-- rotating badge -->
+          <div class="absolute -left-2 sm:left-0 bottom-16 w-32 h-32 rounded-full bg-ivory grid place-items-center shadow-xl shadow-forest/10">
+            <svg viewBox="0 0 120 120" class="absolute inset-0 w-full h-full rotating-badge text-forest" aria-hidden="true">
+              <defs><path id="badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+              <text font-size="9.6" letter-spacing="2.6" font-weight="700" fill="currentColor"><textPath href="#badge-circle">PLANNED WITH LOVE · SINCE 2019 ·</textPath></text>
+            </svg>
+            <i data-lucide="heart" class="w-7 h-7 text-brass"></i>
+          </div>
+          <!-- floating date card -->
+          <div class="absolute right-3 sm:-right-4 -bottom-6 card px-5 py-4 flex items-center gap-4">
+            <span class="stat-icon"><i data-lucide="calendar-heart"></i></span>
+            <div>
+              <p class="text-xs text-muted uppercase tracking-widest">Packages from</p>
+              <p class="font-display text-2xl font-semibold text-forest">LKR 85,000 <span class="text-sm font-sans font-medium text-muted">/ event</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search bar -->
+      <!-- JSP: action="${pageContext.request.contextPath}/vendors" method="get" -->
+      <form action="vendor/list.html" method="get" data-booking-calc data-default-dates
+            class="card mt-20 p-3 sm:p-4 grid gap-3 md:grid-cols-[1fr_1fr_1fr_.8fr_auto] items-end reveal">
+        <label class="block px-3 py-2">
+          <span class="label">Wedding date</span>
+          <input type="date" name="eventDate" required class="w-full bg-transparent font-semibold text-forest focus:outline-none">
+        </label>
+        <label class="block px-3 py-2 md:border-l md:border-line">
+          <span class="label">I'm looking for</span>
+          <select name="category" class="w-full bg-transparent font-semibold text-forest focus:outline-none">
+            <option value="">All vendors</option>
+            <option value="venue">Venues</option>
+            <option value="photography">Photography</option>
+            <option value="beauty">Beauty</option>
+            <option value="florals">Florals</option>
+            <option value="catering">Catering</option>
+            <option value="music">Music</option>
+          </select>
+        </label>
+        <label class="block px-3 py-2 md:border-l md:border-line">
+          <span class="label">Location</span>
+          <select name="location" class="w-full bg-transparent font-semibold text-forest focus:outline-none">
+            <option value="">Anywhere in Sri Lanka</option>
+            <option value="colombo">Colombo</option>
+            <option value="gampaha">Gampaha</option>
+            <option value="kandy">Kandy</option>
+            <option value="galle">Galle</option>
+          </select>
+        </label>
+        <label class="block px-3 py-2 md:border-l md:border-line">
+          <span class="label">Guests</span>
+          <select name="guests" class="w-full bg-transparent font-semibold text-forest focus:outline-none">
+            <option value="50">Up to 50</option>
+            <option value="100">50 – 100</option>
+            <option value="150" selected>100 – 150</option>
+            <option value="250">150 – 250</option>
+            <option value="400">250+</option>
+          </select>
+        </label>
+        <button type="submit" class="btn btn-brass btn-lg h-full min-h-[3.5rem]"><i data-lucide="search"></i>Find your people</button>
+      </form>
+      <p class="mt-3 text-center text-xs text-muted"><span data-out="countdown">—</span> · sending an inquiry is free, nothing is charged online</p>
+    </section>
+
+    <!-- ============ VENDORS ============ -->
+    <section class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 mt-28">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 reveal">
+        <div>
+          <p class="sec-num text-2xl">01</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-1">Find your kind of wonderful</h2>
+          <p class="mt-3 text-ink/65 max-w-xl">From the first look to the final song, meet local wedding professionals who can bring your plans to life.</p>
+        </div>
+        <a href="vendor/list.html" class="btn btn-outline">See all vendors <i data-lucide="arrow-right"></i></a>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-3 gap-8">
+        <article class="group reveal">
+          <a href="vendor/list.html?category=venue" class="block arch h-[380px] img-zoom">
+            <img class="img-cover" src="../img/reception.jpg" alt="A reception table set with candles and flowers">
+          </a>
+          <div class="mt-5 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-display text-3xl font-semibold text-forest">Venues</h3>
+              <p class="text-sm text-muted mt-1 flex items-center gap-3"><span class="inline-flex items-center gap-1"><i data-lucide="store" class="w-4 h-4"></i>28 venues</span><span class="inline-flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i>50 – 600 guests</span></p>
+            </div>
+            <p class="text-right"><span class="block text-xs text-muted">from</span><span class="font-semibold text-forest">LKR 250,000</span></p>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 leading-relaxed">Garden lawns, ballrooms and beach pavilions, each with a date calendar you can check instantly.</p>
+        </article>
+
+        <article class="group reveal md:mt-12">
+          <a href="vendor/list.html?category=photography" class="block arch h-[380px] img-zoom">
+            <img class="img-cover" src="../img/photography.jpg" alt="A wedding photographer at work">
+          </a>
+          <div class="mt-5 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-display text-3xl font-semibold text-forest">Photography</h3>
+              <p class="text-sm text-muted mt-1 flex items-center gap-3"><span class="inline-flex items-center gap-1"><i data-lucide="store" class="w-4 h-4"></i>34 studios</span><span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i>4 – 12 hours</span></p>
+            </div>
+            <p class="text-right"><span class="block text-xs text-muted">from</span><span class="font-semibold text-forest">LKR 120,000</span></p>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 leading-relaxed">Warm, story-led photographs and films that keep the moments you'll want to live again.</p>
+        </article>
+
+        <article class="group reveal">
+          <a href="vendor/list.html?category=florals" class="block arch h-[380px] img-zoom">
+            <img class="img-cover" src="../img/florals.jpg" alt="A loose bridal bouquet of seasonal flowers">
+          </a>
+          <div class="mt-5 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-display text-3xl font-semibold text-forest">Florals</h3>
+              <p class="text-sm text-muted mt-1 flex items-center gap-3"><span class="inline-flex items-center gap-1"><i data-lucide="store" class="w-4 h-4"></i>19 florists</span><span class="inline-flex items-center gap-1"><i data-lucide="flower-2" class="w-4 h-4"></i>Bouquets to arches</span></p>
+            </div>
+            <p class="text-right"><span class="block text-xs text-muted">from</span><span class="font-semibold text-forest">LKR 85,000</span></p>
+          </div>
+          <p class="mt-3 text-sm text-ink/65 leading-relaxed">Natural arrangements with a little whimsy, from the bouquet to the ceremony arch.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section id="how" class="mt-32 bg-sand/60 py-24 scroll-mt-20">
+      <div class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 reveal">
+          <p class="sec-num text-2xl">02</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-1">Planning can feel like part of the celebration</h2>
+          <p class="mt-4 text-ink/65 leading-relaxed">Less juggling of tabs and spreadsheets, more time shaping a day that feels like you.</p>
+
+          <ol class="mt-10 space-y-7">
+            <li class="flex gap-5">
+              <span class="font-display italic text-3xl text-brass w-8">i.</span>
+              <div>
+                <h3 class="font-semibold text-forest text-lg">Explore with a feeling in mind</h3>
+                <p class="text-sm text-ink/65 mt-1">Browse by service, location and date to see who is free on your day.</p>
+              </div>
+            </li>
+            <li class="flex gap-5">
+              <span class="font-display italic text-3xl text-brass w-8">ii.</span>
+              <div>
+                <h3 class="font-semibold text-forest text-lg">Choose a package</h3>
+                <p class="text-sm text-ink/65 mt-1">Compare clear package prices, add your guest count and see the total before you book.</p>
+              </div>
+            </li>
+            <li class="flex gap-5">
+              <span class="font-display italic text-3xl text-brass w-8">iii.</span>
+              <div>
+                <h3 class="font-semibold text-forest text-lg">Book and relax</h3>
+                <p class="text-sm text-ink/65 mt-1">The vendor confirms, you pay a 30% deposit, and every booking lives in one dashboard.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-2 gap-5 reveal">
+          <div class="arch h-[440px] row-span-2 img-zoom">
+            <img class="img-cover" src="../img/beauty.jpg" alt="A bride having her makeup done">
+          </div>
+          <div class="rounded-[22px] overflow-hidden h-[210px] img-zoom">
+            <img class="img-cover" src="../img/catering.jpg" alt="A wedding catering spread">
+          </div>
+          <div class="rounded-[22px] overflow-hidden h-[210px] img-zoom">
+            <img class="img-cover" src="../img/music.jpg" alt="Live musicians playing at a reception">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATEGORIES ============ -->
+    <section class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 mt-24">
+      <div class="ornament mb-12"><span></span></div>
+      <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 text-center reveal">
+        <li><a href="vendor/list.html?category=venue" class="block group"><span class="stat-icon mx-auto w-14 h-14 rounded-full group-hover:bg-brass/25 transition"><i data-lucide="church"></i></span><p class="mt-3 text-sm font-semibold text-forest">Venues</p></a></li>
+        <li><a href="vendor/list.html?category=photography" class="block group"><span class="stat-icon mx-auto w-14 h-14 rounded-full group-hover:bg-brass/25 transition"><i data-lucide="camera"></i></span><p class="mt-3 text-sm font-semibold text-forest">Photography</p></a></li>
+        <li><a href="vendor/list.html?category=beauty" class="block group"><span class="stat-icon mx-auto w-14 h-14 rounded-full group-hover:bg-brass/25 transition"><i data-lucide="sparkles"></i></span><p class="mt-3 text-sm font-semibold text-forest">Beauty</p></a></li>
+        <li><a href="vendor/list.html?category=florals" class="block group"><span class="stat-icon mx-auto w-14 h-14 rounded-full group-hover:bg-brass/25 transition"><i data-lucide="flower-2"></i></span><p class="mt-3 text-sm font-semibold text-forest">Florals</p></a></li>
+        <li><a href="vendor/list.html?category=catering" class="block group"><span class="stat-icon mx-auto w-14 h-14 rounded-full group-hover:bg-brass/25 transition"><i data-lucide="utensils"></i></span><p class="mt-3 text-sm font-semibold text-forest">Catering</p></a></li>
+        <li><a href="vendor/list.html?category=music" class="block group"><span class="stat-icon mx-auto w-14 h-14 rounded-full group-hover:bg-brass/25 transition"><i data-lucide="music"></i></span><p class="mt-3 text-sm font-semibold text-forest">Music</p></a></li>
+      </ul>
+    </section>
+
+    <!-- ============ STORIES ============ -->
+    <section class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 mt-28">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 reveal">
+        <div>
+          <p class="sec-num text-2xl">03</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-1">Couple stories</h2>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="font-display text-5xl font-semibold text-forest">4.9</span>
+          <div>
+            <span data-stars="5"></span>
+            <p class="text-xs text-muted mt-1">from 418 verified bookings</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <figure class="card card-pad card-hover reveal">
+          <i data-lucide="quote" class="w-8 h-8 text-brass/60"></i>
+          <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"We found our venue, photographer and florist in one weekend. On the day, everything just happened."</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="avatar">DR</span>
+            <span class="text-sm"><span class="font-semibold block">Dilini &amp; Ruwan</span><span class="text-muted">The Garden House</span></span>
+            <span class="badge badge-verified ml-auto">Verified</span>
+          </figcaption>
+        </figure>
+        <figure class="card card-pad card-hover reveal">
+          <i data-lucide="quote" class="w-8 h-8 text-brass/60"></i>
+          <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"Seeing the total with our guest count before booking saved so many awkward phone calls."</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="avatar">SA</span>
+            <span class="text-sm"><span class="font-semibold block">Sarah &amp; Ashan</span><span class="text-muted">Table for Two Catering</span></span>
+            <span class="badge badge-verified ml-auto">Verified</span>
+          </figcaption>
+        </figure>
+        <figure class="card card-pad card-hover reveal">
+          <i data-lucide="quote" class="w-8 h-8 text-brass/60"></i>
+          <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">"Our beach photos by Golden Hour still make us cry. Booking took five minutes."</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="avatar">MT</span>
+            <span class="text-sm"><span class="font-semibold block">Maya &amp; Tharindu</span><span class="text-muted">Golden Hour Studio</span></span>
+            <span class="badge badge-verified ml-auto">Verified</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="mx-auto max-w-site px-4 sm:px-6 lg:px-8 mt-28">
+      <div class="panel-dark rounded-[28px] overflow-hidden grid md:grid-cols-2 reveal">
+        <div class="p-10 sm:p-14">
+          <span class="eyebrow">Plus members save more</span>
+          <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-5 leading-tight">Your forever starts with <em class="italic text-brass-light">a single yes.</em></h2>
+          <p class="mt-5 text-ivory/65 max-w-md">Create a free account to book vendors in minutes, track deposits and countdowns, and leave a verified review after your day. Plus members enjoy 10% off every booking.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="couple/register.html" class="btn btn-brass btn-lg">Create an account</a>
+            <a href="couple/login.html" class="btn btn-lg text-ivory border border-ivory/25 hover:bg-ivory/10">Sign in</a>
+          </div>
+        </div>
+        <div class="min-h-[280px]">
+          <img class="img-cover object-[center_35%]" src="../img/hero-couple.jpg" alt="A couple embracing by the sea">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-slot="footer"></div>
+  <script src="../js/layout.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add staff · WedPlan staff</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="staff" data-active="staff" data-user="admin">
+  <div data-slot="sidebar"></div>
+  <div class="lg:pl-72 min-h-screen">
+    <div data-slot="topbar"></div>
+    <main class="px-4 sm:px-8 py-8 max-w-3xl">
+      <a href="staff.html" class="text-sm text-muted hover:text-forest inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i>Staff accounts</a>
+      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Add staff member</h1>
+      <p class="text-muted mt-2">They'll get an email to set their own password.</p>
+
+      <!-- JSP: action="${pageContext.request.contextPath}/admin/staff/save" method="post" -->
+      <form class="card card-pad mt-8 space-y-6" data-demo="Staff member added (prototype)" data-next="staff.html">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div><label class="label" for="name">Full name</label><input id="name" class="input" placeholder="e.g. Tharushi Wijesinghe" required></div>
+          <div><label class="label" for="email">Work email</label><input id="email" type="email" class="input" placeholder="name@wedplan.lk" required></div>
+          <div><label class="label" for="phone">Phone</label><input id="phone" class="input" placeholder="+94 7X XXX XXXX"></div>
+          <div><label class="label" for="id">Staff ID</label><input id="id" class="input" value="S005" readonly></div>
+        </div>
+        <div>
+          <p class="label">Role</p>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <label class="choice"><input type="radio" name="role" value="staff" checked><span class="choice-body block"><span class="font-semibold text-forest flex items-center gap-2"><i data-lucide="headset" class="w-4 h-4 text-brass"></i>Planner support</span><span class="text-xs text-muted block mt-1">Bookings, payments and couples</span></span></label>
+            <label class="choice"><input type="radio" name="role" value="admin"><span class="choice-body block"><span class="font-semibold text-forest flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-brass"></i>Administrator</span><span class="text-xs text-muted block mt-1">Everything, including vendors, reviews and staff</span></span></label>
+          </div>
+        </div>
+        <label class="flex items-center justify-between gap-4 rounded-2xl border border-line px-4 py-3">
+          <span><span class="font-semibold text-forest text-sm block">Account active</span><span class="text-xs text-muted">Turn off to block sign-in without deleting the account.</span></span>
+          <span class="switch"><input type="checkbox" checked><span></span></span>
+        </label>
+        <div class="flex justify-end gap-2"><a href="staff.html" class="btn btn-ghost">Cancel</a><button type="submit" class="btn btn-primary"><i data-lucide="user-plus"></i>Add staff member</button></div>
+      </form>
+    </main>
+  </div>
+
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

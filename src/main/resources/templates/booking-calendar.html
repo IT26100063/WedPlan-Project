@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WedPlan | Wedding Calendar</title>
+
+    <link rel="stylesheet" th:href="@{/css/booking.css}">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: #F8F5EF;
+            color: #35272A;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .calendar-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 22px;
+        }
+
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .calendar-brand {
+            color: #813D45;
+            font-family: Georgia, serif;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .calendar-eyebrow {
+            color: #A6535B;
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin: 0 0 9px;
+        }
+
+        .calendar-title {
+            font-family: Georgia, serif;
+            font-size: clamp(30px, 5vw, 42px);
+            font-weight: 500;
+            margin: 0 0 8px;
+        }
+
+        .calendar-subtitle {
+            color: #817477;
+            margin: 0;
+        }
+
+        .calendar-back {
+            text-decoration: none;
+            background: #813D45;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 7px;
+            font-weight: 600;
+        }
+
+        .calendar-back:hover {
+            background: #632D34;
+            color: white;
+        }
+
+        .calendar-card {
+            background: #FFFEFA;
+            border: 1px solid #EAE0D7;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 28px rgba(70, 40, 40, 0.05);
+        }
+
+        .calendar-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .month-title {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            color: #813D45;
+            margin: 0;
+        }
+
+        .month-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .month-button {
+            border: 1px solid #E1D2C9;
+            background: #FFFEFA;
+            color: #813D45;
+            padding: 9px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .month-button:hover {
+            background: #F4E9E3;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .weekday {
+            text-align: center;
+            color: #8A7778;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 0;
+        }
+
+        .calendar-day {
+            min-height: 115px;
+            padding: 9px;
+            border: 1px solid #EEE6DF;
+            border-radius: 9px;
+            background: #FFFEFA;
+            min-width: 0;
+        }
+
+        .calendar-day.empty {
+            background: #F9F6F1;
+            border-color: transparent;
+        }
+
+        .day-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: #59484A;
+            margin-bottom: 7px;
+        }
+
+        .calendar-day.today {
+            border: 2px solid #C49A52;
+        }
+
+        .event-item {
+            display: block;
+            margin-top: 5px;
+            padding: 6px;
+            border-radius: 5px;
+            font-size: 11px;
+            line-height: 1.4;
+            overflow-wrap: anywhere;
+        }
+
+        .event-confirmed {
+            background: #E5EFE4;
+            color: #426747;
+            border-left: 3px solid #66856B;
+        }
+
+        .event-pending {
+            background: #F8EED9;
+            color: #89651E;
+            border-left: 3px solid #C79B47;
+        }
+
+        .event-cancelled {
+            background: #F2E4E3;
+            color: #8B5050;
+            border-left: 3px solid #A6535B;
+        }
+
+        .calendar-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 22px;
+            color: #756769;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .calendar-footer {
+            text-align: center;
+            margin-top: 28px;
+            color: #A09495;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .calendar-page { padding: 24px 10px; }
+            .calendar-card { padding: 12px; }
+            .calendar-grid { gap: 3px; }
+            .calendar-day {
+                min-height: 75px;
+                padding: 4px;
+            }
+            .event-item {
+                font-size: 9px;
+                padding: 3px;
+            }
+            .weekday { font-size: 10px; }
+            .month-title { font-size: 22px; }
+        }
+    </style>
+</head>
+
+<body>
+<main class="calendar-page">
+
+    <header class="calendar-header">
+        <div>
+            <div class="calendar-brand">♡ WedPlan</div>
+            <p class="calendar-eyebrow">YOUR SPECIAL DAYS</p>
+            <h1 class="calendar-title">Wedding Calendar</h1>
+            <p class="calendar-subtitle">
+                Every beautiful celebration, organised in one place.
+            </p>
+        </div>
+
+        <a class="calendar-back" th:href="@{/bookings}">
+            ← Back to Bookings
+        </a>
+    </header>
+
+    <section class="calendar-card">
+        <div class="calendar-controls">
+            <h2 class="month-title" id="monthTitle">Wedding Dates</h2>
+
+            <div class="month-buttons">
+                <button class="month-button" id="previousMonth" type="button">
+                    ← Previous
+                </button>
+                <button class="month-button" id="todayButton" type="button">
+                    Today
+                </button>
+                <button class="month-button" id="nextMonth" type="button">
+                    Next →
+                </button>
+            </div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+            <div class="weekday">SUN</div>
+            <div class="weekday">MON</div>
+            <div class="weekday">TUE</div>
+            <div class="weekday">WED</div>
+            <div class="weekday">THU</div>
+            <div class="weekday">FRI</div>
+            <div class="weekday">SAT</div>
+        </div>
+
+        <div class="calendar-legend">
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#66856B"></span>
+                Confirmed
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#C79B47"></span>
+                Pending
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#A6535B"></span>
+                Cancelled
+            </div>
+        </div>
+    </section>
+
+    <footer class="calendar-footer">
+        WedPlan · Making every wedding detail special.
+    </footer>
+</main>
+
+<script th:inline="javascript">
+    const bookings = /*[[${bookings}]]*/ [];
+
+    let displayedYear = new Date().getFullYear();
+    let displayedMonth = new Date().getMonth();
+
+    const grid = document.getElementById("calendarGrid");
+    const monthTitle = document.getElementById("monthTitle");
+
+    function renderCalendar() {
+        grid.querySelectorAll(".calendar-day").forEach(day => day.remove());
+
+        const monthName = new Date(
+            displayedYear, displayedMonth, 1
+        ).toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric"
+        });
+
+        monthTitle.textContent = monthName;
+
+        const firstWeekday = new Date(
+            displayedYear, displayedMonth, 1
+        ).getDay();
+
+        const daysInMonth = new Date(
+            displayedYear, displayedMonth + 1, 0
+        ).getDate();
+
+        for (let i = 0; i < firstWeekday; i++) {
+            const empty = document.createElement("div");
+            empty.className = "calendar-day empty";
+            grid.appendChild(empty);
+        }
+
+        const today = new Date();
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement("div");
+            cell.className = "calendar-day";
+
+            if (day === today.getDate()
+                && displayedMonth === today.getMonth()
+                && displayedYear === today.getFullYear()) {
+                cell.classList.add("today");
+            }
+
+            const number = document.createElement("div");
+            number.className = "day-number";
+            number.textContent = day;
+            cell.appendChild(number);
+
+            const dateKey = displayedYear + "-"
+                + String(displayedMonth + 1).padStart(2, "0") + "-"
+                + String(day).padStart(2, "0");
+
+            bookings
+                .filter(booking => booking.eventDate === dateKey)
+                .forEach(booking => {
+                    const event = document.createElement("div");
+                    const status = (booking.status || "PENDING").toUpperCase();
+
+                    event.className = "event-item "
+                        + (status === "CONFIRMED" ? "event-confirmed"
+                            : status === "CANCELLED" ? "event-cancelled"
+                                : "event-pending");
+
+                    event.textContent = (booking.customerName || "Booking")
+                    event.style.cursor = "pointer";
+
+                    event.addEventListener("click", function () {
+                        window.location.href = "/bookings/" + booking.id;
+                    });
+                        + " · " + (booking.type || "EVENT");
+
+                    event.title = (booking.vendorName || "")
+                        + " — " + status;
+
+                    cell.appendChild(event);
+                });
+
+            grid.appendChild(cell);
+        }
+    }
+
+    document.getElementById("previousMonth").addEventListener("click", () => {
+        displayedMonth--;
+        if (displayedMonth < 0) {
+            displayedMonth = 11;
+            displayedYear--;
+        }
+        renderCalendar();
+    });
+
+    document.getElementById("nextMonth").addEventListener("click", () => {
+        displayedMonth++;
+        if (displayedMonth > 11) {
+            displayedMonth = 0;
+            displayedYear++;
+        }
+        renderCalendar();
+    });
+
+    document.getElementById("todayButton").addEventListener("click", () => {
+        const now = new Date();
+        displayedYear = now.getFullYear();
+        displayedMonth = now.getMonth();
+        renderCalendar();
+    });
+
+    renderCalendar();
+</script>
+</body>
+</html>

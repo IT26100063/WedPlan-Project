@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WedPlan | Luxury Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/booking.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .wp-dashboard-body {
+            margin: 0;
+            background: #F8F5EF;
+            color: #35272A;
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        .wp-dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 42px 24px;
+        }
+
+        .wp-dashboard-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .wp-dashboard-eyebrow {
+            color: #A6535B;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .wp-dashboard-title {
+            margin: 10px 0;
+            font-family: Georgia, serif;
+            font-size: clamp(30px, 5vw, 43px);
+            font-weight: 500;
+        }
+
+        .wp-dashboard-subtitle {
+            color: #817477;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .wp-dashboard-back {
+            display: inline-block;
+            background: #813D45;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .wp-dashboard-back:hover {
+            background: #632D34;
+        }
+
+        .wp-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .wp-dashboard-card {
+            position: relative;
+            overflow: hidden;
+            background: #FFFEFA;
+            border: 1px solid #EAE0D7;
+            border-radius: 15px;
+            padding: 26px 23px;
+            box-shadow: 0 8px 25px rgba(70, 40, 40, 0.04);
+        }
+
+        .wp-dashboard-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #A6535B;
+        }
+
+        .wp-dashboard-card.confirmed::before {
+            background: #66856B;
+        }
+
+        .wp-dashboard-card.pending::before {
+            background: #C79B47;
+        }
+
+        .wp-dashboard-card.cancelled::before {
+            background: #9A7777;
+        }
+
+        .wp-dashboard-card-label {
+            color: #817477;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 19px;
+        }
+
+        .wp-dashboard-card-number {
+            font-family: Georgia, serif;
+            font-size: 42px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #813D45;
+        }
+
+        .wp-dashboard-card.confirmed .wp-dashboard-card-number {
+            color: #55775B;
+        }
+
+        .wp-dashboard-card.pending .wp-dashboard-card-number {
+            color: #A57B2E;
+        }
+
+        .wp-dashboard-card.cancelled .wp-dashboard-card-number {
+            color: #8C6565;
+        }
+
+        .wp-dashboard-card-note {
+            color: #A09495;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        .wp-dashboard-welcome {
+            margin-top: 30px;
+            padding: 30px;
+            border: 1px solid #EAE0D7;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #FFFEFA, #F2E8DF);
+        }
+
+        .wp-dashboard-welcome h2 {
+            font-family: Georgia, serif;
+            font-weight: 500;
+            margin: 0 0 10px;
+            font-size: 25px;
+        }
+
+        .wp-dashboard-welcome p {
+            color: #817477;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .wp-dashboard-footer {
+            text-align: center;
+            color: #A09495;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .wp-dashboard-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 500px) {
+            .wp-dashboard {
+                padding: 28px 16px;
+            }
+
+            .wp-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wp-dashboard-card-number {
+                font-size: 36px;
+            }
+        }
+
+        /* ===== WedPlan Dashboard Polish ===== */
+
+        .wp-dashboard-body {
+            background:
+                    radial-gradient(ellipse at top left, rgba(198, 167, 106, 0.16), transparent 38%),
+                    linear-gradient(180deg, #FCF8F2 0%, #F8F5EF 100%);
+        }
+
+        .wp-dashboard {
+            padding-top: 50px;
+            padding-bottom: 30px;
+        }
+
+        .wp-dashboard-top {
+            padding-bottom: 25px;
+            border-bottom: 1px solid #E8D9C5;
+        }
+
+        .wp-dashboard-eyebrow {
+            color: #A57B42;
+            letter-spacing: 2.5px;
+        }
+
+        .wp-dashboard-title {
+            color: #813D45;
+            letter-spacing: -0.8px;
+        }
+
+        .wp-dashboard-back {
+            background: linear-gradient(135deg, #A6535B, #813D45);
+            border: 1px solid #813D45;
+            border-radius: 10px;
+            box-shadow: 0 5px 14px rgba(129, 61, 69, 0.14);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .wp-dashboard-back:hover {
+            background: linear-gradient(135deg, #93454E, #682F36);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(129, 61, 69, 0.2);
+        }
+
+        .wp-dashboard-card {
+            border-color: #E8D9C5;
+            border-radius: 17px;
+            box-shadow: 0 8px 25px rgba(70, 40, 40, 0.055);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .wp-dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 32px rgba(70, 40, 40, 0.1);
+        }
+
+        .wp-dashboard-card::before {
+            height: 5px;
+        }
+
+        .wp-dashboard-card-label {
+            letter-spacing: 1px;
+            font-size: 12px;
+        }
+
+        .wp-dashboard-card-number {
+            font-size: 46px;
+        }
+
+        .wp-dashboard-welcome {
+            border-color: #E5D1B0;
+            border-left: 4px solid #C6A76A;
+            border-radius: 17px;
+            background: linear-gradient(120deg, #FFFEFA, #F6ECE3);
+            box-shadow: 0 8px 25px rgba(70, 40, 40, 0.045);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .wp-dashboard-welcome:hover {
+            box-shadow: 0 12px 30px rgba(70, 40, 40, 0.08);
+        }
+
+        .wp-dashboard-welcome h2 {
+            color: #813D45;
+        }
+
+        .wp-dashboard-footer {
+            padding-top: 22px;
+            border-top: 1px solid #E8D9C5;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wp-dashboard-card,
+            .wp-dashboard-back,
+            .wp-dashboard-welcome {
+                transition: none;
+            }
+
+            .wp-dashboard-card:hover,
+            .wp-dashboard-back:hover {
+                transform: none;
+            }
+        }
+
+    </style>
+</head>
+
+<body class="wp-dashboard-body">
+
+<main class="wp-dashboard">
+
+    <header class="wp-dashboard-top">
+        <div>
+            <div class="wp-dashboard-eyebrow">WedPlan · Booking Management</div>
+            <h1 class="wp-dashboard-title">Booking Dashboard</h1>
+            <p class="wp-dashboard-subtitle">
+                A beautiful overview of your wedding bookings.
+            </p>
+        </div>
+
+        <a th:href="@{/bookings}" class="wp-dashboard-back">
+            View All Bookings →
+        </a>
+    </header>
+
+    <section class="wp-dashboard-grid">
+
+        <article class="wp-dashboard-card">
+            <div class="wp-dashboard-card-label">TOTAL BOOKINGS</div>
+            <div class="wp-dashboard-card-number"
+                 th:text="${totalBookings}">0</div>
+            <div class="wp-dashboard-card-note">All registered bookings</div>
+        </article>
+
+        <article class="wp-dashboard-card confirmed">
+            <div class="wp-dashboard-card-label">CONFIRMED</div>
+            <div class="wp-dashboard-card-number"
+                 th:text="${confirmedBookings}">0</div>
+            <div class="wp-dashboard-card-note">Successfully confirmed</div>
+        </article>
+
+        <article class="wp-dashboard-card pending">
+            <div class="wp-dashboard-card-label">PENDING</div>
+            <div class="wp-dashboard-card-number"
+                 th:text="${pendingBookings}">0</div>
+            <div class="wp-dashboard-card-note">Awaiting confirmation</div>
+        </article>
+
+        <article class="wp-dashboard-card cancelled">
+            <div class="wp-dashboard-card-label">CANCELLED</div>
+            <div class="wp-dashboard-card-number"
+                 th:text="${cancelledBookings}">0</div>
+            <div class="wp-dashboard-card-note">Cancelled bookings</div>
+        </article>
+
+    </section>
+
+    <section class="wp-dashboard-welcome">
+        <h2>Your wedding planning, beautifully organised.</h2>
+        <p>
+            Keep track of booking activity and check your booking statuses
+            in one place. Your dashboard statistics update using your existing
+            booking data.
+        </p>
+    </section>
+
+    <footer class="wp-dashboard-footer">
+        © WedPlan · Wedding Planning & Vendor Booking System
+    </footer>
+
+</main>
+
+</body>
+</html>
