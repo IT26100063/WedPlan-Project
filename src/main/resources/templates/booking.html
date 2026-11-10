@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WedPlan | Booking Management</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/booking.css}">
+</head>
+
+<body class="bg-light">
+
+<header class="wp-header">
+    <div class="wp-header-inner">
+
+        <a class="wp-brand" th:href="@{/bookings}">
+            <span class="wp-brand-mark">W</span>
+            <span>
+                <strong>WedPlan</strong>
+                <small>WEDDING PLANNER</small>
+            </span>
+        </a>
+
+        <nav class="wp-navigation">
+            <a class="active" th:href="@{/bookings}">Bookings</a>
+            <a th:href="@{/bookings/dashboard}">Dashboard</a>
+            <a th:href="@{/bookings/calendar}">Calendar</a>
+        </nav>
+
+        <a class="btn wp-primary-btn" th:href="@{/bookings/new}">
+            + Create Booking
+        </a>
+
+    </div>
+</header>
+
+<main class="container wp-booking-page">
+
+    <!-- Page Heading -->
+    <section class="wp-page-heading">
+        <div>
+            <p class="wp-eyebrow">YOUR SPECIAL DAY, BEAUTIFULLY PLANNED</p>
+            <h1>Booking Management</h1>
+            <p class="wp-subtitle">
+                Every little detail matters. Manage your wedding bookings
+                and vendors with ease.
+            </p>
+        </div>
+    </section>
+
+    <!-- Alerts -->
+    <div th:if="${success}" class="alert alert-success"
+         role="status" th:text="${success}"></div>
+
+    <div th:if="${error}" class="alert alert-danger"
+         role="alert" th:text="${error}"></div>
+
+    <!-- Summary Cards -->
+    <section class="wp-stats-grid">
+
+        <article class="wp-stat-card total">
+            <div class="wp-stat-top">
+                <span class="wp-stat-label">TOTAL BOOKINGS</span>
+                <span class="wp-stat-icon">♡</span>
+            </div>
+            <div class="wp-stat-number" th:text="${totalBookings}">0</div>
+            <p>All registered bookings</p>
+        </article>
+
+        <article class="wp-stat-card confirmed">
+            <div class="wp-stat-top">
+                <span class="wp-stat-label">CONFIRMED</span>
+                <span class="wp-stat-icon">✓</span>
+            </div>
+            <div class="wp-stat-number" th:text="${confirmedBookings}">0</div>
+            <p>Successfully confirmed</p>
+        </article>
+
+        <article class="wp-stat-card pending">
+            <div class="wp-stat-top">
+                <span class="wp-stat-label">PENDING</span>
+                <span class="wp-stat-icon">◷</span>
+            </div>
+            <div class="wp-stat-number" th:text="${pendingBookings}">0</div>
+            <p>Awaiting confirmation</p>
+        </article>
+
+        <article class="wp-stat-card cancelled">
+            <div class="wp-stat-top">
+                <span class="wp-stat-label">CANCELLED</span>
+                <span class="wp-stat-icon">×</span>
+            </div>
+            <div class="wp-stat-number" th:text="${cancelledBookings}">0</div>
+            <p>Cancelled bookings</p>
+        </article>
+
+    </section>
+
+    <!-- Booking Progress -->
+    <section class="wp-progress" th:if="${totalBookings > 0}">
+        <div class="wp-progress-head">
+            <strong>Booking progress</strong>
+            <span th:text="${confirmedBookings} + ' of ' + ${totalBookings} + ' confirmed'"></span>
+        </div>
+        <div class="wp-progress-bar">
+            <span class="seg-confirmed" th:style="'flex:' + ${confirmedBookings} + ' 1 0'"></span>
+            <span class="seg-pending" th:style="'flex:' + ${pendingBookings} + ' 1 0'"></span>
+            <span class="seg-cancelled" th:style="'flex:' + ${cancelledBookings} + ' 1 0'"></span>
+        </div>
+        <div class="wp-progress-legend">
+            <span><i class="dot-confirmed"></i>Confirmed</span>
+            <span><i class="dot-pending"></i>Pending</span>
+            <span><i class="dot-cancelled"></i>Cancelled</span>
+        </div>
+    </section>
+
+    <!-- Section Heading -->
+    <section class="wp-section-heading">
+        <div>
+            <p class="wp-eyebrow">KEEP EVERYTHING IN ONE PLACE</p>
+            <h2>Your Wedding Bookings</h2>
+            <p>Search your records or filter them by booking status.</p>
+        </div>
+        <span class="wp-section-decoration">♡</span>
+    </section>
+
+    <!-- Search and Filter -->
+    <form class="wp-filter-bar" th:action="@{/bookings}" method="get">
+
+        <div class="wp-search-field">
+            <label for="keyword">Search bookings</label>
+            <input class="form-control" id="keyword" name="keyword"
+                   placeholder="Search customer, vendor..."
+                   th:value="${keyword}">
+        </div>
+
+        <div class="wp-status-field">
+            <label for="status">Booking status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="ALL"
+                        th:selected="${selectedStatus == 'ALL'}">
+                    All statuses
+                </option>
+                <option value="PENDING"
+                        th:selected="${selectedStatus == 'PENDING'}">
+                    Pending
+                </option>
+                <option value="CONFIRMED"
+                        th:selected="${selectedStatus == 'CONFIRMED'}">
+                    Confirmed
+                </option>
+                <option value="CANCELLED"
+                        th:selected="${selectedStatus == 'CANCELLED'}">
+                    Cancelled
+                </option>
+            </select>
+        </div>
+
+        <div class="wp-filter-actions">
+            <button type="submit" class="btn wp-primary-btn">Search</button>
+            <a class="btn wp-light-btn" th:href="@{/bookings}">Reset</a>
+        </div>
+
+    </form>
+
+    <!-- Booking Records -->
+    <section class="wp-table-card">
+
+        <div class="wp-table-heading">
+            <div>
+                <h2>Booking Records</h2>
+                <p>Review and manage each wedding booking below.</p>
+            </div>
+            <span class="wp-record-label">♡ YOUR RECORDS</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle wp-booking-table">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Service</th>
+                    <th>Customer</th>
+                    <th>Vendor</th>
+                    <th>Event Date</th>
+                    <th>Status</th>
+                    <th>Total (LKR)</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:if="${#lists.isEmpty(bookings)}">
+                    <td colspan="8" class="wp-empty-state">
+                        <div class="wp-empty-icon">♡</div>
+                        <strong>No bookings found</strong>
+                        <p>Try another search or create a new booking.</p>
+                        <a class="btn wp-primary-btn"
+                           th:href="@{/bookings/new}">
+                            Create Booking
+                        </a>
+                    </td>
+                </tr>
+
+                <tr th:each="b : ${bookings}">
+
+                    <td>
+                        <span class="wp-booking-id"
+                              th:text="${b.id}"></span>
+                    </td>
+
+                    <td th:text="${b.type}"></td>
+
+                    <td class="wp-customer-name">
+                        <div class="wp-customer">
+                            <span class="wp-avatar"
+                                  th:text="${#strings.isEmpty(b.customerName) ? '?' : #strings.toUpperCase(#strings.substring(b.customerName, 0, 1))}"></span>
+                            <span th:text="${b.customerName}"></span>
+                        </div>
+                    </td>
+
+                    <td th:text="${b.vendorName}"></td>
+
+                    <td class="wp-date"
+                        th:text="${b.eventDate}"></td>
+
+                    <td>
+                        <span class="wp-status"
+                              th:classappend="${b.status == 'CONFIRMED' ? ' status-confirmed' : (b.status == 'CANCELLED' ? ' status-cancelled' : ' status-pending')}"
+                              th:text="${b.status}">
+                        </span>
+                    </td>
+
+                    <td class="wp-total"
+                        th:text="${#numbers.formatDecimal(b.calculateTotal(), 1, 'COMMA', 2, 'POINT')}">
+                    </td>
+
+                    <td>
+                        <div class="wp-action-group">
+
+                            <a class="btn wp-action-view"
+                               th:href="@{/bookings/{id}(id=${b.id})}">
+                                View
+                            </a>
+
+                            <a class="btn wp-action-edit"
+                               th:href="@{/bookings/{id}/edit(id=${b.id})}">
+                                Edit
+                            </a>
+
+                            <form th:action="@{/bookings/{id}/delete(id=${b.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('Delete this booking?');">
+
+                                <button type="submit"
+                                        class="btn wp-action-delete">
+                                    Delete
+                                </button>
+
+                            </form>
+                        </div>
+
+                        <!-- Status Update -->
+                        <form class="wp-status-form"
+                              th:action="@{/bookings/{id}/status(id=${b.id})}"
+                              method="post">
+
+                            <label class="visually-hidden"
+                                   th:for="${'status-' + b.id}">
+                                Update status
+                            </label>
+
+                            <select class="form-select form-select-sm"
+                                    name="status"
+                                    th:id="${'status-' + b.id}">
+
+                                <option value="PENDING"
+                                        th:selected="${b.status == 'PENDING'}">
+                                    Pending
+                                </option>
+
+                                <option value="CONFIRMED"
+                                        th:selected="${b.status == 'CONFIRMED'}">
+                                    Confirmed
+                                </option>
+
+                                <option value="CANCELLED"
+                                        th:selected="${b.status == 'CANCELLED'}">
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+                            <button type="submit"
+                                    class="btn wp-status-update">
+                                Update
+                            </button>
+
+                        </form>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="wp-footer">
+        <span>WedPlan</span>
+        <span class="wp-footer-heart">♡</span>
+        Making every wedding detail special.
+    </footer>
+
+</main>
+
+<script>
+    (function () {
+        /* ----- Relative event dates ("in 12 days") ----- */
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        document.querySelectorAll('td.wp-date').forEach(function (cell) {
+            var m = cell.textContent.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (!m) return;
+
+            var eventDay = new Date(+m[1], +m[2] - 1, +m[3]);
+            var diff = Math.round((eventDay - today) / 86400000);
+            var text, cls = '';
+
+            if (diff === 0)       { text = 'Today';     cls = 'soon'; }
+            else if (diff === 1)  { text = 'Tomorrow';  cls = 'soon'; }
+            else if (diff === -1) { text = 'Yesterday'; cls = 'past'; }
+            else if (diff > 1) {
+                text = diff >= 60 ? 'in ' + Math.round(diff / 30) + ' months' : 'in ' + diff + ' days';
+                cls = diff <= 7 ? 'soon' : '';
+            } else {
+                var ago = Math.abs(diff);
+                text = ago >= 60 ? Math.round(ago / 30) + ' months ago' : ago + ' days ago';
+                cls = 'past';
+            }
+
+            var note = document.createElement('small');
+            note.className = 'wp-date-note ' + cls;
+            note.textContent = text;
+            cell.appendChild(note);
+        });
+    })();
+</script>
+
+</body>
+</html>

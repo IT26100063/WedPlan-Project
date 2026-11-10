@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff portal · WedPlan</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" class="panel-dark">
+  <main class="min-h-screen grid place-items-center px-4 py-12">
+    <div class="w-full max-w-md">
+      <a href="../index.html" class="flex flex-col items-center gap-3">
+        <img src="../../img/favicon.svg" class="w-14 h-14" alt="">
+        <span class="font-display text-3xl font-semibold text-ivory">WedPlan<span class="text-brass">.</span></span>
+        <span class="text-[10px] tracking-[.3em] uppercase text-brass font-bold">Staff portal</span>
+      </a>
+
+      <!-- JSP: action="${pageContext.request.contextPath}/admin/login" method="post" -->
+      <form class="card card-pad mt-10 text-ink" data-demo="Signed in (prototype)" data-next="dashboard.html">
+        <h1 class="font-display text-3xl font-semibold text-forest">Sign in</h1>
+        <p class="text-sm text-muted mt-1">For WedPlan planners and administrators.</p>
+        <div class="mt-6 space-y-5">
+          <div>
+            <label class="label" for="username">Staff ID or email</label>
+            <div class="input-icon"><i data-lucide="badge-check"></i><input id="username" name="username" class="input" placeholder="S001 or name@wedplan.lk" autocomplete="username" required></div>
+          </div>
+          <div>
+            <label class="label" for="password">Password</label>
+            <div class="input-icon relative">
+              <i data-lucide="lock"></i>
+              <input id="password" name="password" type="password" class="input pr-12" autocomplete="current-password" required>
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-muted hover:text-forest" data-password-toggle aria-label="Show password">
+                <i data-lucide="eye" data-eye="on" class="w-4 h-4"></i><i data-lucide="eye-off" data-eye="off" class="w-4 h-4 hidden"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in <i data-lucide="arrow-right"></i></button>
+        </div>
+        <div class="alert alert-info mt-6"><i data-lucide="shield"></i><span>Admins manage vendors, reviews and staff. Planner support staff handle bookings, payments and couples.</span></div>
+      </form>
+
+      <a href="../index.html" class="mt-8 flex items-center justify-center gap-2 text-sm text-ivory/60 hover:text-ivory"><i data-lucide="arrow-left" class="w-4 h-4"></i>Back to the couple site</a>
+    </div>
+  </main>
+
+  <script src="../../js/app.js"></script>
+</body>
+</html>

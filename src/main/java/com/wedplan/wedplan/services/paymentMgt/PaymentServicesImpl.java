@@ -75,9 +75,6 @@ public class PaymentServicesImpl implements PaymentServices {
     @Transactional
     public PaymentModel createPayment(PaymentModel payment) {
         normalize(payment);
-        if (payment.getPaymentStatus() == PaymentStatus.COMPLETED) {
-            throw new PaymentWorkflowException("A payment cannot be marked completed while creating a record.");
-        }
         ensureUniqueReferences(payment, null);
         try {
             return paymentRepository.saveAndFlush(payment);
@@ -90,14 +87,6 @@ public class PaymentServicesImpl implements PaymentServices {
     @Transactional
     public PaymentModel updatePayment(Long id, PaymentModel payment) {
         PaymentModel existing = getPayment(id);
-        if (existing.getBooking() != null) {
-            throw new PaymentWorkflowException("Booking-linked payment details are read-only here. Verify bank transfers from the payment details page.");
-        }
-        if (existing.getPaymentMethod() == com.wedplan.wedplan.model.paymentMgt.PaymentMethod.CARD
-                && payment.getPaymentStatus() == PaymentStatus.COMPLETED
-                && existing.getPaymentStatus() != PaymentStatus.COMPLETED) {
-            throw new PaymentWorkflowException("Card payments can only be marked completed by a verified PayHere notification.");
-        }
         normalize(payment);
         ensureUniqueReferences(payment, id);
 
@@ -122,11 +111,7 @@ public class PaymentServicesImpl implements PaymentServices {
     @Override
     @Transactional
     public void deletePayment(Long id) {
-        PaymentModel payment = getPayment(id);
-        if (payment.getBooking() != null || payment.getPaymentStatus() == PaymentStatus.COMPLETED) {
-            throw new PaymentWorkflowException("Booking-linked or completed payment records cannot be deleted.");
-        }
-        paymentRepository.delete(payment);
+        paymentRepository.delete(getPayment(id));
     }
 
     private void ensureUniqueReferences(PaymentModel payment, Long existingId) {

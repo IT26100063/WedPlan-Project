@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage vendors · WedPlan staff</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../js/tailwind.config.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body data-root="../" data-layout="staff" data-active="vendors" data-user="admin">
+  <div data-slot="sidebar"></div>
+  <div class="lg:pl-72 min-h-screen">
+    <div data-slot="topbar"></div>
+    <main class="px-4 sm:px-8 py-8 max-w-7xl">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="eyebrow">Marketplace</span>
+          <h1 class="font-display text-4xl sm:text-5xl font-semibold text-forest mt-3">Vendors</h1>
+          <p class="text-muted mt-2">Approve new vendors, update packages and pause listings.</p>
+        </div>
+        <a href="form.html" class="btn btn-primary"><i data-lucide="plus"></i>Add vendor</a>
+      </div>
+
+      <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="stat flex items-start justify-between"><div><p class="stat-label">Active</p><p class="stat-value mt-2">7</p><p class="text-xs text-muted">listed to couples</p></div><span class="stat-icon"><i data-lucide="store"></i></span></div>
+        <div class="stat flex items-start justify-between"><div><p class="stat-label">Awaiting approval</p><p class="stat-value mt-2">2</p><p class="text-xs text-muted">new sign-ups</p></div><span class="stat-icon"><i data-lucide="hourglass"></i></span></div>
+        <div class="stat flex items-start justify-between"><div><p class="stat-label">Suspended</p><p class="stat-value mt-2">1</p><p class="text-xs text-muted">hidden from search</p></div><span class="stat-icon"><i data-lucide="pause-circle"></i></span></div>
+        <div class="stat flex items-start justify-between"><div><p class="stat-label">Avg. rating</p><p class="stat-value mt-2">4.8</p><p class="text-xs text-muted">across 356 reviews</p></div><span class="stat-icon"><i data-lucide="star"></i></span></div>
+      </div>
+
+      <div class="card mt-8">
+        <div class="p-4 sm:p-5 grid gap-3 md:grid-cols-[1fr_auto_auto] border-b border-line">
+          <div class="input-icon"><i data-lucide="search"></i><input class="input !py-2.5" placeholder="Search by vendor, ID or location…" data-filter-target="#vendor-table"></div>
+          <select class="select !py-2.5 md:w-48" data-filter-target="#vendor-table" data-filter-attr="category">
+            <option value="">All categories</option>
+            <option value="venue">Venues</option>
+            <option value="photography">Photography</option>
+            <option value="beauty">Beauty</option>
+            <option value="florals">Florals</option>
+            <option value="catering">Catering</option>
+            <option value="music">Music</option>
+          </select>
+          <select class="select !py-2.5 md:w-44" data-filter-target="#vendor-table" data-filter-attr="status">
+            <option value="">Any status</option>
+            <option value="active">Active</option>
+            <option value="pending">Awaiting approval</option>
+            <option value="suspended">Suspended</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="vendor-table">
+            <thead>
+              <tr><th>Vendor</th><th>Category</th><th>Location</th><th>From</th><th>Rating</th><th>Status</th><th class="text-right">Actions</th></tr>
+            </thead>
+            <tbody>
+              <!-- JSP: <c:forEach var="v" items="${vendors}"> -->
+              <tr data-item data-category="venue" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/reception.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">The Garden House</p><p class="text-xs text-muted mono">V104</p></div></div></td>
+                <td>Venue</td><td>Gampaha</td><td>LKR 250,000</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="The Garden House" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="venue" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/hero-couple.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">Seaside Pavilion</p><p class="text-xs text-muted mono">V109</p></div></div></td>
+                <td>Venue</td><td>Galle</td><td>LKR 420,000</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="Seaside Pavilion" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="photography" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/photography.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">Golden Hour Studio</p><p class="text-xs text-muted mono">V101</p></div></div></td>
+                <td>Photography</td><td>Colombo</td><td>LKR 120,000</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="Golden Hour Studio" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="beauty" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/beauty.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">Petal &amp; Pearl Beauty</p><p class="text-xs text-muted mono">V102</p></div></div></td>
+                <td>Beauty</td><td>Kandy</td><td>LKR 65,000</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="Petal &amp; Pearl Beauty" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="florals" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/florals.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">Wildflower Atelier</p><p class="text-xs text-muted mono">V103</p></div></div></td>
+                <td>Florals</td><td>Galle</td><td>LKR 85,000</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="Wildflower Atelier" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="catering" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/catering.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">Table for Two Catering</p><p class="text-xs text-muted mono">V105</p></div></div></td>
+                <td>Catering</td><td>Colombo</td><td>LKR 3,400 / guest</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="Table for Two Catering" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="music" data-status="active">
+                <td><div class="flex items-center gap-3"><img src="../../img/music.jpg" class="w-12 h-12 rounded-xl object-cover" alt=""><div><p class="font-semibold">The Evening Set</p><p class="text-xs text-muted mono">V106</p></div></div></td>
+                <td>Music</td><td>Gampaha</td><td>LKR 95,000</td>
+                <td><span data-stars="5"></span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td class="text-right whitespace-nowrap"><a href="form.html" class="btn btn-ghost btn-sm"><i data-lucide="pencil"></i>Edit</a><button class="btn btn-ghost btn-sm text-clay" data-modal-open="suspend-modal" data-vendor="The Evening Set" title="Suspend"><i data-lucide="pause"></i></button></td>
+              </tr>
+              <tr data-item data-category="photography" data-status="pending" class="bg-brass/[.06]">
+                <td><div class="flex items-center gap-3"><span class="avatar w-12 h-12 rounded-xl"><i data-lucide="camera" class="w-5 h-5"></i></span><div><p class="font-semibold">Lens &amp; Lace Films</p><p class="text-xs text-muted mono">V110</p></div></div></td>
+                <td>Photography</td><td>Kandy</td><td>LKR 140,000</td>
+                <td class="text-xs text-muted">No reviews yet</td>
+                <td><span class="badge badge-pending">Awaiting approval</span></td>
+                <td class="text-right whitespace-nowrap"><button class="btn btn-primary btn-sm" data-demo-click="Lens &amp; Lace Films approved (prototype)"><i data-lucide="check"></i>Approve</button></td>
+              </tr>
+              <tr data-item data-category="catering" data-status="pending" class="bg-brass/[.06]">
+                <td><div class="flex items-center gap-3"><span class="avatar w-12 h-12 rounded-xl"><i data-lucide="utensils" class="w-5 h-5"></i></span><div><p class="font-semibold">Spice Route Kitchen</p><p class="text-xs text-muted mono">V111</p></div></div></td>
+                <td>Catering</td><td>Galle</td><td>LKR 2,900 / guest</td>
+                <td class="text-xs text-muted">No reviews yet</td>
+                <td><span class="badge badge-pending">Awaiting approval</span></td>
+                <td class="text-right whitespace-nowrap"><button class="btn btn-primary btn-sm" data-demo-click="Spice Route Kitchen approved (prototype)"><i data-lucide="check"></i>Approve</button></td>
+              </tr>
+              <tr data-item data-category="music" data-status="suspended" class="text-ink/60">
+                <td><div class="flex items-center gap-3"><span class="avatar w-12 h-12 rounded-xl"><i data-lucide="music" class="w-5 h-5"></i></span><div><p class="font-semibold">Drum &amp; Brass Collective</p><p class="text-xs text-muted mono">V098</p></div></div></td>
+                <td>Music</td><td>Colombo</td><td>LKR 70,000</td>
+                <td><span data-stars="3"></span></td>
+                <td><span class="badge badge-suspended">Suspended</span></td>
+                <td class="text-right whitespace-nowrap"><button class="btn btn-ghost btn-sm" data-demo-click="Drum &amp; Brass Collective reactivated (prototype)"><i data-lucide="play"></i>Reactivate</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="hidden p-10 text-center text-muted" data-empty-for="#vendor-table">No vendors match these filters.</div>
+        <div class="px-5 py-4 border-t border-line text-sm text-muted">Showing <span data-count-for="#vendor-table" class="font-semibold text-forest">10</span> vendors</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Suspend modal -->
+  <div class="modal" id="suspend-modal" role="dialog" aria-modal="true" aria-labelledby="suspend-title">
+    <div class="modal-box">
+      <span class="stat-icon !bg-amber/10 !text-amber"><i data-lucide="pause-circle"></i></span>
+      <h2 id="suspend-title" class="font-display text-3xl font-semibold text-forest mt-4">Suspend <span data-fill="vendor">vendor</span>?</h2>
+      <p class="mt-2 text-sm text-ink/70">The listing is hidden from search and no new bookings can be made. Existing confirmed bookings stay in place.</p>
+      <label class="block mt-5"><span class="label">Reason (shown to the vendor)</span><textarea class="textarea !min-h-[5rem]" placeholder="e.g. Missing business registration"></textarea></label>
+      <div class="mt-6 flex justify-end gap-2">
+        <button class="btn btn-ghost" data-modal-close>Keep active</button>
+        <button class="btn btn-danger" data-demo-click="Vendor suspended (prototype)">Suspend listing</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

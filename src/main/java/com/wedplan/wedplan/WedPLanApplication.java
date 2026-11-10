@@ -10,4 +10,6 @@ public class WedPLanApplication {
         SpringApplication.run(WedPLanApplication.class, args);
     }
 
+
 }
+
