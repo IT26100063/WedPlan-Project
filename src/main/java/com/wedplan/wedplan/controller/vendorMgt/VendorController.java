@@ -28,7 +28,15 @@ public class VendorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VendorModel>> getAllVendors() {
+    public ResponseEntity<List<VendorModel>> getAllVendors(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String search) {
+        if (category != null && !category.isBlank()) {
+            return ResponseEntity.ok(vendorService.getVendorsByCategory(category));
+        }
+        if (search != null && !search.isBlank()) {
+            return ResponseEntity.ok(vendorService.searchVendors(search));
+        }
         return ResponseEntity.ok(vendorService.getAllVendors());
     }
 
