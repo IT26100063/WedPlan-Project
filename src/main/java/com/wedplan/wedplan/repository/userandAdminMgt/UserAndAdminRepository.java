@@ -1,6 +1,6 @@
 package com.wedplan.wedplan.repository.userandAdminMgt;
 
-import com.wedplan.wedplan.model.userandadminMgt.UserAndAdminModel;
+import com.wedplan.wedplan.model.userandAdminMgt.UserAndAdminModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
