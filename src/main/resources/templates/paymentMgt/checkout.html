@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout | WedPlan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/style/payment-management.css}">
+</head>
+<body>
+<nav class="navbar wp-navbar"><div class="container"><a class="navbar-brand wp-brand" th:href="@{/}">WedPlan<span>.</span></a><a class="btn btn-light" th:href="@{/reservations/{reference}(reference=${booking.bookingReference})}">Back to reservation</a></div></nav>
+<main class="container py-5 customer-flow-page">
+  <div th:if="${checkoutError}" class="alert alert-danger" role="alert" th:text="${checkoutError}"></div>
+  <section class="panel customer-flow-card">
+    <p class="eyebrow mb-2">SECURE CHECKOUT</p>
+    <h1 class="h2">Your quote is ready</h1>
+    <p class="text-secondary mb-4"><span th:text="${booking.vendorName}">Vendor</span> · Booking <span class="text-break" th:text="${booking.bookingReference}">reference</span></p>
+    <div class="checkout-amount mb-4">
+      <span class="detail-kicker">AMOUNT DUE</span>
+      <strong><span th:text="${booking.currency}">LKR</span> <span th:text="${#numbers.formatDecimal(booking.quotedAmount, 1, 'COMMA', 2, 'POINT')}">0.00</span></strong>
+    </div>
+    <div class="alert alert-light border" th:if="${booking.adminNotes != null and !booking.adminNotes.isBlank()}">
+      <strong class="d-block mb-1">A note from WedPlan</strong><span th:text="${booking.adminNotes}">Quote note</span>
+    </div>
+    <div class="alert alert-warning" role="note">WedPlan records and reconciles payment information. Card credentials are entered only on PayHere's hosted checkout and are never stored here.</div>
+    <div th:if="${payment != null and payment.receiptStorageKey != null}" class="alert alert-info">A bank transfer receipt is currently awaiting admin review. A new payment cannot be started until that receipt is reviewed.</div>
+    <div class="d-grid gap-3 checkout-methods">
+      <form th:action="@{/checkout/{reference}/card(reference=${booking.bookingReference})}" method="post">
+        <button class="btn btn-primary wp-primary w-100" type="submit" th:disabled="${!payHereConfigured or (payment != null and payment.receiptStorageKey != null)}">Pay by card with PayHere</button>
+        <small class="text-secondary d-block mt-2" th:if="${!payHereConfigured}">Sandbox checkout is not configured. Admin must set merchant credentials and a public callback URL.</small>
+      </form>
+      <a class="btn btn-outline-secondary w-100" th:classappend="${payment != null and payment.receiptStorageKey != null ? ' disabled' : ''}" th:href="@{/checkout/{reference}/bank-transfer(reference=${booking.bookingReference})}">Pay by bank transfer</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>

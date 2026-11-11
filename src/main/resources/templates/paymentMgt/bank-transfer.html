@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bank transfer | WedPlan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/style/payment-management.css}">
+</head>
+<body>
+<nav class="navbar wp-navbar"><div class="container"><a class="navbar-brand wp-brand" th:href="@{/}">WedPlan<span>.</span></a><a class="btn btn-light" th:href="@{/checkout/{reference}(reference=${booking.bookingReference})}">Back to checkout</a></div></nav>
+<main class="container py-5 customer-flow-page">
+  <div th:if="${checkoutError}" class="alert alert-danger" role="alert" th:text="${checkoutError}"></div>
+  <section class="panel customer-flow-card">
+    <p class="eyebrow mb-2">BANK TRANSFER</p>
+    <h1 class="h2">Transfer your quoted amount</h1>
+    <p class="text-secondary">Booking <span class="text-break" th:text="${booking.bookingReference}">reference</span></p>
+    <div class="checkout-amount my-4"><span class="detail-kicker">AMOUNT DUE</span><strong><span th:text="${booking.currency}">LKR</span> <span th:text="${#numbers.formatDecimal(booking.quotedAmount, 1, 'COMMA', 2, 'POINT')}">0.00</span></strong></div>
+    <div class="alert alert-info" th:if="${bankAccountNumber == null or bankAccountNumber.isBlank()}">Bank transfer instructions are not configured yet. Contact WedPlan before sending funds.</div>
+    <dl class="detail-grid mb-4" th:if="${bankAccountNumber != null and !bankAccountNumber.isBlank()}">
+      <div><dt>Bank</dt><dd th:text="${bankName ?: 'Contact WedPlan'}">Bank</dd></div>
+      <div><dt>Account name</dt><dd th:text="${bankAccountName ?: 'Contact WedPlan'}">Account</dd></div>
+      <div><dt>Account number</dt><dd th:text="${bankAccountNumber}">Account number</dd></div>
+      <div><dt>Branch</dt><dd th:text="${bankBranch ?: 'Not specified'}">Branch</dd></div>
+    </dl>
+    <div class="alert alert-warning">Upload a transfer receipt after sending. Your booking stays pending until an admin checks the receipt and confirms the money arrived.</div>
+    <form th:action="@{/checkout/{reference}/bank-transfer(reference=${booking.bookingReference})}" method="post" enctype="multipart/form-data" class="mt-4">
+      <label for="transactionReference" class="form-label">Bank transaction reference <span class="text-secondary">(optional)</span></label>
+      <input id="transactionReference" name="transactionReference" class="form-control mb-3" maxlength="100" autocomplete="off">
+      <label for="receipt" class="form-label">Transfer receipt <span class="text-danger">*</span></label>
+      <input id="receipt" name="receipt" type="file" class="form-control" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" required>
+      <div class="form-text mb-4">PDF, PNG or JPEG, up to 5 MB. Never upload card details or credentials.</div>
+      <button class="btn btn-primary wp-primary" type="submit" th:disabled="${bankAccountNumber == null or bankAccountNumber.isBlank()}">Submit receipt for review</button>
+    </form>
+  </section>
+</main>
+</body>
+</html>

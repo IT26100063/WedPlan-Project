@@ -1,101 +1,115 @@
 package com.wedplan.wedplan.model.bookingMgt;
 
-public abstract class BookingModel extends BaseEntity {
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "bookings", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_booking_reference", columnNames = "booking_reference")
+})
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookingModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "Booking reference is required")
+    @Column(name = "booking_reference", nullable = false, length = 60, unique = true)
+    private String bookingReference;
+
+    @NotBlank(message = "Customer name is required")
+    @Size(min = 2, max = 120, message = "Customer name must be between 2 and 120 characters")
+    @Column(name = "customer_name", nullable = false, length = 120)
     private String customerName;
+
+    @NotBlank(message = "Customer email is required")
+    @Email(message = "Enter a valid email format")
+    @Column(name = "customer_email", nullable = false, length = 180)
+    private String customerEmail;
+
+    @Column(name = "customer_phone", length = 30)
+    private String customerPhone;
+
+    @Column(name = "partner_name", length = 120)
+    private String partnerName;
+
+    @NotNull(message = "Wedding date is required")
+    @Column(name = "wedding_date", nullable = false)
+    private LocalDate weddingDate;
+
+    @Column(length = 150)
+    private String location;
+
+    private Long vendorId;
+
+    @Column(name = "vendor_name", length = 150)
     private String vendorName;
-    private String eventDate;   // yyyy-MM-dd
-    private String status;      // PENDING, CONFIRMED, CANCELLED
 
-    protected BookingModel(String id, String createdAt, String customerName,
-                           String vendorName, String eventDate, String status) {
-        super(id, createdAt);
-        this.customerName = customerName;
-        this.vendorName = vendorName;
-        this.eventDate = eventDate;
-        this.status = status;
+    private Long packageId;
+
+    @Column(name = "package_name", length = 150)
+    private String packageName;
+
+    @Column(name = "guest_count")
+    private Integer guestCount;
+
+    @NotNull(message = "Total amount is required")
+    @DecimalMin(value = "0.01", message = "Total amount must be greater than zero")
+    @Column(name = "total_amount", nullable = false, precision = 12, scale = 2)
+    private BigDecimal totalAmount;
+
+    @Column(name = "deposit_amount", precision = 12, scale = 2)
+    private BigDecimal depositAmount;
+
+    @Column(name = "is_plus_member")
+    private Boolean isPlusMember = false;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private BookingStatus status = BookingStatus.PENDING;
+
+    @Size(max = 2000, message = "Special notes cannot exceed 2000 characters")
+    @Column(name = "special_notes", length = 2000)
+    private String specialNotes;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        createdAt = now;
+        updatedAt = now;
+        if (status == null) status = BookingStatus.PENDING;
+        if (isPlusMember == null) isPlusMember = false;
+        if (bookingReference == null || bookingReference.isBlank()) {
+            bookingReference = "WP-" + (System.currentTimeMillis() % 10000000);
+        }
+        if (depositAmount == null && totalAmount != null) {
+            // Default 30% deposit as specified in the prototype documentation
+            depositAmount = totalAmount.multiply(new BigDecimal("0.30")).setScale(2, java.math.RoundingMode.HALF_UP);
+        }
     }
 
-    // Each subclass must implement these (polymorphism)
-    public abstract double calculateTotal();
-    public abstract String getType();
-    public abstract double getQuantity();   // hours or guests
-    public abstract double getRate();       // hourly rate or price per plate
-    public double getExtra() { return 0; }  // optional override (album fee)
-
-    public String toFileString() {
-        return String.join("|", getType(), getId(), getCreatedAt(), customerName,
-                vendorName, eventDate, status,
-                String.valueOf(getQuantity()), String.valueOf(getRate()),
-                String.valueOf(getExtra()));
-    }
-
-    public String getCustomerName() { return customerName; }
-    public void setCustomerName(String customerName) { this.customerName = customerName; }
-    public String getVendorName() { return vendorName; }
-    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
-    public String getEventDate() { return eventDate; }
-    public void setEventDate(String eventDate) { this.eventDate = eventDate; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    // ================= SUBCLASSES =================
-
-    public static class VenueBooking extends BookingModel {
-        private double hours;
-        private double hourlyRate;
-
-        public VenueBooking(String id, String createdAt, String customer, String vendor,
-                            String date, String status, double hours, double hourlyRate) {
-            super(id, createdAt, customer, vendor, date, status);
-            this.hours = hours;
-            this.hourlyRate = hourlyRate;
-        }
-
-        @Override public double calculateTotal() { return hours * hourlyRate * 1.10; } // 10% service charge
-        @Override public String getType() { return "VENUE"; }
-        @Override public double getQuantity() { return hours; }
-        @Override public double getRate() { return hourlyRate; }
-    }
-
-    public static class CateringBooking extends BookingModel {
-        private int guests;
-        private double pricePerPlate;
-
-        public CateringBooking(String id, String createdAt, String customer, String vendor,
-                               String date, String status, int guests, double pricePerPlate) {
-            super(id, createdAt, customer, vendor, date, status);
-            this.guests = guests;
-            this.pricePerPlate = pricePerPlate;
-        }
-
-        @Override
-        public double calculateTotal() {
-            double total = guests * pricePerPlate;
-            return guests >= 200 ? total * 0.95 : total;   // 5% bulk discount
-        }
-        @Override public String getType() { return "CATERING"; }
-        @Override public double getQuantity() { return guests; }
-        @Override public double getRate() { return pricePerPlate; }
-    }
-
-    public static class PhotographyBooking extends BookingModel {
-        private double hours;
-        private double hourlyRate;
-        private double albumFee;
-
-        public PhotographyBooking(String id, String createdAt, String customer, String vendor,
-                                  String date, String status, double hours,
-                                  double hourlyRate, double albumFee) {
-            super(id, createdAt, customer, vendor, date, status);
-            this.hours = hours;
-            this.hourlyRate = hourlyRate;
-            this.albumFee = albumFee;
-        }
-
-        @Override public double calculateTotal() { return hours * hourlyRate + albumFee; }
-        @Override public String getType() { return "PHOTOGRAPHY"; }
-        @Override public double getQuantity() { return hours; }
-        @Override public double getRate() { return hourlyRate; }
-        @Override public double getExtra() { return albumFee; }
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }
